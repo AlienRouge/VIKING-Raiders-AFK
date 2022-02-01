@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3364448367333992069}
   - component: {fileID: 4090448535256668773}
-  - component: {fileID: 7114323706077107371}
   - component: {fileID: 4362465542188243978}
+  - component: {fileID: 7345650808030961680}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Player
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2024793584640464606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2143392, y: -0.75876206, z: -0.49041823}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 240164918265217940}
@@ -56,19 +56,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7114323706077107371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2024793584640464606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef593561206ecf34692e038f610a9298, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetTransform: {fileID: 0}
 --- !u!114 &4362465542188243978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +71,20 @@ MonoBehaviour:
   heroStats: {fileID: 0}
   myTeam: 0
   spawnPoint: {fileID: 0}
+  currentTarget: {fileID: 0}
+--- !u!114 &7345650808030961680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024793584640464606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f530c16934e41ef4dafd99f2e0e9f0f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTransform: {fileID: 0}
 --- !u!1 &2359330137130792562
 GameObject:
   m_ObjectHideFlags: 0
