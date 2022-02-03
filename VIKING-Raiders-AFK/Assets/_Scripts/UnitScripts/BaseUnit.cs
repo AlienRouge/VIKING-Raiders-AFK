@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
 using System.Linq;
+using System.Threading.Tasks;
+using _Scripts.Enums;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace UnitScripts
 {
     public class BaseUnit : MonoBehaviour
     {
         public Hero heroStats { get; private set; }
-        [SerializeField] private BattleManager.Team myTeam;
+        [SerializeField] private Team myTeam;
 
         [SerializeField] private int health;
         [SerializeField] private BaseUnit currentTarget;
@@ -21,6 +24,8 @@ namespace UnitScripts
         private MovementController movementController;
         private HealthBar healthBar;
 
+        public UnityAction healthChanged;
+        
         private void Awake()
         {
             movementController = GetComponent<MovementController>();
@@ -28,7 +33,7 @@ namespace UnitScripts
             healthBar = GetComponentInChildren<HealthBar>();
         }
 
-        public void Init(BattleManager.Team team, Transform spawnPos, Hero hero)
+        public void Init(Team team, Transform spawnPos, Hero hero)
         {
             heroStats = hero;
             health = heroStats.baseHealth;
@@ -38,9 +43,9 @@ namespace UnitScripts
             healthBar.SetMaxHealth(heroStats.baseHealth);
 
             transform.position = spawnPosition;
-            spriteRenderer.color = (myTeam == BattleManager.Team.Team1)
-                ? new Color(53,72,231)
-                : Color.red;
+            spriteRenderer.color = (myTeam == Team.Team1)
+                ? new Color(53/255f,72/255f,231/255f)
+                : new Color(250/255f, 52/255f, 37/255f);
         }
 
 
@@ -84,7 +89,7 @@ namespace UnitScripts
                 return;
             Debug.Log($"{heroStats.name}: Target in range. Attack.");
             currentTarget.TakeDamage(heroStats.baseDamage);
-            StartCoroutine(WaitCoroutine());
+            WaitCoroutine();
         }
 
         private void TakeDamage(int amount)
@@ -95,18 +100,18 @@ namespace UnitScripts
             Debug.Log($"{heroStats.name}: Taking damage: {amount}dmg");
             health -= amount;
             healthBar.SetHealth(health);
+            healthChanged?.Invoke();
             if (isDead)
             {
                 Debug.Log($"{heroStats.name} dead.");
-                BattleManager.Instance.UnitDied(myTeam, this);
+                EventController.UnitDied.Invoke(myTeam, this);
             }
         }
 
-        private IEnumerator WaitCoroutine()
+        private async void WaitCoroutine()
         {
             canAttack = false;
-            yield return null;
-            yield return new WaitForSeconds(attackDeltaTime);
+            await Task.Delay(Mathf.RoundToInt(attackDeltaTime * 1000));
             canAttack = true;
         }
 

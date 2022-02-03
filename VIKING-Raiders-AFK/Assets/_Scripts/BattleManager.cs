@@ -1,7 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using _Scripts.Enums;
 using UnitScripts;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BattleManager : MonoBehaviour
 {
@@ -24,6 +28,28 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Transform[] playerSpawnPoints;
     private readonly Dictionary<Team, List<BaseUnit>> unitsByTeams = new Dictionary<Team, List<BaseUnit>>();
 
+
+    private void OnEnable()
+    {
+        EventController.UnitDied += OnUnitDied;
+    }
+
+    private void OnUnitDied(Team team, BaseUnit unit)
+    {
+        unitsByTeams[team] = unitsByTeams[team]
+            .Where(value => value.gameObject.GetInstanceID() != unit.gameObject.GetInstanceID()).ToList();
+        Destroy(unit.gameObject);
+        if (unitsByTeams[Team.Team1].Count == 0 || unitsByTeams[Team.Team2].Count == 0 )
+        {
+            EventController.GameEnded.Invoke();
+        }
+    }
+
+    private void OnDisable()
+    {        
+        EventController.UnitDied -= OnUnitDied;
+    }
+
     private void Awake()
     {
         _instance = this;
@@ -45,18 +71,13 @@ public class BattleManager : MonoBehaviour
         unitsByTeams.Add(Team.Team2, new List<BaseUnit>());
     }
 
+    
+    //Вынести в отдельный контроллер
     public void StartBattle()
     {
         // Spawn units
         InstantiateUnits(Team.Team1, playerHeroes, playerSpawnPoints);
         InstantiateUnits(Team.Team2, enemyHeroes, enemySpawnPoints);
-    }
-
-    public void UnitDied(Team team, BaseUnit unit)
-    {
-        unitsByTeams[team] = unitsByTeams[team]
-            .Where(value => value.gameObject.GetInstanceID() != unit.gameObject.GetInstanceID()).ToList();
-        Destroy(unit.gameObject);
     }
 
     public List<BaseUnit> GetEnemies(Team myTeam)
@@ -71,12 +92,16 @@ public class BattleManager : MonoBehaviour
             BaseUnit newUnit = Instantiate(unitPrefab);
             unitsByTeams[team].Add(newUnit);
             newUnit.Init(team, spawnPoints[i], heroes[i]);
+            waiatInit(newUnit);
         }
     }
 
-    public enum Team
+    private async void waiatInit(BaseUnit newUnit)
     {
-        Team1,
-        Team2
+        await Task.Delay(10);
+        if (newUnit != null)
+        {
+            newUnit.GetComponent<NavMeshAgent>().enabled = true;
+        }
     }
 }

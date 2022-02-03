@@ -19,17 +19,17 @@ public class MovementController : MonoBehaviour
 
     public void SetTarget(BaseUnit targetUnit)
     {
-        this.target = targetUnit.transform;
+        target = targetUnit.transform;
     }
 
     public void Stop()
     {
-        agent.Stop();
+        agent.isStopped = true;
     }
 
     public void Resume()
     {
-        agent.Resume();
+        agent.isStopped = false;
     }
 
     void Update()
