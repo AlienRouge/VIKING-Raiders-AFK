@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Slave
   description: I'll die for my Master.
-  baseDamage: 0
+  baseDamage: 1
   baseHealth: 5
-  attackRange: 1
+  attackRange: 1.3
   attackSpeed: 1
-  moveSpeed: 1
+  moveSpeed: 1.5

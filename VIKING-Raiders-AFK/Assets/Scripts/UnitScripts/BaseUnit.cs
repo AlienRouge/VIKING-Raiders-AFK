@@ -19,11 +19,13 @@ namespace UnitScripts
 
         private SpriteRenderer spriteRenderer;
         private MovementController movementController;
+        private HealthBar healthBar;
 
         private void Awake()
         {
             movementController = GetComponent<MovementController>();
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            healthBar = GetComponentInChildren<HealthBar>();
         }
 
         public void Init(BattleManager.Team team, Transform spawnPos, Hero hero)
@@ -33,9 +35,12 @@ namespace UnitScripts
             attackDeltaTime = 1 / heroStats.attackSpeed;
             myTeam = team;
             spawnPosition = spawnPos.position;
+            healthBar.SetMaxHealth(heroStats.baseHealth);
 
             transform.position = spawnPosition;
-            spriteRenderer.color = (myTeam == BattleManager.Team.Team1) ? Color.blue : Color.red;
+            spriteRenderer.color = (myTeam == BattleManager.Team.Team1)
+                ? new Color(53,72,231)
+                : Color.red;
         }
 
 
@@ -89,7 +94,7 @@ namespace UnitScripts
 
             Debug.Log($"{heroStats.name}: Taking damage: {amount}dmg");
             health -= amount;
-
+            healthBar.SetHealth(health);
             if (isDead)
             {
                 Debug.Log($"{heroStats.name} dead.");
