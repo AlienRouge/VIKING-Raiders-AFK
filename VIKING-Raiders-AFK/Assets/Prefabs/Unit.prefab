@@ -46,10 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d557ac42241f704eac2b75204227ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroStats: {fileID: 0}
   myTeam: 0
-  spawnPoint: {fileID: 0}
+  health: 0
   currentTarget: {fileID: 0}
+  spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &7345650808030961680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f530c16934e41ef4dafd99f2e0e9f0f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTransform: {fileID: 0}
+  target: {fileID: 0}
 --- !u!195 &-8882337433440362515
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -74,7 +74,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 2
-  m_Acceleration: 8
+  m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 1
