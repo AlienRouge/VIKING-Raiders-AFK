@@ -439,11 +439,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 4362465542188243978, guid: 56846947b1023d34c872e8df936c1059, type: 3}
   playerHeroes:
-  - {fileID: 11400000, guid: 28a0a80ff30948742a7b5f8f0003f3f5, type: 2}
+  - {fileID: 11400000, guid: 0b0d3edff77f62a4a8bce29c6ebed625, type: 2}
   enemyHeroes:
-  - {fileID: 11400000, guid: 9bee5ff79e842104a9dd6467d65cac48, type: 2}
-  - {fileID: 11400000, guid: 9bee5ff79e842104a9dd6467d65cac48, type: 2}
-  - {fileID: 11400000, guid: 9bee5ff79e842104a9dd6467d65cac48, type: 2}
+  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
+  - {fileID: 11400000, guid: 4a6b5296f052d4d40a43b733760ea927, type: 2}
+  - {fileID: 11400000, guid: 0d635cfa58532034f8acef00c4f170de, type: 2}
   enemySpawnPoints: []
   playerSpawnPoints: []
 --- !u!4 &1459515374
@@ -484,7 +484,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512367331}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.45, y: 4.25, z: 0}
+  m_LocalPosition: {x: -2.3, y: 4.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1666521721}

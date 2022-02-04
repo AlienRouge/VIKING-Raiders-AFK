@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using _Scripts.Enums;
-using UnitScripts;
+using _Scripts.UnitScripts;
 using UnityEngine;
 using UnityEngine.Events;
 

@@ -46,10 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d557ac42241f704eac2b75204227ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myTeam: 0
-  health: 0
-  currentTarget: {fileID: 0}
-  spawnPosition: {x: 0, y: 0, z: 0}
+  HeroStats: {fileID: 0}
+  _myTeam: 0
+  _health: 0
+  _currentTarget: {fileID: 0}
+  _spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &7345650808030961680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,12 +155,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7814442467161813431, guid: 5d015d5ad34c2b44e81c8fda69dd6d0c, type: 3}
       propertyPath: m_Name
-      value: Knight
+      value: View
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d015d5ad34c2b44e81c8fda69dd6d0c, type: 3}
+--- !u!1 &2359330137130792562 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7814442467161813431, guid: 5d015d5ad34c2b44e81c8fda69dd6d0c, type: 3}
+  m_PrefabInstance: {fileID: 5533934686640129989}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &240164918265217940 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5735687066672448593, guid: 5d015d5ad34c2b44e81c8fda69dd6d0c, type: 3}
   m_PrefabInstance: {fileID: 5533934686640129989}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9204534574700088190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359330137130792562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23d5b67e5bcb87c44a2db58f23710c13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _viewGO: {fileID: 0}
+  _spriteRenderer: {fileID: 0}

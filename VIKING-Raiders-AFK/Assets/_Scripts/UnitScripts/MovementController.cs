@@ -1,4 +1,4 @@
-using UnitScripts;
+using _Scripts.UnitScripts;
 using UnityEngine;
 using UnityEngine.AI;
 public class MovementController : MonoBehaviour
@@ -14,7 +14,7 @@ public class MovementController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-        agent.speed = parentUnit.heroStats.moveSpeed;
+        agent.speed = parentUnit.HeroStats.MoveSpeed;
     }
 
     public void SetTarget(BaseUnit targetUnit)

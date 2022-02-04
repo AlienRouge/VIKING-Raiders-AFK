@@ -5,19 +5,23 @@ using UnityEngine;
 
 public abstract class BaseUnitModel : ScriptableObject
 {
-    [SerializeField] protected new string name;
+    [SerializeField] public string CharacterName;
     [SerializeField] protected string description;
-    [SerializeField, Header("Put link on view game object")] protected GameObject viewGameObject;
-    [SerializeField,Space] protected float baseDamage;
-    [SerializeField] protected float baseHealth;
-    [SerializeField] protected float attackRange;
+
+    [SerializeField, Header("View sprite")]
+    public Sprite viewSprite;
+
+    [SerializeField] public Vector3 spriteScale = new Vector3(1.0f, 1.0f, 1.0f);
+    [SerializeField, Header("Attributes")] public float BaseDamage;
+    [SerializeField] public float BaseHealth = 1.0f;
+    [SerializeField, Range(1, 5)] public float AttackRange = 1.0f;
     [SerializeField] protected float armor;
     [SerializeField] protected UnitType unitType;
-    [Header("Speed")]
-    [SerializeField] protected float moveSpeed;
-    [SerializeField, Range(1, 5)] protected float attackSpeed;
-    [Header("Multiplier")]
-    [SerializeField, Range(0.5f, 3f)] protected float damageMultiplier;
-    
+    [Header("Speed")] [SerializeField] public float MoveSpeed;
+    [SerializeField, Range(1, 5)] public float AttackSpeed = 1.0f;
+
+    [Header("Multiplier")] [SerializeField, Range(0.5f, 3f)]
+    protected float damageMultiplier;
+
     [SerializeField] protected PhysicalDamageType physicalDamageType;
 }
