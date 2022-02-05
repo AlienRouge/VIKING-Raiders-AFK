@@ -221,7 +221,7 @@ GameObject:
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &977283997
 Transform:
   m_ObjectHideFlags: 0
@@ -326,7 +326,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277977847}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.47, y: -5.35, z: 0}
+  m_LocalPosition: {x: -2.46, y: -5.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1666521721}
@@ -419,7 +419,7 @@ GameObject:
   - component: {fileID: 1459515374}
   - component: {fileID: 1459515373}
   m_Layer: 0
-  m_Name: BattleManager
+  m_Name: BattleController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -437,15 +437,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7c758df934cea4db8f890d540400e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 4362465542188243978, guid: 56846947b1023d34c872e8df936c1059, type: 3}
+  unitPrefab: {fileID: -6495290467257647797, guid: 5d015d5ad34c2b44e81c8fda69dd6d0c, type: 3}
   playerHeroes:
   - {fileID: 11400000, guid: 0b0d3edff77f62a4a8bce29c6ebed625, type: 2}
   enemyHeroes:
   - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
-  - {fileID: 11400000, guid: 4a6b5296f052d4d40a43b733760ea927, type: 2}
-  - {fileID: 11400000, guid: 0d635cfa58532034f8acef00c4f170de, type: 2}
-  enemySpawnPoints: []
-  playerSpawnPoints: []
+  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
+  enemySpawnPoints:
+  - {fileID: 1717993249}
+  playerSpawnPoints:
+  - {fileID: 1666521721}
 --- !u!4 &1459515374
 Transform:
   m_ObjectHideFlags: 0
@@ -552,7 +553,7 @@ GameObject:
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1701427602
 Transform:
   m_ObjectHideFlags: 0
@@ -561,7 +562,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701427601}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.84, y: -4.95, z: 0}
+  m_LocalPosition: {x: 2.56, y: -3.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1318332546}
@@ -591,7 +592,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717993248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.49, y: 3.07, z: 0}
+  m_LocalPosition: {x: 2.49, y: 2.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1318332546}
@@ -612,7 +613,7 @@ GameObject:
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1826205468
 Transform:
   m_ObjectHideFlags: 0

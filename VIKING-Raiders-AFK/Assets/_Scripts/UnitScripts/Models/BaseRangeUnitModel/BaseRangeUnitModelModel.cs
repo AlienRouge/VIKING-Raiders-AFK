@@ -4,7 +4,7 @@ using _Scripts.Enums;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Base melee unit", menuName = "Units/Base/Range/Unit")]
-public class BaseRangeUnitModel : BaseUnitModel
+public class BaseRangeUnitModelModel : BaseUnitModelModel
 {
     [SerializeField] protected MagicalDamageType magicalDamageMeleeType;
 }
