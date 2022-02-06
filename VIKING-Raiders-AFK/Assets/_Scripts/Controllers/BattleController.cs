@@ -130,9 +130,8 @@ public class BattleController : MonoBehaviour
         unitsByTeams[team] = unitsByTeams[team]
             .Where(value => value.gameObject.GetInstanceID() != unit.gameObject.GetInstanceID()).ToList();
         unit.EndFight -= OnEndFight;
+        unit.gameObject.SetActive(false);
         Destroy(unit.gameObject);
-        Debug.Log(unitsByTeams[Team.Team1].Count);
-        Debug.Log(unitsByTeams[Team.Team2].Count);
         if (unitsByTeams[Team.Team1].Count == 0 || unitsByTeams[Team.Team2].Count == 0 )
         {
             _isEnd = true;

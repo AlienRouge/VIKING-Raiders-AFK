@@ -25,6 +25,8 @@ namespace _Scripts.UnitScripts.Views
         public float moveSpeed => _model.moveSpeed;
         public float attackRange => _model.attackRange;
         public bool isDead => health <= 0;
+        
+        private Ability ability => _model.ability;
 
         public UnityAction<BaseUnitView> EndFight;
 
@@ -48,6 +50,7 @@ namespace _Scripts.UnitScripts.Views
             _movementController.Init(moveSpeed, attackRange);
             _healthBar = GetComponentInChildren<HealthBar>();
             _healthBar.SetMaxHealth(health);
+            ability?.Init();
             /*transform.localScale = model.spriteScale;*/
         }
         
@@ -76,11 +79,20 @@ namespace _Scripts.UnitScripts.Views
             return _currentTarget != null;
         }
         
-        public void AttackTarget()
+        public async void AttackTarget()
         {
             _movementController.SetTarget(_currentTarget);
-            MoveToTarget();
+            await MoveToTarget();
+            StartFight();
             /*_movementController.SetTarget(_currentTarget);*/
+        }
+
+        public void TakeDamageFromAbility(Enum damageType, float damage)
+        {
+            Debug.Log("Accepted damage from ability");
+            Debug.Log(damageType);
+            Debug.Log(damage);
+            TakeDamage(damage);
         }
         
         private void TakeDamage(float dmg)
@@ -95,12 +107,12 @@ namespace _Scripts.UnitScripts.Views
             if (isDead)
             {
                 Debug.Log($"{_model.characterName} dead.");
+                EventController.UnitDied?.Invoke(myTeam, this);
             }
         }
 
         private bool CanAttack()
         {
-            Debug.Log(characterName);
             if (_currentTarget == null)
             {
                 return false;
@@ -108,19 +120,19 @@ namespace _Scripts.UnitScripts.Views
             return Vector3.Distance(transform.position, _currentTarget.transform.position) <= attackRange;
         }
 
-        private async void MoveToTarget()
+        private async Task MoveToTarget()
         {
             if (isDead) return;
             while (!CanAttack())
             {
                 await Task.Delay(100);
+                if (isDead) return;
                 if (_movementController.isActiveAndEnabled)
                 {
                     _movementController.Resume();
                 }
             }
             _movementController.Stop();
-            StartFight();
         }
         
         private async void StartFight()
@@ -128,26 +140,20 @@ namespace _Scripts.UnitScripts.Views
             while (_currentTarget != null )
             {
                 if (isDead) return;
-                if (CanAttack())
+                if (!CanAttack()) break;
+
+                if (ability != null && ability.CheckPossibilityToUseAbility())
                 {
-                    _currentTarget.TakeDamage(_model.baseDamage);
-                    if (!_currentTarget.isDead)
-                    {
-                        await Task.Delay(Mathf.RoundToInt(_attackDeltaTime * 1000));
-                    }
-                    else
-                    {
-                        Debug.Log("smert");
-                        EventController.UnitDied?.Invoke(_currentTarget.myTeam, _currentTarget);
-                        break;
-                    }
+                    Debug.Log($"{characterName} use ability on {_currentTarget.characterName}");
+                    ability.Use(_currentTarget);
+                    await Task.Delay(Mathf.RoundToInt(ability.castTime * 1000));//вынести в абилку
+                    continue;
                 }
-                else
-                {
-                    break;
-                }
+
+                _currentTarget.TakeDamage(_model.baseDamage);
+
+                await Task.Delay(Mathf.RoundToInt(_attackDeltaTime * 1000));
             }
-            
             EndFight?.Invoke(this);
         }
     }

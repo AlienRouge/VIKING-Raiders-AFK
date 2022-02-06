@@ -17,7 +17,7 @@ namespace _Scripts.Interfaces
         public float moveSpeed { get;}
         public float attackSpeed { get;}
         public float damageMultiplier { get;}
-        public PhysicalDamageType physicalDamageType { get;}
+        public Ability ability { get; }
     }
 }
 

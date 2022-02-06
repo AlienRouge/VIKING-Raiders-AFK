@@ -24,5 +24,5 @@ MonoBehaviour:
   _moveSpeed: 2
   _attackSpeed: 1.36
   _damageMultiplier: 0.67
-  _physicalDamageType: 2
+  _ability: {fileID: 11400000, guid: b466d6b076f2991478fd0df231a837c1, type: 2}
   additionalArmor: 20

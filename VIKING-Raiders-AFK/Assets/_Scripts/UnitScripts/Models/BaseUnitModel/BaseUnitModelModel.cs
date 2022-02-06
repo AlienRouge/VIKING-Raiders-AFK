@@ -38,7 +38,8 @@ public abstract class BaseUnitModelModel : ScriptableObject, IUnitModel
     [Header("Multiplier")] 
     [SerializeField, Range(0.5f, 3f)] protected float _damageMultiplier;
     public float damageMultiplier => _damageMultiplier;
-    [SerializeField] protected PhysicalDamageType _physicalDamageType;
-    public PhysicalDamageType physicalDamageType => _physicalDamageType;
+
+    [SerializeField] protected Ability _ability;
+    public Ability ability => _ability;
 
 }
