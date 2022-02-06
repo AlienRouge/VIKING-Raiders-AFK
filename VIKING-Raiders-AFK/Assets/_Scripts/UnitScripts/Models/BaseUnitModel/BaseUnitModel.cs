@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using _Scripts.Enums;
-using _Scripts.Interfaces;
 using UnityEngine;
 
-public abstract class BaseUnitModelModel : ScriptableObject, IUnitModel
+public abstract class BaseUnitModel : ScriptableObject
 {
     [Header("UnitDescription")]
     [SerializeField] protected string _characterName;

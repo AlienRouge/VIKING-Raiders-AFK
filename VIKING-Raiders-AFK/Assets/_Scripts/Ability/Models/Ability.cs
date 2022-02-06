@@ -1,8 +1,7 @@
-using _Scripts.Interfaces;
 using _Scripts.UnitScripts.Views;
 using UnityEngine;
 
-public abstract class Ability : ScriptableObject, IAbility
+public abstract class Ability : ScriptableObject
 {
     [SerializeField] protected float _cooldown;
     public float cooldown => _cooldown;

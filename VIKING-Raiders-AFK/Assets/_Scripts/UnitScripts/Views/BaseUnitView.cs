@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using _Scripts.Enums;
-using _Scripts.Interfaces;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,7 +13,7 @@ namespace _Scripts.UnitScripts.Views
         
         private MovementController _movementController;
         private SpriteRenderer _spriteRenderer;
-        private IUnitModel _model;
+        private BaseUnitModel _model;
         private float _attackDeltaTime;
         private BaseUnitView _currentTarget;
         private HealthBar _healthBar;
@@ -37,7 +36,7 @@ namespace _Scripts.UnitScripts.Views
                 : new Color(250/255f, 52/255f, 37/255f);
         }
         
-        public void Init(IUnitModel model, Team team, Vector3 startPosition)
+        public void Init(BaseUnitModel model, Team team, Vector3 startPosition)
         {
             _model = model;
             _movementController = GetComponent<MovementController>();

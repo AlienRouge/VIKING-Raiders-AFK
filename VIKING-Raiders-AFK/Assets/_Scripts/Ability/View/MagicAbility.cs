@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using _Scripts.Enums;
-using _Scripts.Interfaces;
 using _Scripts.UnitScripts.Views;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Base melee unit", menuName = "Abilities/Magic")]
 
-public class MagicAbility : Ability, IMagicAbility
+public class MagicAbility : Ability
 {
     [SerializeField] private MagicalDamageType _damageType;
     public MagicalDamageType damageType => _damageType;

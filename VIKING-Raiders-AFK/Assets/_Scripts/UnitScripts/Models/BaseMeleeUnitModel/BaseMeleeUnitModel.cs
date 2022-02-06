@@ -4,7 +4,7 @@ using _Scripts.Enums;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Base melee unit", menuName = "Units/Base/Melee/Unit")]
-public class BaseMeleeUnitModelModel : BaseUnitModelModel
+public class BaseMeleeUnitModel : BaseUnitModel
 {
     [SerializeField] private float additionalArmor; //Щит
 }

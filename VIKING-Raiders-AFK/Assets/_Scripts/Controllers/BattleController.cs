@@ -1,10 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using _Scripts.Enums;
-using _Scripts.Interfaces;
-using _Scripts.UnitScripts;
 using _Scripts.UnitScripts.Views;
 using UnityEngine;
 using UnityEngine.AI;
@@ -24,8 +21,8 @@ public class BattleController : MonoBehaviour
     }
     
     [SerializeField] private BaseUnitView unitPrefab;
-    [SerializeField] private List<BaseUnitModelModel> playerHeroes;
-    [SerializeField] private List<BaseUnitModelModel> enemyHeroes;
+    [SerializeField] private List<BaseUnitModel> playerHeroes;
+    [SerializeField] private List<BaseUnitModel> enemyHeroes;
     [SerializeField] private Transform[] enemySpawnPoints;
     [SerializeField] private Transform[] playerSpawnPoints;
     private readonly Dictionary<Team, List<BaseUnitView>> unitsByTeams = new Dictionary<Team, List<BaseUnitView>>();
@@ -87,7 +84,7 @@ public class BattleController : MonoBehaviour
         return myTeam == Team.Team1 ? unitsByTeams[Team.Team2] : unitsByTeams[Team.Team1];
     }
 
-    private void InstantiateUnits(Team team, List<BaseUnitModelModel> heroes, Transform[] spawnPoints)
+    private void InstantiateUnits(Team team, List<BaseUnitModel> heroes, Transform[] spawnPoints)
     {
         for (int i = 0; i < heroes.Count; i++)
         {
