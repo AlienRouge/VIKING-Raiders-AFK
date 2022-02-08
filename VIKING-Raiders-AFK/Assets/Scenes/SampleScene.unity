@@ -437,10 +437,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7c758df934cea4db8f890d540400e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: -6495290467257647797, guid: 5d015d5ad34c2b44e81c8fda69dd6d0c, type: 3}
+  unitPrefab: {fileID: 8373044224295067024, guid: 56846947b1023d34c872e8df936c1059, type: 3}
   playerHeroes:
   - {fileID: 11400000, guid: 0b0d3edff77f62a4a8bce29c6ebed625, type: 2}
   enemyHeroes:
+  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
+  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
   - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
   - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
   enemySpawnPoints:

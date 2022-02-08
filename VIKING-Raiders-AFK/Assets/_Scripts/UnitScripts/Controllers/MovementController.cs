@@ -1,5 +1,3 @@
-using _Scripts.UnitScripts;
-using _Scripts.UnitScripts.Views;
 using UnityEngine;
 using UnityEngine.AI;
 public class MovementController : MonoBehaviour
@@ -7,9 +5,8 @@ public class MovementController : MonoBehaviour
     [SerializeField] private Transform target;
     /*private BaseUnitView parentUnit;*/
     private NavMeshAgent agent;
-    private bool isMoving;
     private float distanceRange;
-
+    
     /*
     public bool canAttack => agent.destination.magnitude <= distanceRange;
     */
@@ -27,20 +24,23 @@ public class MovementController : MonoBehaviour
         distanceRange = attackRange;
     }
 
-    public void SetTarget(BaseUnitView targetUnit)
+    public void SetTarget(BaseUnitController targetUnit)
     {
         target = targetUnit.transform;
     }
 
     public void Stop()
     {
-        Debug.Log("stop");
-        agent.isStopped = true;
+        if (agent.isActiveAndEnabled)
+            agent.isStopped = true;
+        
     }
 
     public void Resume()
     {
-        agent.isStopped = false;
+        if (agent.isActiveAndEnabled)
+            agent.isStopped = false;
+
     }
 
     void Update()

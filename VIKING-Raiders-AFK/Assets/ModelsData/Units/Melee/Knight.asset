@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a945832059c4a534c9f81a988264dd08, type: 3}
   m_Name: Knight
   m_EditorClassIdentifier: 
-  _characterName: Knight Master
-  _description: Best warrior in the world
+  _characterName: Knight
+  _description: 
   _viewSprite: {fileID: 21300000, guid: b1ad4586410f20a45ae46023317ba1c8, type: 3}
-  _spriteScale: {x: 1, y: 1, z: 1}
+  _spriteScale: {x: 8, y: 8, z: 8}
   _baseDamage: 2
-  _baseHeath: 20
-  _attackRange: 1.57
-  _armor: 20
-  _unitType: 1
+  _baseHeath: 10
+  _attackRange: 1.46
+  _armor: 0
+  _unitType: 0
   _moveSpeed: 2
-  _attackSpeed: 1.36
-  _damageMultiplier: 0.67
-  _ability: {fileID: 11400000, guid: b466d6b076f2991478fd0df231a837c1, type: 2}
-  additionalArmor: 20
+  _attackSpeed: 2
+  _damageMultiplier: 0
+  _ability: {fileID: 0}
+  additionalArmor: 0

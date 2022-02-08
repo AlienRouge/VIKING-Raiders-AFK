@@ -15,5 +15,5 @@ MonoBehaviour:
   _cooldown: 3
   _powerModifier: 5
   _baseDamage: 3
-  _castTime: 0.5
+  _castTime: 5
   _damageType: 0

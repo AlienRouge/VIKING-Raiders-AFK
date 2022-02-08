@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using _Scripts.Enums;
-using _Scripts.UnitScripts.Views;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Base melee unit", menuName = "Abilities/Magic")]
@@ -17,17 +17,19 @@ public class MagicAbility : Ability
     {
         _lastUse = 0;
     }
-    public override void Use(BaseUnitView target)
+    public async override Task Use(BaseUnitView target)
     {
         Debug.Log("dasda");
         if (CheckPossibilityToUseAbility())
         {
-            Debug.Log($"I use ability on {target.characterName}");
-            _lastUse = Time.time+castTime;
-            target.TakeDamageFromAbility(damageType, currentDamage);
+            // TODO 
+            // await Task.Delay(Mathf.RoundToInt(castTime * 1000));
+            // Debug.Log($"I use ability on {target.characterName}");
+            // _lastUse = Time.time+castTime;
+            // target.TakeDamageFromAbility(damageType, currentDamage);
         }
     }
-
+    
     public override bool CheckPossibilityToUseAbility()
     {
         return CheckDistance() && CheckCooldown();

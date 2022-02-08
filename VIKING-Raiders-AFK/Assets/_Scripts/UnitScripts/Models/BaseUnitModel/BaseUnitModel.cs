@@ -31,7 +31,7 @@ public abstract class BaseUnitModel : ScriptableObject
     [Header("Speed")]
     [SerializeField] protected float _moveSpeed;
     public float moveSpeed => _moveSpeed;
-    [SerializeField, Range(1, 5)] protected float _attackSpeed = 1.0f;
+    [SerializeField, Range(0, 5)] protected float _attackSpeed = 1.0f;
     public float attackSpeed => _attackSpeed;
     
     [Header("Multiplier")] 
