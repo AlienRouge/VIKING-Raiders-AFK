@@ -8,7 +8,7 @@ using UnityEngine.AI;
 public class BattleController : MonoBehaviour
 {
     private static BattleController _instance;
-    public static BattleController Instance
+    public static BattleController instance
     {
         get
         {
@@ -24,7 +24,7 @@ public class BattleController : MonoBehaviour
     [SerializeField] private List<BaseUnitModel> enemyHeroes;
     [SerializeField] private Transform[] enemySpawnPoints;
     [SerializeField] private Transform[] playerSpawnPoints;
-    private readonly Dictionary<Team, List<BaseUnitController>> unitsByTeams = new Dictionary<Team, List<BaseUnitController>>();
+    private readonly Dictionary<Team, List<BaseUnitController>> _unitsByTeams = new Dictionary<Team, List<BaseUnitController>>();
     
     private void Awake()
     {
@@ -39,20 +39,11 @@ public class BattleController : MonoBehaviour
         Init();
         StartBattle();
     }
-    private void OnEnable()
-    {
-        /*EventController.UnitDied += OnUnitDied;*/
-    }
-    
-    private void OnDisable()
-    {        
-        /*EventController.UnitDied -= OnUnitDied;*/
-    }
     
     public void Init()
     {
-        unitsByTeams.Add(Team.Team1, new List<BaseUnitController>());
-        unitsByTeams.Add(Team.Team2, new List<BaseUnitController>());
+        _unitsByTeams.Add(Team.Team1, new List<BaseUnitController>());
+        _unitsByTeams.Add(Team.Team2, new List<BaseUnitController>());
     }
     
      public void StartBattle()
@@ -64,7 +55,7 @@ public class BattleController : MonoBehaviour
 
     public List<BaseUnitController> GetEnemies(Team myTeam)
     {
-        return myTeam == Team.Team1 ? unitsByTeams[Team.Team2] : unitsByTeams[Team.Team1];
+        return myTeam == Team.Team1 ? _unitsByTeams[Team.Team2] : _unitsByTeams[Team.Team1];
     }
 
     private void InstantiateUnits(Team team, List<BaseUnitModel> heroes, Transform[] spawnPoints)
@@ -73,7 +64,7 @@ public class BattleController : MonoBehaviour
         {
             BaseUnitController newUnit = Instantiate(unitPrefab);
             newUnit.UnitDead += OnUnitDied;
-            unitsByTeams[team].Add(newUnit);
+            _unitsByTeams[team].Add(newUnit);
             newUnit.Init(heroes[i], team, spawnPoints[i].position);
             newUnit.name = heroes[i].characterName;
             WaitInit(newUnit);
@@ -92,13 +83,14 @@ public class BattleController : MonoBehaviour
     private void OnUnitDied(Team team, BaseUnitController unit)
     {
         unit.UnitDead -= OnUnitDied; 
-        unitsByTeams[team] = unitsByTeams[team]
+        _unitsByTeams[team] = _unitsByTeams[team]
             .Where(value => value.gameObject.GetInstanceID() != unit.gameObject.GetInstanceID()).ToList();
         
         /*Destroy(unit.gameObject);*/
         /*unit.gameObject.SetActive(false);*/
+        unit.gameObject.SetActive(false);
         
-        if (unitsByTeams[Team.Team1].Count == 0 || unitsByTeams[Team.Team2].Count == 0 )
+        if (_unitsByTeams[Team.Team1].Count == 0 || _unitsByTeams[Team.Team2].Count == 0 )
         {
             EventController.BattleEnded?.Invoke();
         }

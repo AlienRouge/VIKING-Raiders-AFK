@@ -4,8 +4,8 @@ public class MovementController : MonoBehaviour
 {
     [SerializeField] private Transform target;
     /*private BaseUnitView parentUnit;*/
-    private NavMeshAgent agent;
-    private float distanceRange;
+    private NavMeshAgent _navMeshAgent;
+    /*private float distanceRange;*/
     
     /*
     public bool canAttack => agent.destination.magnitude <= distanceRange;
@@ -13,15 +13,15 @@ public class MovementController : MonoBehaviour
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent.updateRotation = false;
+        _navMeshAgent.updateUpAxis = false;
     }
 
-    public void Init(float speed, float attackRange)
+    public void Init(float speed/*, float attackRange*/)
     {
-        agent.speed = speed;
-        distanceRange = attackRange;
+        _navMeshAgent.speed = speed;
+        /*distanceRange = attackRange;*/
     }
 
     public void SetTarget(BaseUnitController targetUnit)
@@ -31,15 +31,15 @@ public class MovementController : MonoBehaviour
 
     public void Stop()
     {
-        if (agent.isActiveAndEnabled)
-            agent.isStopped = true;
+        if (_navMeshAgent.isActiveAndEnabled)
+            _navMeshAgent.isStopped = true;
         
     }
 
     public void Resume()
     {
-        if (agent.isActiveAndEnabled)
-            agent.isStopped = false;
+        if (_navMeshAgent.isActiveAndEnabled)
+            _navMeshAgent.isStopped = false;
 
     }
 
@@ -47,9 +47,9 @@ public class MovementController : MonoBehaviour
     {
         if (target == null)
             return;
-        if (agent.isActiveAndEnabled)
+        if (_navMeshAgent.isActiveAndEnabled)
         {
-            agent.SetDestination(target.position);
+            _navMeshAgent.SetDestination(target.position);
         }
     }
 }
