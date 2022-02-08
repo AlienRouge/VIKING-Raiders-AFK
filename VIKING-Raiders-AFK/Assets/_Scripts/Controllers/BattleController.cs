@@ -41,12 +41,12 @@ public class BattleController : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventController.UnitDied += OnUnitDied;
+        /*EventController.UnitDied += OnUnitDied;*/
     }
     
     private void OnDisable()
     {        
-        EventController.UnitDied -= OnUnitDied;
+        /*EventController.UnitDied -= OnUnitDied;*/
     }
     
     public void Init()
@@ -72,6 +72,7 @@ public class BattleController : MonoBehaviour
         for (int i = 0; i < heroes.Count; i++)
         {
             BaseUnitController newUnit = Instantiate(unitPrefab);
+            newUnit.UnitDead += OnUnitDied;
             unitsByTeams[team].Add(newUnit);
             newUnit.Init(heroes[i], team, spawnPoints[i].position);
             newUnit.name = heroes[i].characterName;
@@ -90,14 +91,16 @@ public class BattleController : MonoBehaviour
     
     private void OnUnitDied(Team team, BaseUnitController unit)
     {
+        unit.UnitDead -= OnUnitDied; 
         unitsByTeams[team] = unitsByTeams[team]
             .Where(value => value.gameObject.GetInstanceID() != unit.gameObject.GetInstanceID()).ToList();
         
-        Destroy(unit.gameObject);
+        /*Destroy(unit.gameObject);*/
+        /*unit.gameObject.SetActive(false);*/
         
         if (unitsByTeams[Team.Team1].Count == 0 || unitsByTeams[Team.Team2].Count == 0 )
         {
-            EventController.GameEnded?.Invoke();
+            EventController.BattleEnded?.Invoke();
         }
     }
 

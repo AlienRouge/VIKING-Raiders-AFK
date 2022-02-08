@@ -16,22 +16,38 @@ public class BaseUnitController : MonoBehaviour
     private Team _myTeam;
     private float _health;
     private float _attackDeltaTime;
+    private bool _isBattleEnd = false;
     private bool _isDead => _health <= 0;
 
-    private bool _targetInRange =>
-        Vector3.Distance(transform.position, _currentTarget.transform.position) <= _attackRange;
+
+    private bool isTargetInRange => Vector3.Distance(transform.position, _currentTarget.transform.position) <= _attackRange;
 
     private string _characterName => _model.characterName;
     private float _attackRange => _model.attackRange;
 
-    private UnityAction _unitDead;
+    public UnityAction<Team, BaseUnitController> UnitDead;
 
 
-    void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
         // Attack range visualization on select
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, _attackRange);
+    }
+
+    private void OnEnable()
+    {
+        EventController.BattleEnded += OnBattleEnded;
+    }
+
+    private void OnDisable()
+    {
+        EventController.BattleEnded -= OnBattleEnded;
+    }
+
+    private void OnBattleEnded()
+    {
+        _isBattleEnd = true;
     }
 
     private void Start()
@@ -64,7 +80,7 @@ public class BaseUnitController : MonoBehaviour
         float minDistance = Mathf.Infinity;
         BaseUnitController supposedEnemy = null;
         _currentTarget = null;
-
+        
         // TODO Find with priority
         foreach (var enemy in enemies.Where(enemy =>
                      Vector3.Distance(enemy.transform.position, this.transform.position) <= minDistance))
@@ -72,12 +88,12 @@ public class BaseUnitController : MonoBehaviour
             minDistance = Vector3.Distance(enemy.transform.position, this.transform.position);
             supposedEnemy = enemy;
         }
-
+        
         _currentTarget = supposedEnemy;
 
         if (_currentTarget)
         {
-            _currentTarget._unitDead += OnTargetDeadHandler;
+            _currentTarget.UnitDead += OnTargetDeadHandler;
             _movementController.SetTarget(_currentTarget);
         }
 
@@ -86,14 +102,14 @@ public class BaseUnitController : MonoBehaviour
             : $"{_characterName}: No targets.");
     }
 
-    private void OnTargetDeadHandler()
+    private void OnTargetDeadHandler(Team team, BaseUnitController unit)
     {
         FindTarget();
     }
 
     private async void StartBattle()
     {
-        while (_currentTarget)
+        while (!_isBattleEnd && !_isDead)
         {
             await Task.Yield();
             if (FollowTarget())
@@ -105,20 +121,21 @@ public class BaseUnitController : MonoBehaviour
 
     private bool FollowTarget()
     {
-        if (!_targetInRange)
+        if (!_isBattleEnd && !isTargetInRange) 
         {
             _movementController.Resume();
             return true;
         }
-
+        
         _movementController.Stop();
         return false;
     }
 
     private async Task Attack()
     {
-        await Task.Delay(Mathf.RoundToInt(_attackDeltaTime * 1000));
+        if (_isBattleEnd) return;
         _currentTarget.TakeDamage(_model.baseDamage);
+        await Task.Delay(Mathf.RoundToInt(_attackDeltaTime * 1000));
     }
 
     private void TakeDamage(float dmg)
@@ -132,9 +149,11 @@ public class BaseUnitController : MonoBehaviour
         _baseUnitView.OnTakeDamage(_health);
         if (_isDead)
         {
-            Debug.Log($"{_model.characterName} dead.");
-            EventController.UnitDied?.Invoke(_myTeam, this);
-            _unitDead.Invoke();
+            Debug.Log($"{_model.characterName} dead. {gameObject.GetInstanceID()}");
+            /*EventController.UnitDied?.Invoke(_myTeam, this);*/
+            UnitDead.Invoke(_myTeam, this);
+            _currentTarget = null;
+            gameObject.SetActive(false);
         }
     }
 }

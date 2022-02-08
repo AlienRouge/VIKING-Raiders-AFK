@@ -19,7 +19,6 @@ public class MagicAbility : Ability
     }
     public async override Task Use(BaseUnitView target)
     {
-        Debug.Log("dasda");
         if (CheckPossibilityToUseAbility())
         {
             // TODO 
@@ -42,11 +41,6 @@ public class MagicAbility : Ability
 
     private bool CheckCooldown()
     {
-        Debug.Log(cooldown);
-        Debug.Log(_lastUse);
-        Debug.Log(_lastUse + cooldown - Time.time <= 0);
-        Debug.Log(_lastUse + cooldown );
-        Debug.Log(Time.time);
-       return _lastUse + cooldown - Time.time <= 0;
+        return _lastUse + cooldown - Time.time <= 0;
     }
 }

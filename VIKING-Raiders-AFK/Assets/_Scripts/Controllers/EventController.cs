@@ -5,5 +5,5 @@ using UnityEngine.Events;
 public class EventController : MonoBehaviour
 {
     public static UnityAction<Team, BaseUnitController> UnitDied;
-    public static UnityAction GameEnded;
+    public static UnityAction BattleEnded;
 }
