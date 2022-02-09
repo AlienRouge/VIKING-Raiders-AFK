@@ -17,7 +17,7 @@ public abstract class Ability : ScriptableObject
     
     public float currentDamage => baseDamage * powerModifier;
     
-    public abstract Task Use(BaseUnitView target);
+    public abstract Task Use(BaseUnitController target);
     public abstract bool CheckPossibilityToUseAbility();
     public abstract void Init();
 }

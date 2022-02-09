@@ -22,7 +22,7 @@ public class BaseUnitController : MonoBehaviour
 
     private bool isTargetInRange => Vector3.Distance(transform.position, _currentTarget.transform.position) <= attackRange;
 
-    private string characterName => _model.characterName;
+    public string characterName => _model.characterName;
     private float attackRange => _model.attackRange;
 
     public UnityAction<Team, BaseUnitController> UnitDead;
