@@ -82,12 +82,23 @@ public class BaseUnitController : MonoBehaviour
         _currentTarget = null;
         
         // TODO Find with priority
-        foreach (var enemy in enemies.Where(enemy =>
-                     Vector3.Distance(enemy.transform.position, this.transform.position) <= minDistance))
+
+        foreach (var enemy in enemies)
         {
-            minDistance = Vector3.Distance(enemy.transform.position, this.transform.position);
-            supposedEnemy = enemy;
+            float distance = _movementController.CalculatePathLength(enemy.transform.position);
+            if (distance<minDistance)
+            {
+                minDistance = distance;
+                supposedEnemy = enemy;
+            }
         }
+        
+        // foreach (var enemy in enemies.Where(enemy =>
+        //              Vector3.Distance(enemy.transform.position, this.transform.position) <= minDistance))
+        // {
+        //     minDistance = Vector3.Distance(enemy.transform.position, this.transform.position);
+        //     supposedEnemy = enemy;
+        // }
         
         _currentTarget = supposedEnemy;
 
