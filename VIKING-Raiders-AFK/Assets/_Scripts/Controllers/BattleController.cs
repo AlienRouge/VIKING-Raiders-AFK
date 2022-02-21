@@ -20,37 +20,26 @@ public class BattleController : MonoBehaviour
     }
     
     [SerializeField] private BaseUnitController unitPrefab;
-    [SerializeField] private List<BaseUnitModel> playerHeroes;
-    [SerializeField] private List<BaseUnitModel> enemyHeroes;
-    [SerializeField] private Transform[] enemySpawnPoints;
-    [SerializeField] private Transform[] playerSpawnPoints;
+   
+   
     private readonly Dictionary<Team, List<BaseUnitController>> _unitsByTeams = new Dictionary<Team, List<BaseUnitController>>();
     
-    private void Awake()
+    private void Start()
     {
         _instance = this;
     }
-
-    private void Start()
-    {
-        playerSpawnPoints = FindObjectOfType<PlayerSpawnPoint>().GetSpawnTransforms();
-        enemySpawnPoints = FindObjectOfType<EnemySpawnPoint>().GetSpawnTransforms();
-
-        Init();
-        StartBattle();
-    }
     
-    public void Init()
+    private void Init()
     {
         _unitsByTeams.Add(Team.Team1, new List<BaseUnitController>());
         _unitsByTeams.Add(Team.Team2, new List<BaseUnitController>());
     }
     
-     public void StartBattle()
+     public void StartBattle(List<BaseUnitModel> playerHeroes, List<BaseUnitModel> enemyHeroes)
      {
+         Init();
          // Spawn units
-         InstantiateUnits(Team.Team1, playerHeroes, playerSpawnPoints);
-         InstantiateUnits(Team.Team2, enemyHeroes, enemySpawnPoints);
+        
      }
 
     public List<BaseUnitController> GetEnemies(Team myTeam)
@@ -58,18 +47,7 @@ public class BattleController : MonoBehaviour
         return myTeam == Team.Team1 ? _unitsByTeams[Team.Team2] : _unitsByTeams[Team.Team1];
     }
 
-    private void InstantiateUnits(Team team, List<BaseUnitModel> heroes, Transform[] spawnPoints)
-    {
-        for (int i = 0; i < heroes.Count; i++)
-        {
-            BaseUnitController newUnit = Instantiate(unitPrefab);
-            newUnit.UnitDead += OnUnitDied;
-            _unitsByTeams[team].Add(newUnit);
-            newUnit.Init(heroes[i], team, spawnPoints[i].position);
-            newUnit.name = heroes[i].characterName;
-            WaitInit(newUnit);
-        }
-    }
+    
     
     private async void WaitInit(BaseUnitController newUnit)
     {
@@ -93,6 +71,16 @@ public class BattleController : MonoBehaviour
         if (_unitsByTeams[Team.Team1].Count == 0 || _unitsByTeams[Team.Team2].Count == 0 )
         {
             EventController.BattleEnded?.Invoke();
+        }
+    }
+    
+    private void InstantiateUnits(List<BaseUnitController> unitList)
+    {
+        foreach (var unit in unitList)
+        {
+            unit.UnitDead += OnUnitDied;
+            _unitsByTeams[unit.MyTeam].Add(unit);
+            WaitInit(unit);
         }
     }
 

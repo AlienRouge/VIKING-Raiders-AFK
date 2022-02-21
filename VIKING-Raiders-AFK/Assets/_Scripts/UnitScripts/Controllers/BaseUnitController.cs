@@ -13,7 +13,8 @@ public class BaseUnitController : MonoBehaviour
     private BaseUnitModel _model;
     private BaseUnitController _currentTarget;
 
-    private Team _myTeam;
+    public Team MyTeam { get; private set; }
+    
     private float _health;
     private float _attackDeltaTime;
     private bool _isBattleEnd;
@@ -49,6 +50,8 @@ public class BaseUnitController : MonoBehaviour
     {
         _isBattleEnd = true;
     }
+    
+    
 
     private void Start()
     {
@@ -56,7 +59,7 @@ public class BaseUnitController : MonoBehaviour
         StartBattle();
     }
 
-    public void Init(BaseUnitModel model, Team team, Vector3 startPosition)
+    public void Init(BaseUnitModel model, Team team)
     {
         _movementController = GetComponent<MovementController>();
         _baseUnitView = GetComponentInChildren<BaseUnitView>();
@@ -64,19 +67,17 @@ public class BaseUnitController : MonoBehaviour
         _model = model;
         _health = model.baseHealth;
         _attackDeltaTime = 1 / model.attackSpeed;
-        _myTeam = team;
+        MyTeam = team;
+        
 
         _movementController.Init(model.moveSpeed/*, model.attackRange*/);
         _baseUnitView.Init(_model);
         // ability?.Init();
-
-
-        transform.position = startPosition; // ?
     }
 
     private void FindTarget()
     {
-        var enemies = BattleController.instance.GetEnemies(_myTeam);
+        var enemies = BattleController.instance.GetEnemies(MyTeam);
         float minDistance = Mathf.Infinity;
         BaseUnitController supposedEnemy = null;
         _currentTarget = null;
@@ -163,7 +164,7 @@ public class BaseUnitController : MonoBehaviour
             Debug.Log($"{_model.characterName} dead. {gameObject.GetInstanceID()}");
             /*EventController.UnitDied?.Invoke(_myTeam, this);*/
             _currentTarget = null;
-            UnitDead.Invoke(_myTeam, this);
+            UnitDead.Invoke(MyTeam, this);
         }
     }
 }

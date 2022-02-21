@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f1797ba3b4407faaf6d6b384081867, type: 3}
   m_Name: FlyingShit
   m_EditorClassIdentifier: 
-  CharacterName: 
-  description: 
-  viewSprite: {fileID: 21300000, guid: 2715cec70a75b7744840d1e41b26547f, type: 3}
-  spriteScale: {x: 10, y: 10, z: 10}
-  BaseDamage: 1
-  BaseHealth: 4
-  AttackRange: 5
-  armor: 0
-  unitType: 0
-  MoveSpeed: 1
-  AttackSpeed: 1
-  damageMultiplier: 0
-  physicalDamageType: 0
+  _characterName: Flying Shit
+  _description: 
+  _viewSprite: {fileID: 0}
+  _spriteScale: {x: 1, y: 1, z: 1}
+  _baseDamage: 0
+  _baseHeath: 0
+  _attackRange: 1
+  _armor: 0
+  _unitType: 0
+  _moveSpeed: 0
+  _attackSpeed: 1
+  _damageMultiplier: 0
+  _ability: {fileID: 0}
   magicalDamageMeleeType: 0
