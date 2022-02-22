@@ -28,6 +28,27 @@ public class BaseUnitController : MonoBehaviour
 
     public UnityAction<Team, BaseUnitController> UnitDead;
 
+    public void StartBattle()
+    {
+        FindTarget();
+        StartBattleCycle();
+    }
+    
+    public void Init(BaseUnitModel model, Team team)
+    {
+        _movementController = GetComponent<MovementController>();
+        _baseUnitView = GetComponentInChildren<BaseUnitView>();
+
+        _model = model;
+        _health = model.baseHealth;
+        _attackDeltaTime = 1 / model.attackSpeed;
+        MyTeam = team;
+        
+
+        _movementController.Init(model.moveSpeed/*, model.attackRange*/);
+        _baseUnitView.Init(_model);
+        // ability?.Init();
+    }
 
     private void OnDrawGizmosSelected()
     {
@@ -49,30 +70,6 @@ public class BaseUnitController : MonoBehaviour
     private void OnBattleEnded()
     {
         _isBattleEnd = true;
-    }
-    
-    
-
-    private void Start()
-    {
-        FindTarget();
-        StartBattle();
-    }
-
-    public void Init(BaseUnitModel model, Team team)
-    {
-        _movementController = GetComponent<MovementController>();
-        _baseUnitView = GetComponentInChildren<BaseUnitView>();
-
-        _model = model;
-        _health = model.baseHealth;
-        _attackDeltaTime = 1 / model.attackSpeed;
-        MyTeam = team;
-        
-
-        _movementController.Init(model.moveSpeed/*, model.attackRange*/);
-        _baseUnitView.Init(_model);
-        // ability?.Init();
     }
 
     private void FindTarget()
@@ -119,7 +116,7 @@ public class BaseUnitController : MonoBehaviour
         FindTarget();
     }
 
-    private async void StartBattle()
+    private async void StartBattleCycle()
     {
         while (!_isBattleEnd && !isDead)
         {

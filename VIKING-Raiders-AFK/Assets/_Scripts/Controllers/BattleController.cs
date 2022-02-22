@@ -80,7 +80,8 @@ public class BattleController : MonoBehaviour
         {
             unit.UnitDead += OnUnitDied;
             _unitsByTeams[unit.MyTeam].Add(unit);
-            WaitInit(unit);
+            unit.StartBattle();
+            // WaitInit(unit);
         }
     }
 

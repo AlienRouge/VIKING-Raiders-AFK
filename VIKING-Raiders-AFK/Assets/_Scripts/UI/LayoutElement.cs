@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public class LayoutElement : MonoBehaviour
 {
-    private BaseUnitModel UnitModel { get; set; }
+    private BaseUnitModel unitModel;
 
     [SerializeField] private Text _textContent;
     private Button selectButton;
     private Image image;
-    private Color inactiveColor;
-    [SerializeField] private int _unitObjectID; //<
 
-    [SerializeField] private bool isSelected;
+    private Color inactiveColor;
+
+    private int _unitObjectID;
+    private bool isSelected;
 
     private void Awake()
     {
@@ -34,24 +35,24 @@ public class LayoutElement : MonoBehaviour
 
     public void Init(BaseUnitModel model)
     {
-        UnitModel = model;
-        _textContent.text = UnitModel.characterName;
+        unitModel = model;
+        _textContent.text = unitModel.characterName;
     }
 
     private void SelectElement()
     {
         if (isSelected)
         {
-            image.color = inactiveColor;
-            SpawnContoller.Instance.RemoveUnit(UnitModel, _unitObjectID);
+            SpawnContoller.Instance.RemoveUnit(unitModel, _unitObjectID);
         }
         else
         {
-            image.color = Color.red;
-            _unitObjectID = SpawnContoller.Instance.SpawnUnit(UnitModel);
+            _unitObjectID = SpawnContoller.Instance.SpawnUnit(unitModel);
+            if (_unitObjectID == 0)
+                return;
         }
 
-        Debug.Log("Switch!");
         isSelected = !isSelected;
+        image.color = isSelected ? Color.red : inactiveColor;
     }
 }
