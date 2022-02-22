@@ -11,7 +11,6 @@ public class SpawnContoller : MonoBehaviour
     private const int MAX_PLAYER_TEAM_SIZE = 4;
 
     private static SpawnContoller _instance;
-
     public static SpawnContoller Instance
     {
         get
@@ -22,6 +21,8 @@ public class SpawnContoller : MonoBehaviour
             return _instance;
         }
     }
+
+    public int PlayerTeamSize => _playerTeam.Count;
 
     [SerializeField] private BaseUnitController _baseUnitPrefab;
     [SerializeField] private List<BaseUnitController> _playerTeam;
@@ -38,8 +39,7 @@ public class SpawnContoller : MonoBehaviour
     {
         _spawnPointController = spawnPointController;
     }
-
-
+    
     public int SpawnUnit(BaseUnitModel unitModel)
     {
         if (_playerTeam.Count < MAX_PLAYER_TEAM_SIZE)
@@ -59,7 +59,6 @@ public class SpawnContoller : MonoBehaviour
         return 0;
     }
 
-
     public void RemoveUnit(BaseUnitModel unitModel, int unitInstanceID)
     {
         var deletedUnit = _playerTeam.Find(unit => unit.GetInstanceID() == unitInstanceID);
@@ -73,18 +72,23 @@ public class SpawnContoller : MonoBehaviour
         Destroy(deletedUnit.gameObject);
     }
 
+    public void SpawnEnemies(List<BaseUnitModel> enemiesModels)
+    {
+        InstantiateUnits(Team.Team2, enemiesModels, _spawnPointController.GetFreeSpawnPoints(Team.Team2));
+    }
 
-    // public void SpawnEnemies(List<BaseUnitModel> enemiesModels)
-    // {
-    //  InstantiateUnits(Team.Team2, enemiesModels, _enemiesSpawnPoints);   
-    // }
-    // private void InstantiateUnits(Team team, List<BaseUnitModel> unitModels, List<Transform> spawnPoints)
-    // {
-    //     for (int i = 0; i < unitModels.Count; i++)
-    //     {
-    //         InstantiateUnit(team, unitModels[i], spawnPoints[i]);
-    //     }
-    // }
+    public List<BaseUnitController> GetSpawnedUnits()
+    {
+        return _playerTeam.Concat(_enemyTeam).ToList();
+    }
+
+    private void InstantiateUnits(Team team, List<BaseUnitModel> unitModels, List<SpawnPoint> spawnPoints)
+    {
+        for (int i = 0; i < unitModels.Count; i++)
+        {
+            InstantiateUnit(team, unitModels[i], spawnPoints[i]);
+        }
+    }
 
     private int InstantiateUnit(Team team, BaseUnitModel unitModel, SpawnPoint spawnPoint)
     {
@@ -93,7 +97,12 @@ public class SpawnContoller : MonoBehaviour
 
         newUnit.Init(unitModel, team);
         newUnit.name = unitModel.characterName;
-        _playerTeam.Add(newUnit);
+
+        if (team == Team.Team1)
+            _playerTeam.Add(newUnit);
+        else
+            _enemyTeam.Add(newUnit);
+        
 
         return newUnit.GetInstanceID();
     }

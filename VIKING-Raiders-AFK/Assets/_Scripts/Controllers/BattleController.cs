@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using _Scripts.Enums;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.PlayerLoop;
 
 public class BattleController : MonoBehaviour
 {
@@ -35,11 +36,18 @@ public class BattleController : MonoBehaviour
         _unitsByTeams.Add(Team.Team2, new List<BaseUnitController>());
     }
     
-     public void StartBattle(List<BaseUnitModel> playerHeroes, List<BaseUnitModel> enemyHeroes)
+     public void StartBattle(List<BaseUnitController> units)
      {
          Init();
-         // Spawn units
         
+         foreach (var unit in units)
+         {
+             unit.UnitDead += OnUnitDied;
+             _unitsByTeams[unit.MyTeam].Add(unit);
+         }
+
+         foreach (var unit in units)
+             unit.StartBattle();
      }
 
     public List<BaseUnitController> GetEnemies(Team myTeam)
@@ -74,15 +82,4 @@ public class BattleController : MonoBehaviour
         }
     }
     
-    private void InstantiateUnits(List<BaseUnitController> unitList)
-    {
-        foreach (var unit in unitList)
-        {
-            unit.UnitDead += OnUnitDied;
-            _unitsByTeams[unit.MyTeam].Add(unit);
-            unit.StartBattle();
-            // WaitInit(unit);
-        }
-    }
-
 }

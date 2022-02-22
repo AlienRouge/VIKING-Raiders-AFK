@@ -35,15 +35,17 @@ public class SceneContoller : MonoBehaviour
     {
         UIController.Instance.Init(playerHeroes);
         SpawnContoller.Instance.Init(_spawnPointController);
+        SpawnContoller.Instance.SpawnEnemies(_enemyHeroes);
         
     }
     
     // Start button or smth else
     public void StartBattle()
     {
-        if (true) // Check start battle conditions
+        if (SpawnContoller.Instance.PlayerTeamSize>0) // Check start battle conditions
         {
-            BattleController.instance.StartBattle(_playerHeroes, _enemyHeroes);
+            UIController.Instance.HideHeroPanel();
+            BattleController.instance.StartBattle(SpawnContoller.Instance.GetSpawnedUnits());
         }
     }
 }

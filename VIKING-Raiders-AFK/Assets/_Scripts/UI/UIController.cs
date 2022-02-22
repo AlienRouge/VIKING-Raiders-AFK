@@ -23,6 +23,11 @@ public class UIController : MonoBehaviour
     {
         _panelController.FillUnitPanel(playerUnitModels);
     }
+
+    public void HideHeroPanel()
+    {
+        _panelController.gameObject.SetActive(false);
+    }
     private void Start()
     {
         _instance = this;

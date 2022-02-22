@@ -683,7 +683,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
   _enemyHeroes:
   - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
-  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
 --- !u!4 &708460294
 Transform:
   m_ObjectHideFlags: 0

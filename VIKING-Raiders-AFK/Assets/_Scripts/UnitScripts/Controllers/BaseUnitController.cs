@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using _Scripts.Enums;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class BaseUnitController : MonoBehaviour
@@ -30,6 +31,8 @@ public class BaseUnitController : MonoBehaviour
 
     public void StartBattle()
     {
+        GetComponent<MovementController>().enabled = true;
+        GetComponent<NavMeshAgent>().enabled = true;
         FindTarget();
         StartBattleCycle();
     }
