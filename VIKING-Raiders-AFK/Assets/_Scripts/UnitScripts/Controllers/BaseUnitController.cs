@@ -15,14 +15,15 @@ public class BaseUnitController : MonoBehaviour
     private BaseUnitController _currentTarget;
 
     public Team MyTeam { get; private set; }
-    
+
     private float _health;
     private float _attackDeltaTime;
     private bool _isBattleEnd;
     private bool isDead => _health <= 0;
 
 
-    private bool isTargetInRange => Vector3.Distance(transform.position, _currentTarget.transform.position) <= attackRange;
+    private bool isTargetInRange =>
+        Vector3.Distance(transform.position, _currentTarget.transform.position) <= attackRange;
 
     public string characterName => _model.characterName;
     private float attackRange => _model.attackRange;
@@ -36,7 +37,7 @@ public class BaseUnitController : MonoBehaviour
         FindTarget();
         StartBattleCycle();
     }
-    
+
     public void Init(BaseUnitModel model, Team team)
     {
         _movementController = GetComponent<MovementController>();
@@ -46,9 +47,9 @@ public class BaseUnitController : MonoBehaviour
         _health = model.baseHealth;
         _attackDeltaTime = 1 / model.attackSpeed;
         MyTeam = team;
-        
 
-        _movementController.Init(model.moveSpeed/*, model.attackRange*/);
+
+        _movementController.Init(model.moveSpeed /*, model.attackRange*/);
         _baseUnitView.Init(_model);
         // ability?.Init();
     }
@@ -81,26 +82,19 @@ public class BaseUnitController : MonoBehaviour
         float minDistance = Mathf.Infinity;
         BaseUnitController supposedEnemy = null;
         _currentTarget = null;
-        
+
         // TODO Find with priority
 
         foreach (var enemy in enemies)
         {
             float distance = _movementController.CalculatePathLength(enemy.transform.position);
-            if (distance<minDistance)
+            if (distance < minDistance)
             {
                 minDistance = distance;
                 supposedEnemy = enemy;
             }
         }
-        
-        // foreach (var enemy in enemies.Where(enemy =>
-        //              Vector3.Distance(enemy.transform.position, this.transform.position) <= minDistance))
-        // {
-        //     minDistance = Vector3.Distance(enemy.transform.position, this.transform.position);
-        //     supposedEnemy = enemy;
-        // }
-        
+
         _currentTarget = supposedEnemy;
 
         if (_currentTarget)
@@ -121,7 +115,7 @@ public class BaseUnitController : MonoBehaviour
 
     private async void StartBattleCycle()
     {
-        while (!_isBattleEnd && !isDead)
+        while (!isDead && !_isBattleEnd)
         {
             await Task.Yield();
             if (FollowTarget())
@@ -133,19 +127,21 @@ public class BaseUnitController : MonoBehaviour
 
     private bool FollowTarget()
     {
-        if (!_isBattleEnd && !isTargetInRange) 
+        if (isDead) return false;
+
+        if (!_isBattleEnd && !isTargetInRange)
         {
             _movementController.Resume();
             return true;
         }
-        
+
         _movementController.Stop();
         return false;
     }
 
     private async Task Attack()
     {
-        if (_isBattleEnd) return;
+        if (isDead || _isBattleEnd || _currentTarget.isDead) return;
         _currentTarget.TakeDamage(_model.baseDamage);
         await Task.Delay(Mathf.RoundToInt(_attackDeltaTime * 1000));
     }
@@ -161,7 +157,7 @@ public class BaseUnitController : MonoBehaviour
         _baseUnitView.OnTakeDamage(_health);
         if (isDead)
         {
-            Debug.Log($"{_model.characterName} dead. {gameObject.GetInstanceID()}");
+            Debug.Log($"{_model.characterName} dead.");
             /*EventController.UnitDied?.Invoke(_myTeam, this);*/
             _currentTarget = null;
             UnitDead.Invoke(MyTeam, this);

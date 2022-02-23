@@ -20,8 +20,6 @@ public class DragContoller : MonoBehaviour
 
         var mousePosition = GetMousePos();
         transform.position = mousePosition - _offset;
-
-
     }
 
     private void OnMouseDown()
