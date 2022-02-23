@@ -1,16 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Enums;
 using UnityEngine;
-using Random = UnityEngine.Random;
-
 
 public class SpawnContoller : MonoBehaviour
 {
     private const int MAX_PLAYER_TEAM_SIZE = 4;
 
     private static SpawnContoller _instance;
+
     public static SpawnContoller Instance
     {
         get
@@ -22,75 +20,87 @@ public class SpawnContoller : MonoBehaviour
         }
     }
 
+    private SpawnPointController _spawnPointController;
+
+    private struct SpawnedUnit
+    {
+        public int ButtonID;
+        public BaseUnitController unitController;
+        public SpawnPoint SpawnPoint;
+    }
+
     public int PlayerTeamSize => _playerTeam.Count;
 
     [SerializeField] private BaseUnitController _baseUnitPrefab;
-    [SerializeField] private List<BaseUnitController> _playerTeam;
-    [SerializeField] private List<BaseUnitController> _enemyTeam;
 
-    private SpawnPointController _spawnPointController;
+    [SerializeField] private List<SpawnedUnit> _playerTeam;
+    [SerializeField] private List<BaseUnitController> _enemyTeam;
 
     private void Awake()
     {
         _instance = this;
+        _playerTeam = new List<SpawnedUnit>();
     }
 
     public void Init(SpawnPointController spawnPointController)
     {
         _spawnPointController = spawnPointController;
     }
-    
-    public int SpawnUnit(BaseUnitModel unitModel)
-    {
-        if (_playerTeam.Count < MAX_PLAYER_TEAM_SIZE)
-        {
-            var sp = _spawnPointController.GetFreeSpawnPoints(Team.Team1);
-            if (sp == null)
-            {
-                Debug.Log("No free spawn points." + unitModel.characterName);
-                return 0;
-            }
 
-            Debug.Log("Spawned:" + unitModel.characterName);
-            return InstantiateUnit(Team.Team1, unitModel, sp[0]);
+    public bool TrySpawnUnit(BaseUnitModel unitModel, int buttonID)
+    {
+        if (_playerTeam.Count >= MAX_PLAYER_TEAM_SIZE)
+        {
+            Debug.Log("Team overflow. " + unitModel.characterName);
+            return false;
         }
 
-        Debug.Log("Team overflow. " + unitModel.characterName);
-        return 0;
+        var sp = _spawnPointController.GetFreeSpawnPoints(Team.Team1);
+        if (sp.Count <= 0)
+        {
+            Debug.Log("No free spawn points." + unitModel.characterName);
+            return false;
+        }
+
+        Debug.Log("Spawned:" + unitModel.characterName);
+        InstantiateUnit(Team.Team1, unitModel, sp[0], buttonID);
+        return true;
     }
 
-    public void RemoveUnit(BaseUnitModel unitModel, int unitInstanceID)
+    public bool RemoveUnit(BaseUnitModel unitModel, int buttonID)
     {
-        var deletedUnit = _playerTeam.Find(unit => unit.GetInstanceID() == unitInstanceID);
-        _playerTeam.Remove(deletedUnit);
+        var unit = _playerTeam.Find(unit => unit.ButtonID == buttonID);
+        if (unit.unitController == null)
+        {
+            Debug.Log(buttonID);
+            return false;
+        }
 
-        var freeSp = _spawnPointController.GetTakenSpawnPoints(Team.Team1)
-            .Find(sp => sp.GetPosition() == deletedUnit.transform.position);
-        _spawnPointController.FreeSpawnPoint(freeSp);
+        _spawnPointController.FreeSpawnPoint(unit.SpawnPoint);
+        _playerTeam.Remove(unit);
 
-        Debug.Log("Deleted: " + deletedUnit.characterName);
-        Destroy(deletedUnit.gameObject);
+        BaseUnitController unitController = unit.unitController;
+        Debug.Log("Deleted: " + unitController.characterName);
+        Destroy(unitController.gameObject);
+        return true;
     }
 
     public void SpawnEnemies(List<BaseUnitModel> enemiesModels)
     {
-        InstantiateUnits(Team.Team2, enemiesModels, _spawnPointController.GetFreeSpawnPoints(Team.Team2));
+        foreach (var enemy in enemiesModels)
+        {
+            var freeSP = _spawnPointController.GetFreeSpawnPoints(Team.Team2);
+            InstantiateUnit(Team.Team2, enemy, freeSP[0]);
+        }
     }
 
     public List<BaseUnitController> GetSpawnedUnits()
     {
-        return _playerTeam.Concat(_enemyTeam).ToList();
+        return _playerTeam.Select(unit => unit.unitController).Concat(_enemyTeam).ToList();
     }
 
-    private void InstantiateUnits(Team team, List<BaseUnitModel> unitModels, List<SpawnPoint> spawnPoints)
-    {
-        for (int i = 0; i < unitModels.Count; i++)
-        {
-            InstantiateUnit(team, unitModels[i], spawnPoints[i]);
-        }
-    }
 
-    private int InstantiateUnit(Team team, BaseUnitModel unitModel, SpawnPoint spawnPoint)
+    private void InstantiateUnit(Team team, BaseUnitModel unitModel, SpawnPoint spawnPoint, int buttonID = -1)
     {
         BaseUnitController newUnit = Instantiate(_baseUnitPrefab, spawnPoint.GetPosition(), Quaternion.identity);
         _spawnPointController.TakeSpawnPoint(spawnPoint);
@@ -99,11 +109,17 @@ public class SpawnContoller : MonoBehaviour
         newUnit.name = unitModel.characterName;
 
         if (team == Team.Team1)
-            _playerTeam.Add(newUnit);
+        {
+            _playerTeam.Add(new SpawnedUnit
+            {
+                ButtonID = buttonID, 
+                unitController = newUnit, 
+                SpawnPoint = spawnPoint
+            });
+        }
         else
+        {
             _enemyTeam.Add(newUnit);
-        
-
-        return newUnit.GetInstanceID();
+        }
     }
 }

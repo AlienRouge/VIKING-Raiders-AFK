@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class LayoutElement : MonoBehaviour
 {
+    private int ButtonID => GetInstanceID();
     private BaseUnitModel unitModel;
 
     [SerializeField] private Text _textContent;
@@ -13,7 +14,7 @@ public class LayoutElement : MonoBehaviour
 
     private Color inactiveColor;
 
-    private int _unitObjectID;
+    
     private bool isSelected;
 
     private void Awake()
@@ -43,12 +44,11 @@ public class LayoutElement : MonoBehaviour
     {
         if (isSelected)
         {
-            SpawnContoller.Instance.RemoveUnit(unitModel, _unitObjectID);
+            SpawnContoller.Instance.RemoveUnit(unitModel, ButtonID);
         }
         else
         {
-            _unitObjectID = SpawnContoller.Instance.SpawnUnit(unitModel);
-            if (_unitObjectID == 0)
+            if (!SpawnContoller.Instance.TrySpawnUnit(unitModel, ButtonID))
                 return;
         }
 
