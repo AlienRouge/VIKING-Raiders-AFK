@@ -27,6 +27,10 @@ public class NoiseMap : MonoBehaviour
         
         // Передаём карту в рендерер
         NoiseMapRenderer mapRenderer = GetComponent<NoiseMapRenderer>();
+        NoiseMapRendererText mapRendererText = GetComponent<NoiseMapRendererText>();
+        
         mapRenderer.RenderMap(width, height, noiseMap);
+        mapRendererText.RenderMap(width,height,noiseMap,MapType.Color);
+
     }
 }

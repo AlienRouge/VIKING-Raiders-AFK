@@ -42,7 +42,7 @@ public class NoiseMapRendererText : MonoBehaviour
         texture.SetPixels(colors);
         texture.Apply();
         
-        spriteRenderer.sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);;
+        spriteRenderer.sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 1.0f);;
     }
 
     // Преобразуем массив с данными о шуме в массив чёрно-белых цветов, для передачи в текстуру
