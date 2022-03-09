@@ -105,7 +105,7 @@ public class SpawnContoller : MonoBehaviour
         BaseUnitController newUnit = Instantiate(_baseUnitPrefab, spawnPoint.GetPosition(), Quaternion.identity);
         _spawnPointController.TakeSpawnPoint(spawnPoint);
 
-        newUnit.Init(unitModel, team);
+        newUnit.Init(unitModel, team, team==Team.Team1);
         newUnit.name = unitModel.characterName;
 
         if (team == Team.Team1)

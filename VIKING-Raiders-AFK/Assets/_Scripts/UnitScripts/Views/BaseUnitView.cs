@@ -1,23 +1,19 @@
 using _Scripts.Enums;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BaseUnitView : MonoBehaviour
 {
-    private SpriteRenderer _spriteRenderer;
-    private HealthBar _healthBar;
+    [SerializeField] private HealthBar _healthBar;
+    [SerializeField] private GameObject _unitView;
 
+    private Image _viewImage;
+    private RectTransform _viewRectTransform;
 
-    public void SetTeamColor(Team team)
-    {
-        _spriteRenderer.color = (team == Team.Team1)
-            ? new Color(53 / 255f, 72 / 255f, 231 / 255f)
-            : new Color(250 / 255f, 52 / 255f, 37 / 255f);
-    }
-    
     private void SetUnitSprite(Sprite sprite, Vector3 scale)
     {
-        _spriteRenderer.sprite = sprite;
-        transform.localScale = scale;
+        _viewImage.sprite = sprite;
+        _viewRectTransform.localScale = scale;
     }
 
     public void OnTakeDamage(float health)
@@ -25,11 +21,10 @@ public class BaseUnitView : MonoBehaviour
         _healthBar.SetHealth(health);
     }
     
-
     public void Init(BaseUnitModel model)
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _healthBar = GetComponentInChildren<HealthBar>();
+        _viewImage = _unitView.GetComponent<Image>();
+        _viewRectTransform = _unitView.GetComponent<RectTransform>();
         
         SetUnitSprite(model.viewSprite, model.spriteScale);
         _healthBar.SetMaxHealth(model.baseHealth);

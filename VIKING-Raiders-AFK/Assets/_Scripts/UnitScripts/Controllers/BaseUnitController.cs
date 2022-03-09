@@ -10,6 +10,7 @@ public class BaseUnitController : MonoBehaviour
 {
     private MovementController _movementController;
     private BaseUnitView _baseUnitView;
+    private DragContoller _dragContoller;
 
     private BaseUnitModel _model;
     private BaseUnitController _currentTarget;
@@ -32,16 +33,18 @@ public class BaseUnitController : MonoBehaviour
 
     public void StartBattle()
     {
-        GetComponent<MovementController>().enabled = true;
-        GetComponent<NavMeshAgent>().enabled = true;
+        _movementController.Enable();
+        _dragContoller.Disable();
+
         FindTarget();
         StartBattleCycle();
     }
 
-    public void Init(BaseUnitModel model, Team team)
+    public void Init(BaseUnitModel model, Team team, bool isDraggable)
     {
         _movementController = GetComponent<MovementController>();
         _baseUnitView = GetComponentInChildren<BaseUnitView>();
+        _dragContoller = GetComponent<DragContoller>();
 
         _model = model;
         _health = model.baseHealth;
@@ -49,8 +52,14 @@ public class BaseUnitController : MonoBehaviour
         MyTeam = team;
 
 
-        _movementController.Init(model.moveSpeed /*, model.attackRange*/);
+        _movementController.Init(model.moveSpeed);
         _baseUnitView.Init(_model);
+
+        if (isDraggable)
+            _dragContoller.Enable();
+        else
+            _dragContoller.Disable();
+        
         // ability?.Init();
     }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   _characterName: Slime
   _description: 
   _viewSprite: {fileID: 21300000, guid: 5ffed6b50d9e117468078a8df73f534c, type: 3}
-  _spriteScale: {x: 8, y: 8, z: 8}
+  _spriteScale: {x: 80, y: 80, z: 80}
   _baseDamage: 2
   _baseHeath: 5
   _attackRange: 1.23

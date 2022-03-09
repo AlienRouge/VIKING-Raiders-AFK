@@ -70,6 +70,18 @@ public class MovementController : MonoBehaviour
             _navMeshAgent.isStopped = false;
     }
 
+    public void Disable()
+    {
+        enabled = false;
+        _navMeshAgent.enabled = false;
+    }
+
+    public void Enable()
+    {
+        enabled = true;
+        _navMeshAgent.enabled = true;
+    }
+
     void Update()
     {
         if (target == null)
