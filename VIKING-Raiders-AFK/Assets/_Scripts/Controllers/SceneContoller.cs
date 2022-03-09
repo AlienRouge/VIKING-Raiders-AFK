@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using _Scripts.Enums;
 using UnityEngine;
 
 public class SceneContoller : MonoBehaviour
