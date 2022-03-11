@@ -1,14 +1,17 @@
 using System;
+using _Scripts.Enums;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class MapGenerator : MonoBehaviour
 {
     [Header("Map settings")] [SerializeField]
-    private int width;
+    private MapController _mapPrefab;
 
+    [SerializeField] private int width;
     [SerializeField] private int height;
     [SerializeField] private int spawnAreaWidth;
+    [SerializeField] private Vector2 spawnAreaOffset;
 
     [Header("Generation settings")] [SerializeField]
     private float scale;
@@ -16,72 +19,80 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private int octaves;
     [SerializeField] private float persistence;
     [SerializeField] private float lacunarity;
-
-    [SerializeField] private int seed;
     [SerializeField] private Vector2 offset;
 
-    private int mapOffset;
+    private MapController _mapController;
     private int BattleAreaWidth => width - 2 * spawnAreaWidth;
-
     private NoiseMapRenderer _noiseMapRenderer;
 
-    [SerializeField] private NavMeshSurface2d _navMeshSurface2d;
-
-    [SerializeField] private SpawnArea _spawnArea;
-    [SerializeField] private Vector2 spawnAreaOffset;
 
     private void Start()
     {
         _noiseMapRenderer = GetComponent<NoiseMapRenderer>();
     }
 
+    public void TryInstantiateMap()
+    {
+        _mapController = FindObjectOfType<MapController>();
+        if (_mapController == null)
+        {
+            _mapController = Instantiate(_mapPrefab);
+        }
+        _noiseMapRenderer.Init(_mapController.walkableTilemap, _mapController.notWalkableTilemap,
+            _mapController.decorTilemap);
+    }
+
     public void GenerateMap()
     {
         GenerateTilemap();
-        BakeNavMesh();
+        _mapController.BakeMap();
+        SetupSpawnAreas();
     }
 
     public void GenerateTilemap()
     {
+        TryInstantiateMap();
+        _noiseMapRenderer.ClearTilemaps();
         GenerateSpawnAreas();
-        GeneratePerlinMap();
+        GenerateBattleArea();
     }
 
-    public void BakeNavMesh()
+    public void SetupSpawnAreas()
     {
-        _navMeshSurface2d.BuildNavMeshAsync();
-    }
+        var spawnAreaScale = new Vector3(spawnAreaWidth - spawnAreaOffset.x, height - spawnAreaOffset.y);
 
-    public void SetSpawnAreas()
-    {
-        _spawnArea.transform.localScale = new Vector3(spawnAreaWidth - spawnAreaOffset.x, height - spawnAreaOffset.y);
-        _spawnArea.transform.localPosition = new Vector3(spawnAreaWidth / 2f, height / 2f);
-    }
+        _mapController.spawnAreaController.SetupSpawnArea(Team.Team1, spawnAreaScale,
+            new Vector3(spawnAreaWidth / 2f, height / 2f));
 
+        _mapController.spawnAreaController.SetupSpawnArea(Team.Team2, spawnAreaScale,
+            new Vector3(width - spawnAreaWidth / 2f, height / 2f));
+    }
 
     private void GenerateSpawnAreas()
     {
-        var spawnMap = GenerateOneTileSpawnArea();
-        _noiseMapRenderer.RenderMap(spawnAreaWidth, height, spawnMap);
-        _noiseMapRenderer.RenderMap(spawnAreaWidth, height, spawnMap, width - spawnAreaWidth);
+        _noiseMapRenderer.RenderMap(spawnAreaWidth, height, GenerateSpawnAreaNoiseMap());
+        _noiseMapRenderer.RenderMap(spawnAreaWidth, height, GenerateSpawnAreaNoiseMap(), width - spawnAreaWidth);
     }
 
-    private float[] GenerateOneTileSpawnArea()
+    private float[] GenerateSpawnAreaNoiseMap()
     {
-        float[] map = new float[height * spawnAreaWidth];
+        float[] noiseMap = NoiseMapGenerator.GenerateNoiseMap(spawnAreaWidth, height, scale, octaves, persistence,
+            lacunarity,
+            offset);
+        var terrainLevels = _noiseMapRenderer.GetTerrainLevels();
 
-        for (int y = 0; y < height; y++)
+        for (int i = 0; i < noiseMap.Length; i++)
         {
-            for (int x = 0; x < spawnAreaWidth; x++)
+            if (noiseMap[i] <= terrainLevels[0].height)
             {
-                map[y * spawnAreaWidth + x] = 1.0f;
+                noiseMap[i] = terrainLevels[1].height;
             }
         }
 
-        return map;
+        return noiseMap;
     }
 
-    private void GeneratePerlinMap()
+    private void GenerateBattleArea()
     {
         float[] noiseMap =
             NoiseMapGenerator.GenerateNoiseMap(BattleAreaWidth, height, scale, octaves, persistence, lacunarity,

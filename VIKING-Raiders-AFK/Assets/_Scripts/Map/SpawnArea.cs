@@ -1,9 +1,11 @@
+using _Scripts.Enums;
 using UnityEngine;
 
 public class SpawnArea : MonoBehaviour
-{
-   private SpriteRenderer _spriteRenderer;
-   [SerializeField] private Color _highlightColor;
+{ 
+    public Team Team;
+    private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Color _highlightColor;
 
    private void Start()
    {

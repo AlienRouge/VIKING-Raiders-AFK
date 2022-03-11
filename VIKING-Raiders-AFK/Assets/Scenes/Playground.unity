@@ -341,7 +341,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2133720996}
         m_TargetAssemblyTypeName: MapGenerator, Assembly-CSharp
-        m_MethodName: SetSpawnAreas
+        m_MethodName: SetupSpawnAreas
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -515,17 +515,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &640680485 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4831423608272660599, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-  m_PrefabInstance: {fileID: 752571375}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148387606d0ccd84fa326ca211f274ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &726535232
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,79 +594,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726535232}
   m_CullTransparentMesh: 1
---- !u!1001 &752571375
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4831423606254140801, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423606254140801, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423606254140801, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423606254140801, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423607141909000, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423607141909000, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423607141909000, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423607141909000, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423607141909000, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423607141909000, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423607141909000, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423607141909000, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423607141909000, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423607141909000, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423607141909000, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831423607141909001, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-      propertyPath: m_Name
-      value: Map
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
 --- !u!1 &950959210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,21 +952,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1a5e8fa852ae5468da874261919e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkableTilemap: {fileID: 0}
-  notWalkableTilemap: {fileID: 0}
   terrainLevel:
   - name: Water
     height: 0.3
     tile: {fileID: 11400000, guid: dcda3cf384ea40a4695d1cb54fa3c253, type: 2}
-    walkable: 0
+    levelType: 0
   - name: Sand
     height: 0.4
     tile: {fileID: 11400000, guid: c1df3b1ed61d77b47883538a09b37e42, type: 2}
-    walkable: 0
+    levelType: 0
   - name: Grass
     height: 0.85
     tile: {fileID: 11400000, guid: 196c8da14463cb34fb0c37def80c7b8a, type: 2}
-    walkable: 0
+    levelType: 0
 --- !u!4 &1388363967
 Transform:
   m_ObjectHideFlags: 0
@@ -1308,17 +1222,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1414609415}
   m_CullTransparentMesh: 1
---- !u!114 &1547376239 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4831423606254140800, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-  m_PrefabInstance: {fileID: 752571375}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06d91f66e88959a4692b4f553743ad35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1557604051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,11 +1434,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626460843}
   m_CullTransparentMesh: 1
---- !u!1839735485 &1783658689 stripped
-Tilemap:
-  m_CorrespondingSourceObject: {fileID: 4831423606473740602, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-  m_PrefabInstance: {fileID: 752571375}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1904679301
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,11 +1583,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1839735485 &2121074758 stripped
-Tilemap:
-  m_CorrespondingSourceObject: {fileID: 4831423608035048658, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
-  m_PrefabInstance: {fileID: 752571375}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2133720994
 GameObject:
   m_ObjectHideFlags: 0
@@ -1720,21 +1613,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1a5e8fa852ae5468da874261919e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkableTilemap: {fileID: 1783658689}
-  notWalkableTilemap: {fileID: 2121074758}
   terrainLevel:
   - name: Water
     height: 0.3
     tile: {fileID: 11400000, guid: dcda3cf384ea40a4695d1cb54fa3c253, type: 2}
-    walkable: 0
+    levelType: 0
   - name: Sand
     height: 0.4
     tile: {fileID: 11400000, guid: c1df3b1ed61d77b47883538a09b37e42, type: 2}
-    walkable: 1
+    levelType: 0
   - name: Grass
     height: 0.85
     tile: {fileID: 11400000, guid: 196c8da14463cb34fb0c37def80c7b8a, type: 2}
-    walkable: 1
+    levelType: 0
 --- !u!114 &2133720996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1747,18 +1638,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56ba1e1282e10043b1b58465fdda078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mapPrefab: {fileID: 7149745937407577528, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}
   width: 14
   height: 10
   spawnAreaWidth: 3
+  spawnAreaOffset: {x: 0.3, y: 0.3}
   scale: 3
   octaves: 1
   persistence: 0.1
   lacunarity: 13
-  seed: 0
   offset: {x: 0, y: 0}
-  _navMeshSurface2d: {fileID: 640680485}
-  _spawnArea: {fileID: 1547376239}
-  spawnAreaOffset: {x: 0.3, y: 0.3}
 --- !u!4 &2133720997
 Transform:
   m_ObjectHideFlags: 0

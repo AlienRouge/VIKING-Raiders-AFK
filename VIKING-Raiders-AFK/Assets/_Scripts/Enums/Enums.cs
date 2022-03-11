@@ -28,4 +28,11 @@
         Team1,
         Team2
     }
+
+    public enum TerrainLevelType
+    {
+        Walkable,
+        NotWalkable,
+        Decor
+    }
 }
