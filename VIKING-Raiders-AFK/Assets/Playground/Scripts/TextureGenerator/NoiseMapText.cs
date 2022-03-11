@@ -31,7 +31,7 @@ public class NoiseMapText : MonoBehaviour
     public void GenerateMap()
     {
         // Генерируем карту
-        float[] noiseMap = NoiseMapGenerator.GenerateNoiseMap(width, height, seed, scale, octaves, persistence, lacunarity, offset);
+        float[] noiseMap = NoiseMapGenerator.GenerateNoiseMap(width, height, scale, octaves, persistence, lacunarity, offset);
 
         // Передаём карту в рендерер
         NoiseMapRendererText mapRenderer = FindObjectOfType<NoiseMapRendererText>();

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class NoiseMapGenerator
 {
-    public static float[] GenerateNoiseMap(int width, int height, int seed, float scale, int octaves, float persistence,
+    public static float[] GenerateNoiseMap(int width, int height, float scale, int octaves, float persistence,
         float lacunarity, Vector2 offset)
     {
         // Массив данных о вершинах, одномерный вид поможет избавиться от лишних циклов впоследствии
