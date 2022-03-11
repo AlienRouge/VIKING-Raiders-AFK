@@ -1,3 +1,4 @@
+using _Scripts.Enums;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,16 +9,11 @@ public class DragDropController : MonoBehaviour, IPointerDownHandler, IBeginDrag
     private Vector3 UnitPositon => GetMousePos() - _offset;
     private Vector2 _offset;
     private Vector2 _originalPos;
-    
-    //TODO To map object
-    private SpawnArea _spawnArea;
 
     private void Start()
     {
         _camera = Camera.main;
         _originalPos = transform.position;
-
-        _spawnArea = FindObjectOfType<SpawnArea>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -28,7 +24,7 @@ public class DragDropController : MonoBehaviour, IPointerDownHandler, IBeginDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        _spawnArea.HighlightSpawnArea(true);
+        EventController.unitDrag.Invoke(Team.Team1);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -38,7 +34,7 @@ public class DragDropController : MonoBehaviour, IPointerDownHandler, IBeginDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        _spawnArea.HighlightSpawnArea(false);
+        EventController.unitDrag.Invoke(Team.Team1);
         
         Vector2 mousePos = GetMousePos();
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);

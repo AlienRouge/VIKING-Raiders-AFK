@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d91f66e88959a4692b4f553743ad35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Team: 0
+  Team: 1
   _highlightColor: {r: 1, g: 0, b: 0, a: 0.3764706}
 --- !u!1 &4831423606254140862
 GameObject:

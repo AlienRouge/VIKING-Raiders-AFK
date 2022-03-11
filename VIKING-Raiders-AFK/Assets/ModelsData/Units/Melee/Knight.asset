@@ -18,10 +18,10 @@ MonoBehaviour:
   _spriteScale: {x: 70, y: 70, z: 70}
   _baseDamage: 2
   _baseHeath: 10
-  _attackRange: 1.46
+  _attackRange: 1.88
   _armor: 0
   _unitType: 0
-  _moveSpeed: 2
+  _moveSpeed: 2.5
   _attackSpeed: 2
   _damageMultiplier: 0
   _ability: {fileID: 0}

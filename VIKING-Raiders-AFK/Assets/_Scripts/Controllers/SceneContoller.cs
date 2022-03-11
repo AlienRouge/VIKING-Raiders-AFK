@@ -19,13 +19,16 @@ public class SceneContoller : MonoBehaviour
     [SerializeField] private List<BaseUnitModel> _playerHeroes;
     [SerializeField] private List<BaseUnitModel> _enemyHeroes;
 
+    private MapController _mapController;
+
     private SpawnPointController _spawnPointController; // Move to map controller
 
     private void Start()
     {
         _instance = this;
 
-        _spawnPointController = FindObjectOfType<SpawnPointController>();
+        _mapController = MapGenerator.instance.GenerateMap();
+        _spawnPointController = _mapController.spawnPointController;
 
         InitializeScene(_playerHeroes, _enemyHeroes);
     }

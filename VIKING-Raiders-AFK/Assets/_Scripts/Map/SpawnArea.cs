@@ -1,3 +1,4 @@
+using System;
 using _Scripts.Enums;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class SpawnArea : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     [SerializeField] private Color _highlightColor;
 
-   private void Start()
+   private void Awake()
    {
        Init();
    }
@@ -18,8 +19,21 @@ public class SpawnArea : MonoBehaviour
        _spriteRenderer.color = Color.clear;
    }
 
-   public void HighlightSpawnArea(bool status)
+   private void OnEnable()
    {
-       _spriteRenderer.color = status ? _highlightColor : Color.clear;
+       EventController.unitDrag += HighlightSpawnArea;
+   }
+
+   private void OnDisable()
+   {
+       EventController.unitDrag -= HighlightSpawnArea;
+   }
+
+   private void HighlightSpawnArea(Team team)
+   {
+       if (Team == team)
+       {
+           _spriteRenderer.color = _spriteRenderer.color == Color.clear ? _highlightColor : Color.clear;
+       }
    }
 }

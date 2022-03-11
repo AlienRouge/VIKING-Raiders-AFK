@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class MapGenerator : MonoBehaviour
 {
+    private static MapGenerator _instance;
     [Header("Map settings")] [SerializeField]
     private MapController _mapPrefab;
 
@@ -25,9 +26,19 @@ public class MapGenerator : MonoBehaviour
     private int BattleAreaWidth => width - 2 * spawnAreaWidth;
     private NoiseMapRenderer _noiseMapRenderer;
 
-
-    private void Start()
+    public static MapGenerator instance
     {
+        get
+        {
+            if (_instance == null)
+                Debug.LogError(nameof(MapGenerator) + " is NULL!");
+
+            return _instance;
+        }
+    }
+    private void Awake()
+    {
+        _instance = this;
         _noiseMapRenderer = GetComponent<NoiseMapRenderer>();
     }
 
@@ -42,11 +53,13 @@ public class MapGenerator : MonoBehaviour
             _mapController.decorTilemap);
     }
 
-    public void GenerateMap()
+    public MapController GenerateMap()
     {
         GenerateTilemap();
         _mapController.BakeMap();
         SetupSpawnAreas();
+
+        return _mapController;
     }
 
     public void GenerateTilemap()
