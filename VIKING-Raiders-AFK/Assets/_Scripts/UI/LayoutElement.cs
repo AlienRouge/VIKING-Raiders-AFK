@@ -44,11 +44,11 @@ public class LayoutElement : MonoBehaviour
     {
         if (isSelected)
         {
-            SpawnContoller.Instance.RemoveUnit(unitModel, ButtonID);
+            SpawnController.Instance.RemoveUnit(unitModel, ButtonID);
         }
         else
         {
-            if (!SpawnContoller.Instance.TrySpawnUnit(unitModel, ButtonID))
+            if (!SpawnController.Instance.TrySpawnUnit(unitModel, ButtonID))
                 return;
         }
 

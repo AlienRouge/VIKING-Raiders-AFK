@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using _Scripts.Enums;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.PlayerLoop;
-
 public class BattleController : MonoBehaviour
 {
     private static BattleController _instance;
