@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28eb918870bf9254dae9fcce5c888e8f, type: 3}
+  m_Name: User data
+  m_EditorClassIdentifier: 
+  _userName: 
+  _accountLevel: 0
+  _accountExp: 0
+  _heroList:
+  - _heroLevel: 0
+    _heroModel: {fileID: 11400000, guid: 0b0d3edff77f62a4a8bce29c6ebed625, type: 2}
+  - _heroLevel: 5
+    _heroModel: {fileID: 11400000, guid: 0b0d3edff77f62a4a8bce29c6ebed625, type: 2}
+  - _heroLevel: 10
+    _heroModel: {fileID: 11400000, guid: 0b0d3edff77f62a4a8bce29c6ebed625, type: 2}
