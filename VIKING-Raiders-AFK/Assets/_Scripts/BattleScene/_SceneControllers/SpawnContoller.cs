@@ -47,27 +47,27 @@ public class SpawnContoller : MonoBehaviour
         _spawnPointController = spawnPointController;
     }
 
-    public bool TrySpawnUnit(BaseUnitModel unitModel, int buttonID)
+    public bool TrySpawnUnit(User.Hero hero, int buttonID)
     {
         if (_playerTeam.Count >= MAX_PLAYER_TEAM_SIZE)
         {
-            Debug.Log("Team overflow. " + unitModel.characterName);
+            Debug.Log("Team overflow. " + hero._heroModel.CharacterName);
             return false;
         }
 
         var sp = _spawnPointController.GetFreeSpawnPoints(Team.Team1);
         if (sp.Count <= 0)
         {
-            Debug.Log("No free spawn points." + unitModel.characterName);
+            Debug.Log("No free spawn points." + hero._heroModel.CharacterName);
             return false;
         }
 
-        Debug.Log("Spawned:" + unitModel.characterName);
-        InstantiateUnit(Team.Team1, unitModel, sp[0], buttonID);
+        Debug.Log("Spawned:" + hero._heroModel.CharacterName);
+        InstantiateUnit(Team.Team1, hero, sp[0], buttonID);
         return true;
     }
 
-    public bool RemoveUnit(BaseUnitModel unitModel, int buttonID)
+    public bool RemoveUnit(User.Hero unitModel, int buttonID)
     {
         var unit = _playerTeam.Find(unit => unit.ButtonID == buttonID);
         if (unit.unitController == null)
@@ -85,9 +85,9 @@ public class SpawnContoller : MonoBehaviour
         return true;
     }
 
-    public void SpawnEnemies(List<BaseUnitModel> enemiesModels)
+    public void SpawnEnemies(List<User.Hero> enemyHeroes)
     {
-        foreach (var enemy in enemiesModels)
+        foreach (var enemy in enemyHeroes)
         {
             var freeSP = _spawnPointController.GetFreeSpawnPoints(Team.Team2);
             InstantiateUnit(Team.Team2, enemy, freeSP[0]);
@@ -100,13 +100,13 @@ public class SpawnContoller : MonoBehaviour
     }
 
 
-    private void InstantiateUnit(Team team, BaseUnitModel unitModel, SpawnPoint spawnPoint, int buttonID = -1)
+    private void InstantiateUnit(Team team, User.Hero hero, SpawnPoint spawnPoint, int buttonID = -1)
     {
         BaseUnitController newUnit = Instantiate(_baseUnitPrefab, spawnPoint.GetPosition(), Quaternion.identity);
         _spawnPointController.TakeSpawnPoint(spawnPoint);
 
-        newUnit.Init(unitModel, team, team==Team.Team1);
-        newUnit.name = unitModel.characterName;
+        newUnit.Init(hero._heroModel, team,  hero._heroLevel, team==Team.Team1);
+        newUnit.name = hero._heroModel.CharacterName;
 
         if (team == Team.Team1)
         {

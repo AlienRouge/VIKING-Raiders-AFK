@@ -527,21 +527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e508f3b18401e4f844cacfcec10295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerHeroes:
-  - {fileID: 11400000, guid: 0b0d3edff77f62a4a8bce29c6ebed625, type: 2}
-  - {fileID: 11400000, guid: 0b0d3edff77f62a4a8bce29c6ebed625, type: 2}
-  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
-  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
-  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
-  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
-  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
-  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
-  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
-  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
-  _enemyHeroes:
-  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
-  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
-  - {fileID: 11400000, guid: 461542a10a0a6dd4fb53f27ccfcbc88b, type: 2}
+  _player: {fileID: 11400000, guid: 73d9bb9f0a2c19842a955cef5f85bb80, type: 2}
+  _enemy: {fileID: 11400000, guid: 7ca183dbf7a833a4d8ccd85db1e4b3a3, type: 2}
 --- !u!4 &708460294
 Transform:
   m_ObjectHideFlags: 0

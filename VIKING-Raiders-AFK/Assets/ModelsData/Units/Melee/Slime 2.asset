@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a945832059c4a534c9f81a988264dd08, type: 3}
+  m_Name: Slime 2
+  m_EditorClassIdentifier: 
+  <CharacterName>k__BackingField: Normal Slime
+  <Description>k__BackingField: 
+  <ViewSprite>k__BackingField: {fileID: 21300000, guid: 5ffed6b50d9e117468078a8df73f534c, type: 3}
+  <ViewSpriteScale>k__BackingField: {x: 85, y: 85, z: 85}
+  <UnitType>k__BackingField: 0
+  <MaxUnitLevel>k__BackingField: 20
+  <BaseHealth>k__BackingField: 300
+  <BaseDamage>k__BackingField: 25
+  <BaseArmour>k__BackingField: 10
+  <AttackSpeed>k__BackingField: 1
+  <CriticalRate>k__BackingField: 0
+  <AttackRange>k__BackingField: 1.6
+  <MoveSpeed>k__BackingField: 1
+  <Ability>k__BackingField: {fileID: 0}
+  additionalArmor: 0

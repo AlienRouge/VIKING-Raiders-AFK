@@ -24,7 +24,7 @@ public class UIController : MonoBehaviour
         _instance = this;
     }
     
-    public void Init(List<BaseUnitModel> playerUnitModels)
+    public void Init(List<User.Hero> playerUnitModels)
     {
         _panelController.FillUnitPanel(playerUnitModels);
     }

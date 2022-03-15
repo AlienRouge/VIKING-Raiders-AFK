@@ -8,13 +8,13 @@ public class PanelController : MonoBehaviour
     [SerializeField] private GameObject _layoutGroup;
     [SerializeField] private List<LayoutElement> _elements;
     
-    public void FillUnitPanel(List<BaseUnitModel> unitModels)
+    public void FillUnitPanel(List<User.Hero> heroes)
     {
-        foreach (var model in unitModels)
+        foreach (var hero in heroes)
         {
             LayoutElement newElement = Instantiate(_layoutElementPrefab);
-            newElement.Init(model);
-            newElement.name = model.characterName;
+            newElement.Init(hero);
+            newElement.name = hero._heroModel.CharacterName;
             newElement.transform.parent = _layoutGroup.transform;
             _elements.Add(newElement);
         }   

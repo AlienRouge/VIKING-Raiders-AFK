@@ -5,40 +5,38 @@ using UnityEngine;
 
 public abstract class BaseUnitModel : ScriptableObject
 {
-    [Header("UnitDescription")]
-    [SerializeField] protected string _characterName;
-    public string characterName => _characterName;
-    [SerializeField] protected string _description;
-    public string description => _description;
-    [SerializeField, Header("View sprite")] protected Sprite _viewSprite;
-    public Sprite viewSprite => _viewSprite;
-    [SerializeField] protected Vector3 _spriteScale = new Vector3(1.0f, 1.0f, 1.0f);
-    public Vector3 spriteScale => _spriteScale;
-    
-    [Header("Attributes")]
-    [SerializeField] private float _baseDamage;
-    public float baseDamage => _baseDamage;
-    [SerializeField] protected float _baseHeath;
-    public float baseHealth => _baseHeath;
+    [field: Header("UnitDescription")]
+    [field: SerializeField]
+    public string CharacterName { get; private set; }
 
-    [SerializeField, Range(1, 5)] protected float _attackRange = 1.0f;
-    public float attackRange => _attackRange;
-    [SerializeField] protected float _armor;
-    public float armor => _armor;
-    [SerializeField] protected UnitType _unitType;
-    public UnitType unitType => _unitType;
-    
-    [Header("Speed")]
-    [SerializeField] protected float _moveSpeed;
-    public float moveSpeed => _moveSpeed;
-    [SerializeField, Range(0, 5)] protected float _attackSpeed = 1.0f;
-    public float attackSpeed => _attackSpeed;
-    
-    [Header("Multiplier")] 
-    [SerializeField, Range(0.5f, 3f)] protected float _damageMultiplier;
-    public float damageMultiplier => _damageMultiplier;
+    [field: SerializeField] public string Description { get; private set; }
 
-    [SerializeField] protected Ability _ability;
-    public Ability ability => _ability;
+    [field: SerializeField, Header("View Sprite")]
+    public Sprite ViewSprite { get; private set; }
 
+    [field: SerializeField] public Vector3 ViewSpriteScale { get; private set; }
+
+    [field: Header("Attributes")]
+    [field: SerializeField]
+    public UnitType UnitType { get; private set; }
+    [field: SerializeField] public int MaxUnitLevel { get; private set; }
+    [field: SerializeField] public int BaseHealth { get; private set; }
+    [field: SerializeField] public int BaseDamage { get; private set; }
+    [field: SerializeField] public int BaseArmour { get; private set; }
+    [field: SerializeField] public float AttackSpeed { get; private set; }
+    [field: SerializeField] public float CriticalRate { get; private set; }
+    
+    [field: SerializeField, Range(1, 7)] public float AttackRange { get; private set; }
+    [field: SerializeField] public float MoveSpeed { get; private set; }
+    [field: SerializeField] public Ability Ability { get; private set; }
+
+    public float GetDamagePerUnitLevel(int unitLevel)
+    {
+        return BaseDamage * (1 + unitLevel / MaxUnitLevel);
+    }
+
+    public float GetArmourPerUnitLevel(int unitLevel)
+    {
+        return BaseArmour * (1 + unitLevel / MaxUnitLevel);
+    }
 }

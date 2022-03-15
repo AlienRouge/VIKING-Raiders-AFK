@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using _Scripts.Enums;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class BaseUnitController : MonoBehaviour
 {
@@ -10,8 +11,14 @@ public class BaseUnitController : MonoBehaviour
     private BaseUnitController _currentTarget;
     private BaseUnitView _baseUnitView;
 
-    public Team MyTeam { get; private set; }
-    private float _health;
+    [field: SerializeField] public Team MyTeam { get; private set; }
+    [SerializeField] private int _level = 1;
+    [SerializeField] private float _health;
+    
+    // Debug 
+    [SerializeField] private float Damage;
+    [SerializeField] private float Armour;
+    // EndDebug
     private float _attackDeltaTime;
     private bool _isBattleEnd;
     private bool isDead => _health <= 0;
@@ -19,8 +26,8 @@ public class BaseUnitController : MonoBehaviour
     private bool isTargetInRange =>
         Vector3.Distance(transform.position, _currentTarget.transform.position) <= attackRange;
 
-    public string characterName => _model.characterName;
-    private float attackRange => _model.attackRange;
+    public string characterName => _model.CharacterName;
+    private float attackRange => _model.AttackRange;
 
     public UnityAction<Team, BaseUnitController> UnitDead;
 
@@ -29,6 +36,9 @@ public class BaseUnitController : MonoBehaviour
 
     public void StartBattle()
     {
+        Damage = GetDamageValue();
+        Armour = GetArmourValue();
+        
         _movementController.Enable();
         _dragDropController.enabled = false;
 
@@ -36,19 +46,20 @@ public class BaseUnitController : MonoBehaviour
         StartBattleCycle();
     }
 
-    public void Init(BaseUnitModel model, Team team, bool isDraggable)
+    public void Init(BaseUnitModel model, Team team, int unitLevel, bool isDraggable)
     {
         _movementController = GetComponent<MovementController>();
         _baseUnitView = GetComponentInChildren<BaseUnitView>();
         _dragDropController = GetComponent<DragDropController>();
 
         _model = model;
-        _health = model.baseHealth;
-        _attackDeltaTime = 1 / model.attackSpeed;
+        _level = unitLevel;
+        _health = model.BaseHealth;
+        _attackDeltaTime = 1 / model.AttackSpeed;
         MyTeam = team;
 
 
-        _movementController.Init(model.moveSpeed);
+        _movementController.Init(model.MoveSpeed);
         _baseUnitView.Init(_model);
 
         _dragDropController.enabled = isDraggable;
@@ -143,8 +154,30 @@ public class BaseUnitController : MonoBehaviour
     private async Task Attack()
     {
         if (isDead || _isBattleEnd || _currentTarget.isDead) return;
-        _currentTarget.TakeDamage(_model.baseDamage);
+        
+        _currentTarget.TakeDamage(CalculateDamage());
         await Task.Delay(Mathf.RoundToInt(_attackDeltaTime * 1000));
+    }
+
+    private float GetArmourValue()
+    {
+        return _model.GetArmourPerUnitLevel(_level);
+    }
+
+    private float GetDamageValue()
+    {
+        return _model.GetDamagePerUnitLevel(_level);
+    }
+
+    private int CalculateDamage()
+    {
+        var dmgRatio = GetDamageValue() / _currentTarget.GetArmourValue();
+        var lvlRatio = (_currentTarget._level - _level) * 0.05f; // Value per level
+        // var critRatio = Random.Range(0f, 1f) < _model.CriticalRate;
+        var attackRatio = dmgRatio - lvlRatio;
+        var finalDmg = (int) Mathf.Floor(GetDamageValue() * attackRatio);
+
+        return finalDmg > 0 ? finalDmg : 0;
     }
 
     private void TakeDamage(float dmg)
@@ -152,13 +185,13 @@ public class BaseUnitController : MonoBehaviour
         if (dmg < 0)
             throw new ArgumentOutOfRangeException(nameof(dmg));
 
-        Debug.Log($"{_model.characterName}: Taking damage: {dmg}dmg");
+        Debug.Log($"{_model.CharacterName}: Taking damage: {dmg}dmg");
         _health -= dmg;
 
         _baseUnitView.OnTakeDamage(_health);
         if (isDead)
         {
-            Debug.Log($"{_model.characterName} dead.");
+            Debug.Log($"{_model.CharacterName} dead.");
             /*EventController.UnitDied?.Invoke(_myTeam, this);*/
             _currentTarget = null;
             UnitDead.Invoke(MyTeam, this);

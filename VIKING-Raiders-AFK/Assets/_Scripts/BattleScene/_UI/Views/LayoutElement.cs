@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LayoutElement : MonoBehaviour
 {
     private int ButtonID => GetInstanceID();
-    private BaseUnitModel unitModel;
+    private User.Hero _hero;
 
     [SerializeField] private Text _textContent;
     private Button selectButton;
@@ -34,21 +34,21 @@ public class LayoutElement : MonoBehaviour
         selectButton.onClick.RemoveListener(SelectElement);
     }
 
-    public void Init(BaseUnitModel model)
+    public void Init(User.Hero hero)
     {
-        unitModel = model;
-        _textContent.text = unitModel.characterName;
+        _hero = hero;
+        _textContent.text = _hero._heroModel.CharacterName;
     }
 
     private void SelectElement()
     {
         if (isSelected)
         {
-            SpawnContoller.Instance.RemoveUnit(unitModel, ButtonID);
+            SpawnContoller.Instance.RemoveUnit(_hero, ButtonID);
         }
         else
         {
-            if (!SpawnContoller.Instance.TrySpawnUnit(unitModel, ButtonID))
+            if (!SpawnContoller.Instance.TrySpawnUnit(_hero, ButtonID))
                 return;
         }
 
