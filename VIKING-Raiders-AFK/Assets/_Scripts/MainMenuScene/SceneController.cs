@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class SceneController : MonoBehaviour
     {
         _userName.text = _userData._userName;
         _userlvl.text = $"{_userData._accountLevel} lvl";
+    }
+
+    public void PlayGame()
+    {
+        SceneManager.LoadScene("BattleScene");
     }
 
     public void ExitGame()
