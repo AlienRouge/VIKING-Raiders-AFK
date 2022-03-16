@@ -1173,7 +1173,7 @@ MonoBehaviour:
   scale: 3
   octaves: 1
   persistence: 0.1
-  lacunarity: 13
+  lacunarity: 1
   offset: {x: 0, y: 0}
 --- !u!4 &2133720997
 Transform:

@@ -23,7 +23,7 @@ MonoBehaviour:
   <BaseArmour>k__BackingField: 10
   <AttackSpeed>k__BackingField: 1
   <CriticalRate>k__BackingField: 0
-  <AttackRange>k__BackingField: 1.6
+  <AttackRange>k__BackingField: 2
   <MoveSpeed>k__BackingField: 1
   <Ability>k__BackingField: {fileID: 0}
   additionalArmor: 0

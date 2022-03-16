@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using _Scripts.Enums;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -18,19 +20,35 @@ public class UIController : MonoBehaviour
     }
     
     [SerializeField] private PanelController _panelController;
+    [SerializeField] private Button _startButton;
+    private bool _isVisible;
 
     private void Awake()
     {
         _instance = this;
     }
-    
-    public void Init(List<User.Hero> playerUnitModels)
+
+    private void OnEnable()
     {
-        _panelController.FillUnitPanel(playerUnitModels);
+        EventController.BattleStarted += SwitchSpawnUIVisible;
+        EventController.UnitDragged += (arg0 => SwitchSpawnUIVisible());
     }
 
-    public void HideHeroPanel()
+    private void OnDisable()
     {
-        _panelController.gameObject.SetActive(false);
+        EventController.BattleStarted -= SwitchSpawnUIVisible;
+        EventController.UnitDragged -= (arg0 => SwitchSpawnUIVisible());
+    }
+
+    public void Init(List<User.Hero> playerUnitModels)
+    {
+        _isVisible = true;
+        _panelController.FillUnitPanel(playerUnitModels);
+    }
+    
+    public void SwitchSpawnUIVisible()
+    {
+        _isVisible = !_isVisible;
+        _panelController.gameObject.SetActive(_isVisible);
     }
 }

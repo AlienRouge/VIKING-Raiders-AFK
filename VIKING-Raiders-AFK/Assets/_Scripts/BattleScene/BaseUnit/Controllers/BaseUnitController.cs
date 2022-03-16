@@ -61,6 +61,7 @@ public class BaseUnitController : MonoBehaviour
 
         _movementController.Init(model.MoveSpeed);
         _baseUnitView.Init(_model);
+        _dragDropController.Init(MyTeam);
 
         _dragDropController.enabled = isDraggable;
         // ability?.Init();
@@ -116,7 +117,7 @@ public class BaseUnitController : MonoBehaviour
         }
 
         Debug.Log(_currentTarget
-            ? $"{characterName}: Found new target({_currentTarget.characterName})."
+            ? $"{characterName}: New target({_currentTarget.characterName})."
             : $"{characterName}: No targets.");
     }
 
@@ -154,8 +155,10 @@ public class BaseUnitController : MonoBehaviour
     private async Task Attack()
     {
         if (isDead || _isBattleEnd || _currentTarget.isDead) return;
-        
-        _currentTarget.TakeDamage(CalculateDamage());
+
+        var damage = CalculateDamage();
+        Debug.Log($"{_model.CharacterName} --> {_currentTarget.characterName} [{damage}]dmg");
+        _currentTarget.TakeDamage(damage);
         await Task.Delay(Mathf.RoundToInt(_attackDeltaTime * 1000));
     }
 
@@ -173,9 +176,14 @@ public class BaseUnitController : MonoBehaviour
     {
         var dmgRatio = GetDamageValue() / _currentTarget.GetArmourValue();
         var lvlRatio = (_currentTarget._level - _level) * 0.05f; // Value per level
-        // var critRatio = Random.Range(0f, 1f) < _model.CriticalRate;
-        var attackRatio = dmgRatio - lvlRatio;
-        var finalDmg = (int) Mathf.Floor(GetDamageValue() * attackRatio);
+        var critRatio = Random.Range(0f, 1f) < _model.CriticalRate;
+        var attackRatio = dmgRatio - lvlRatio + Convert.ToInt32(critRatio);
+        var finalDmg = (int) Mathf.Floor(GetDamageValue() * attackRatio * Random.Range(0.85f, 1f));
+        
+        if (critRatio)
+        {
+            Debug.Log($"{_model.CharacterName}: CRITICAL DAMAGE");
+        }
 
         return finalDmg > 0 ? finalDmg : 0;
     }
@@ -184,14 +192,11 @@ public class BaseUnitController : MonoBehaviour
     {
         if (dmg < 0)
             throw new ArgumentOutOfRangeException(nameof(dmg));
-
-        Debug.Log($"{_model.CharacterName}: Taking damage: {dmg}dmg");
+        
         _health -= dmg;
-
         _baseUnitView.OnTakeDamage(_health);
         if (isDead)
         {
-            Debug.Log($"{_model.CharacterName} dead.");
             /*EventController.UnitDied?.Invoke(_myTeam, this);*/
             _currentTarget = null;
             UnitDead.Invoke(MyTeam, this);

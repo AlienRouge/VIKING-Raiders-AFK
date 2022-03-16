@@ -12,10 +12,9 @@ public class PanelController : MonoBehaviour
     {
         foreach (var hero in heroes)
         {
-            LayoutElement newElement = Instantiate(_layoutElementPrefab);
+            LayoutElement newElement = Instantiate(_layoutElementPrefab, _layoutGroup.transform, false);
             newElement.Init(hero);
             newElement.name = hero._heroModel.CharacterName;
-            newElement.transform.parent = _layoutGroup.transform;
             _elements.Add(newElement);
         }   
     }

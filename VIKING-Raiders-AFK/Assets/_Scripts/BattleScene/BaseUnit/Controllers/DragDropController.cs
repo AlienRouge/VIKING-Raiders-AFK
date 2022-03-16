@@ -7,6 +7,7 @@ public class DragDropController : MonoBehaviour, IPointerDownHandler, IBeginDrag
     private Camera _camera;
 
     private Vector3 UnitPositon => GetMousePos() - _offset;
+    private Team _unitTeam;
     private Vector2 _offset;
     private Vector2 _originalPos;
 
@@ -14,6 +15,11 @@ public class DragDropController : MonoBehaviour, IPointerDownHandler, IBeginDrag
     {
         _camera = Camera.main;
         _originalPos = transform.position;
+    }
+
+    public void Init(Team team)
+    {
+        _unitTeam = team;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -24,7 +30,7 @@ public class DragDropController : MonoBehaviour, IPointerDownHandler, IBeginDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        EventController.unitDrag.Invoke(Team.Team1);
+        EventController.UnitDragged.Invoke(_unitTeam);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -34,7 +40,7 @@ public class DragDropController : MonoBehaviour, IPointerDownHandler, IBeginDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        EventController.unitDrag.Invoke(Team.Team1);
+        EventController.UnitDragged.Invoke(_unitTeam);
         
         Vector2 mousePos = GetMousePos();
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);

@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "User data", menuName = "User/User")]
 public class User : ScriptableObject
 {
-    [SerializeField] private string _userName;
-    [SerializeField] private int _accountLevel;
-    [SerializeField] private int _accountExp;
+    [SerializeField] public string _userName;
+    [SerializeField] public int _accountLevel;
+    [SerializeField] public int _accountExp;
     [SerializeField] public List<Hero> _heroList;
     
     [Serializable]

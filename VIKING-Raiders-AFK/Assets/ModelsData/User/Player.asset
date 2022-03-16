@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28eb918870bf9254dae9fcce5c888e8f, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  _userName: NeverIce
-  _accountLevel: 0
+  _userName: TestAccount01
+  _accountLevel: 12
   _accountExp: 0
   _heroList:
-  - _heroLevel: 10
+  - _heroLevel: 20
     _heroModel: {fileID: 11400000, guid: a754ef786c05155429226647ec435cff, type: 2}
-  - _heroLevel: 5
+  - _heroLevel: 10
     _heroModel: {fileID: 11400000, guid: cc307999848cda0448b45b8750041989, type: 2}
   - _heroLevel: 1
     _heroModel: {fileID: 11400000, guid: f0f8b24a625247542b50c7f777c9acb9, type: 2}

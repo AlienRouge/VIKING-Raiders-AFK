@@ -21,12 +21,12 @@ public class SpawnArea : MonoBehaviour
 
    private void OnEnable()
    {
-       EventController.unitDrag += HighlightSpawnArea;
+       EventController.UnitDragged += HighlightSpawnArea;
    }
 
    private void OnDisable()
    {
-       EventController.unitDrag -= HighlightSpawnArea;
+       EventController.UnitDragged -= HighlightSpawnArea;
    }
 
    private void HighlightSpawnArea(Team team)

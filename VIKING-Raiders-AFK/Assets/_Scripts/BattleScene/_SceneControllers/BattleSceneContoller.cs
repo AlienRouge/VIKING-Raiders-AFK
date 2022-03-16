@@ -38,12 +38,11 @@ public class BattleSceneContoller : MonoBehaviour
     }
     
     // Start button or smth else
-    public void StartBattle()
+    public void OnStartButtonHandler()
     {
-        if (SpawnContoller.Instance.PlayerTeamSize>0) // Check start battle conditions
-        {
-            UIController.Instance.HideHeroPanel();
-            BattleController.instance.StartBattle(SpawnContoller.Instance.GetSpawnedUnits());
-        }
+        if (SpawnContoller.Instance.PlayerTeamSize <= 0) return;
+        
+        EventController.BattleStarted.Invoke();
+        BattleController.instance.StartBattle(SpawnContoller.Instance.GetSpawnedUnits());
     }
 }
