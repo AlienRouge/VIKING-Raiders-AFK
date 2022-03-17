@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PanelController : MonoBehaviour
 {
-    [SerializeField] private LayoutElement _layoutElementPrefab;
-    [SerializeField] private GameObject _layoutGroup;
+    [SerializeField] protected LayoutElement _layoutElementPrefab;
+    [SerializeField] protected GameObject _layoutGroup;
     [SerializeField] private List<LayoutElement> _elements;
     
     public void FillUnitPanel(List<User.Hero> heroes)
@@ -17,5 +17,10 @@ public class PanelController : MonoBehaviour
             newElement.name = hero._heroModel.CharacterName;
             _elements.Add(newElement);
         }   
+    }
+
+    protected virtual LayoutElement InstantiateLayoutElement()
+    {
+        return Instantiate(_layoutElementPrefab, _layoutGroup.transform, false);
     }
 }

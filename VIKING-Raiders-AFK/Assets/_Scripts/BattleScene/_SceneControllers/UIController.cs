@@ -20,7 +20,7 @@ public class UIController : MonoBehaviour
     }
     
     [SerializeField] private PanelController _panelController;
-    [SerializeField] private Button _startButton;
+    
     private bool _isVisible;
 
     private void Awake()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Enums;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public class SpawnContoller : MonoBehaviour
 {
-    private const int MAX_PLAYER_TEAM_SIZE = 4;
+    protected const int MAX_PLAYER_TEAM_SIZE = 4;
 
     private static SpawnContoller _instance;
 
@@ -20,9 +21,9 @@ public class SpawnContoller : MonoBehaviour
         }
     }
 
-    private SpawnPointController _spawnPointController;
+    protected SpawnPointController _spawnPointController;
 
-    private struct SpawnedUnit
+    protected struct SpawnedUnit
     {
         public int ButtonID;
         public BaseUnitController unitController;
@@ -31,15 +32,23 @@ public class SpawnContoller : MonoBehaviour
 
     public int PlayerTeamSize => _playerTeam.Count;
 
-    [SerializeField] private BaseUnitController _baseUnitPrefab;
+    [SerializeField] protected BaseUnitController _baseUnitPrefab;
 
-    [SerializeField] private List<SpawnedUnit> _playerTeam;
-    [SerializeField] private List<BaseUnitController> _enemyTeam;
+    [SerializeField] protected List<SpawnedUnit> _playerTeam;
+    [SerializeField] protected List<BaseUnitController> _enemyTeam;
 
+    protected delegate void SpawnAction(Team team, User.Hero unitModel, SpawnPoint spawnPoint, int buttonID = -1);
+    protected SpawnAction SpawnUnit;
+    
     private void Awake()
     {
         _instance = this;
         _playerTeam = new List<SpawnedUnit>();
+    }
+
+    private void Start()
+    {
+        SpawnUnit = InstantiateUnit;
     }
 
     public void Init(SpawnPointController spawnPointController)
@@ -63,7 +72,7 @@ public class SpawnContoller : MonoBehaviour
         }
 
         Debug.Log("Spawned:" + hero._heroModel.CharacterName);
-        InstantiateUnit(Team.Team1, hero, sp[0], buttonID);
+        SpawnUnit(Team.Team1, hero, sp[0], buttonID);
         return true;
     }
 
