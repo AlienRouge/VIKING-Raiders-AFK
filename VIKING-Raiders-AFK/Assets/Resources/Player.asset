@@ -16,9 +16,11 @@ MonoBehaviour:
   _accountLevel: 12
   _accountExp: 0
   _heroList:
-  - _heroLevel: 20
+  - _heroLevel: 1
     _heroModel: {fileID: 11400000, guid: a754ef786c05155429226647ec435cff, type: 2}
   - _heroLevel: 10
     _heroModel: {fileID: 11400000, guid: cc307999848cda0448b45b8750041989, type: 2}
   - _heroLevel: 1
+    _heroModel: {fileID: 11400000, guid: f0f8b24a625247542b50c7f777c9acb9, type: 2}
+  - _heroLevel: 5
     _heroModel: {fileID: 11400000, guid: f0f8b24a625247542b50c7f777c9acb9, type: 2}

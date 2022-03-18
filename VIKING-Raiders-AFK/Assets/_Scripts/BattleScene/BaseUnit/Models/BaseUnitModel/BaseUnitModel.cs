@@ -30,13 +30,19 @@ public abstract class BaseUnitModel : ScriptableObject
     [field: SerializeField] public float MoveSpeed { get; private set; }
     [field: SerializeField] public Ability Ability { get; private set; }
 
-    public float GetDamagePerUnitLevel(int unitLevel)
+    public int GetDamagePerUnitLevel(int unitLevel)
     {
-        return BaseDamage * (1 + unitLevel / MaxUnitLevel);
+        Debug.Log(BaseDamage * (1f + unitLevel / (float)MaxUnitLevel));
+        return (int)Mathf.Floor(BaseDamage * (1f + unitLevel / (float)MaxUnitLevel));
     }
 
-    public float GetArmourPerUnitLevel(int unitLevel)
+    public int GetArmourPerUnitLevel(int unitLevel)
     {
-        return BaseArmour * (1 + unitLevel / MaxUnitLevel);
+        return (int)Mathf.Floor(BaseArmour * (1f + unitLevel / (float)MaxUnitLevel));
+    }
+    
+    public int GetHealthPerUnitLevel(int unitLevel)
+    {
+        return (int)Mathf.Floor(BaseArmour * (1f + unitLevel / (float)MaxUnitLevel));
     }
 }
