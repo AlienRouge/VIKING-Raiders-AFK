@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InventorySceneController : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class InventorySceneController : MonoBehaviour
         _userData = Resources.Load<User>("Player");
         
         FillInventoryPanel();
+    }
+
+    public void BackToMainMenuScene()
+    {
+        SceneManager.LoadScene(sceneBuildIndex: 0);
     }
 
     private void FillInventoryPanel()

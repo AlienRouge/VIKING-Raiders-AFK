@@ -16,7 +16,11 @@ public class SceneController : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("BattleScene");
+        SceneManager.LoadScene(sceneBuildIndex: 1);
+    }
+    public void GoInventory()
+    {
+        SceneManager.LoadScene(sceneBuildIndex: 5);
     }
 
     public void ExitGame()
