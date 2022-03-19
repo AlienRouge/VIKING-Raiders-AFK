@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BattleSceneContoller : MonoBehaviour
 {
-    private static BattleSceneContoller _instance;
+    protected static BattleSceneContoller _instance;
 
     public static BattleSceneContoller instance
     {
@@ -16,11 +16,11 @@ public class BattleSceneContoller : MonoBehaviour
         }
     }
 
-    [SerializeField] private User _player;
-    [SerializeField] private User _enemy;
+    [SerializeField] protected User _player;
+    [SerializeField] protected User _enemy;
     protected SpawnContoller _spawnController;
 
-    private MapController _mapController;
+    protected MapController _mapController;
 
     private void Start()
     {
@@ -36,7 +36,7 @@ public class BattleSceneContoller : MonoBehaviour
         _spawnController = SpawnContoller.Instance;
     }
 
-    public void InitializeScene(User player, User enemy, MapController map)
+    protected void InitializeScene(User player, User enemy, MapController map)
     {
         UIController.Instance.Init(player._heroList);
         _spawnController.Init(map.spawnPointController);

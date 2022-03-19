@@ -1,3 +1,6 @@
+using System;
+using _Scripts.Network.Map;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -5,6 +8,9 @@ using UnityEngine.SceneManagement;
 
 public class NetController : MonoBehaviourPunCallbacks
 {
+    private MapGeneratorNet _mapGenerator;
+    [SerializeField] private BattleSceneControllerNet _battleSceneController;
+
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene("Lobby");
@@ -17,6 +23,14 @@ public class NetController : MonoBehaviourPunCallbacks
     
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2 && PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("enter");
+            _battleSceneController.InitScene();
+        }
+
+
         Debug.Log($"player {newPlayer.NickName} joined to game");
     }
 

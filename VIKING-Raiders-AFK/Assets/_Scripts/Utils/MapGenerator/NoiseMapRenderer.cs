@@ -42,6 +42,7 @@ public class NoiseMapRenderer : MonoBehaviour
 
     private void CreateTile(int x, int y, TerrainLevel terrainLevel, int xOffset, int yOffset)
     {
+        
         var tilemap = terrainLevel.levelType switch
         {
             TerrainLevelType.Walkable => _walkable,
@@ -49,7 +50,7 @@ public class NoiseMapRenderer : MonoBehaviour
             TerrainLevelType.Decor => _decor,
             _ => _walkable
         };
-
+        
         tilemap.SetTile(new Vector3Int(x + xOffset, y + yOffset, 0), terrainLevel.tile);
     }
 
