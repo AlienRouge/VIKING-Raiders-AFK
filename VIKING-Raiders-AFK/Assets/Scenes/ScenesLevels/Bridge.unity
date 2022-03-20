@@ -437,13 +437,13 @@ MonoBehaviour:
       - m_Target: {fileID: 561970092}
         m_TargetAssemblyTypeName: Scenes, Assembly-CSharp
         m_MethodName: NextLevel
-        m_Mode: 3
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 4
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Start location
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &851342331
