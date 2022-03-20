@@ -9,36 +9,73 @@ public class BaseUnitController : MonoBehaviour
 {
     private BaseUnitModel _model;
     private BaseUnitController _currentTarget;
-    private BaseUnitView _baseUnitView;
-
-    [field: SerializeField] public Team MyTeam { get; private set; }
-    [SerializeField] private int _level = 1;
-    [SerializeField] private float _health;
     
-    // Debug 
-    [SerializeField] private float Damage;
-    [SerializeField] private float Armour;
-    // EndDebug
+    [field: SerializeField] public Team MyTeam { get; private set; }
+    
+    [SerializeField] private int _level;
+    [SerializeField] private float _health;
+    [SerializeField] private MoveState _currentMoveState;
+    public UnityAction<Team, BaseUnitController> UnitDead;
     private float _attackDeltaTime;
     private bool _isBattleEnd;
     private bool isDead => _health <= 0;
+    public string characterName => _model.CharacterName;
 
-    private bool isTargetInRange =>
+    private float attackRange => _model.AttackRange;
+    
+    private MoveState CurrentMoveState
+    {
+        get => _currentMoveState;
+        set
+        {
+            Debug.Log(characterName);
+            if (value == MoveState.Move)
+            {
+                _movementController.Resume();
+            }
+            else
+            {
+                _movementController.Stop();
+            }
+
+            _currentMoveState = value;
+        }
+    }
+    
+    private bool _isTargetInRange;
+    private bool TargetInRange
+    {
+        set
+        {
+            if (_isTargetInRange == value) return;
+            var newMoveState = CurrentMoveState == MoveState.Move ? MoveState.Stop : MoveState.Move;
+            CurrentMoveState = newMoveState;
+            _isTargetInRange = value;
+        }
+    }
+
+    private bool CheckAttackRange =>
         Vector3.Distance(transform.position, _currentTarget.transform.position) <= attackRange;
 
-    public string characterName => _model.CharacterName;
-    private float attackRange => _model.AttackRange;
+    // private bool isTargetInAbilityRange =>
+    //     Vector3.Distance(transform.position, _currentTarget.transform.position) <= abilityRange;
 
-    public UnityAction<Team, BaseUnitController> UnitDead;
 
+    
+    // private float abilityRange => _model.Ability.CastRange;
+
+    private enum MoveState
+    {
+        Move,
+        Stop
+    }
+    
+    private BaseUnitView _baseUnitView;
     private MovementController _movementController;
     private DragDropController _dragDropController;
 
     public void StartBattle()
     {
-        Damage = GetDamageValue();
-        Armour = GetArmourValue();
-        
         _movementController.Enable();
         _dragDropController.enabled = false;
 
@@ -87,6 +124,7 @@ public class BaseUnitController : MonoBehaviour
     private void OnBattleEnded()
     {
         _isBattleEnd = true;
+        CurrentMoveState = MoveState.Stop;
     }
 
     private void FindTarget()
@@ -130,31 +168,25 @@ public class BaseUnitController : MonoBehaviour
     {
         while (!isDead && !_isBattleEnd)
         {
-            await Task.Yield();
-            if (FollowTarget())
-                continue;
+            FollowTarget();
 
-            await Attack();
+            if (CheckAttackRange)
+            {
+                await Attack();
+            }
+            
+            await Task.Yield();
         }
     }
 
-    private bool FollowTarget()
+    private void FollowTarget()
     {
-        if (isDead) return false;
-
-        if (!_isBattleEnd && !isTargetInRange)
-        {
-            _movementController.Resume();
-            return true;
-        }
-
-        _movementController.Stop();
-        return false;
+        TargetInRange = CheckAttackRange;
     }
 
     private async Task Attack()
     {
-        if (isDead || _isBattleEnd || _currentTarget.isDead) return;
+        // if (isDead || _isBattleEnd || _currentTarget.isDead) return;
 
         var damage = CalculateDamage();
         Debug.Log($"{_model.CharacterName} --> {_currentTarget.characterName} [{damage}]dmg");
@@ -178,8 +210,8 @@ public class BaseUnitController : MonoBehaviour
         var lvlRatio = (_currentTarget._level - _level) * 0.05f; // Value per level
         var critRatio = Random.Range(0f, 1f) < _model.CriticalRate;
         var attackRatio = dmgRatio - lvlRatio + Convert.ToInt32(critRatio);
-        var finalDmg = (int) Mathf.Floor(GetDamageValue() * attackRatio * Random.Range(0.85f, 1f));
-        
+        var finalDmg = (int)Mathf.Floor(GetDamageValue() * attackRatio * Random.Range(0.85f, 1f));
+
         if (critRatio)
         {
             Debug.Log($"{_model.CharacterName}: CRITICAL DAMAGE");
@@ -192,7 +224,7 @@ public class BaseUnitController : MonoBehaviour
     {
         if (dmg < 0)
             throw new ArgumentOutOfRangeException(nameof(dmg));
-        
+
         _health -= dmg;
         _baseUnitView.OnTakeDamage(_health);
         if (isDead)
