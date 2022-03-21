@@ -17,9 +17,10 @@ public class DragDropController : MonoBehaviour, IPointerDownHandler, IBeginDrag
         _originalPos = transform.position;
     }
 
-    public void Init(Team team)
+    public void Init(Team team, bool isDraggable)
     {
         _unitTeam = team;
+        enabled = isDraggable;
     }
 
     public void OnPointerDown(PointerEventData eventData)

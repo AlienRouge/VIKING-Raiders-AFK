@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using _Scripts.Enums;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -9,9 +10,9 @@ public class BaseUnitController : MonoBehaviour
 {
     private BaseUnitModel _model;
     private BaseUnitController _currentTarget;
-    
+
     [field: SerializeField] public Team MyTeam { get; private set; }
-    
+
     [SerializeField] private int _level;
     [SerializeField] private float _health;
     [SerializeField] private MoveState _currentMoveState;
@@ -21,8 +22,9 @@ public class BaseUnitController : MonoBehaviour
     private bool isDead => _health <= 0;
     public string characterName => _model.CharacterName;
 
-    private float attackRange => _model.AttackRange;
-    
+    private float _attackRange => _model.AttackRange;
+    private float _abilityRange => _model.Ability.CastRange;
+
     private MoveState CurrentMoveState
     {
         get => _currentMoveState;
@@ -41,8 +43,9 @@ public class BaseUnitController : MonoBehaviour
             _currentMoveState = value;
         }
     }
-    
+
     private bool _isTargetInRange;
+
     private bool TargetInRange
     {
         set
@@ -55,24 +58,24 @@ public class BaseUnitController : MonoBehaviour
     }
 
     private bool CheckAttackRange =>
-        Vector3.Distance(transform.position, _currentTarget.transform.position) <= attackRange;
+        Vector3.Distance(transform.position, _currentTarget.transform.position) <= _attackRange;
 
-    // private bool isTargetInAbilityRange =>
-    //     Vector3.Distance(transform.position, _currentTarget.transform.position) <= abilityRange;
-
-
+    private bool CheckAbilityRange =>
+        Vector3.Distance(transform.position, _currentTarget.transform.position) <= _abilityRange;
     
-    // private float abilityRange => _model.Ability.CastRange;
+
+    [SerializeField] private bool _isAbilityReady;
 
     private enum MoveState
     {
         Move,
         Stop
     }
-    
+
     private BaseUnitView _baseUnitView;
     private MovementController _movementController;
     private DragDropController _dragDropController;
+    private AbilityController _abilityController;
 
     public void StartBattle()
     {
@@ -85,30 +88,47 @@ public class BaseUnitController : MonoBehaviour
 
     public void Init(BaseUnitModel model, Team team, int unitLevel, bool isDraggable)
     {
-        _movementController = GetComponent<MovementController>();
-        _baseUnitView = GetComponentInChildren<BaseUnitView>();
-        _dragDropController = GetComponent<DragDropController>();
-
+        InitializeData(model, team, unitLevel);
+        InitializeControllers(isDraggable);
+    }
+    
+    private void InitializeData(BaseUnitModel model, Team team, int unitLevel)
+    {
         _model = model;
         _level = unitLevel;
         _health = model.BaseHealth;
         _attackDeltaTime = 1 / model.AttackSpeed;
         MyTeam = team;
+    }
 
-
-        _movementController.Init(model.MoveSpeed);
+    private void InitializeControllers(bool isDraggable)
+    {
+        _movementController = GetComponent<MovementController>();
+        _baseUnitView = GetComponentInChildren<BaseUnitView>();
+        _dragDropController = GetComponent<DragDropController>();
+        _abilityController = GetComponent<AbilityController>();
+        
+        _movementController.Init(_model.MoveSpeed);
         _baseUnitView.Init(_model);
-        _dragDropController.Init(MyTeam);
-
-        _dragDropController.enabled = isDraggable;
-        // ability?.Init();
+        _dragDropController.Init(MyTeam, isDraggable);
+        
+        if (_model.Ability)
+        {
+            _isAbilityReady = true;
+            _abilityController.AbilityReady += () => _isAbilityReady = true;
+            _abilityController.Init(_model.Ability);
+        }
     }
 
     private void OnDrawGizmosSelected()
     {
         // Attack range visualization on inspector select
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(transform.position, _attackRange);
+
+        if (!_model.Ability) return;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, _abilityRange);
     }
 
     private void OnEnable()
@@ -168,30 +188,57 @@ public class BaseUnitController : MonoBehaviour
     {
         while (!isDead && !_isBattleEnd)
         {
-            FollowTarget();
-
+            if (_isAbilityReady)
+            {
+                if (CheckAbilityRange)
+                {
+                    TargetInRange = CheckAbilityRange;
+                    await UseAbility();
+                    continue;
+                }
+            }
+            
+            TargetInRange = CheckAttackRange;
             if (CheckAttackRange)
             {
                 await Attack();
             }
-            
+
             await Task.Yield();
         }
     }
-
-    private void FollowTarget()
-    {
-        TargetInRange = CheckAttackRange;
-    }
-
+    
     private async Task Attack()
     {
-        // if (isDead || _isBattleEnd || _currentTarget.isDead) return;
+        if (isDead || _isBattleEnd || _currentTarget.isDead) return;
 
         var damage = CalculateDamage();
         Debug.Log($"{_model.CharacterName} --> {_currentTarget.characterName} [{damage}]dmg");
         _currentTarget.TakeDamage(damage);
         await Task.Delay(Mathf.RoundToInt(_attackDeltaTime * 1000));
+    }
+    
+    private async Task UseAbility()
+    {
+        if (isDead || _isBattleEnd || _currentTarget.isDead) return;
+
+        await _abilityController.ActivateAbility(_currentTarget);
+        _isAbilityReady = false;
+    }
+
+    public void TakeDamage(float dmg)
+    {
+        if (dmg < 0)
+            throw new ArgumentOutOfRangeException(nameof(dmg));
+
+        _health -= dmg;
+        _baseUnitView.OnTakeDamage(_health);
+        if (isDead)
+        {
+            /*EventController.UnitDied?.Invoke(_myTeam, this);*/
+            _currentTarget = null;
+            UnitDead.Invoke(MyTeam, this);
+        }
     }
 
     private float GetArmourValue()
@@ -218,20 +265,5 @@ public class BaseUnitController : MonoBehaviour
         }
 
         return finalDmg > 0 ? finalDmg : 0;
-    }
-
-    private void TakeDamage(float dmg)
-    {
-        if (dmg < 0)
-            throw new ArgumentOutOfRangeException(nameof(dmg));
-
-        _health -= dmg;
-        _baseUnitView.OnTakeDamage(_health);
-        if (isDead)
-        {
-            /*EventController.UnitDied?.Invoke(_myTeam, this);*/
-            _currentTarget = null;
-            UnitDead.Invoke(MyTeam, this);
-        }
     }
 }
