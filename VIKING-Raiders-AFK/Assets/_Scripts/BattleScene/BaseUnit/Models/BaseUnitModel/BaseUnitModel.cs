@@ -32,7 +32,6 @@ public abstract class BaseUnitModel : ScriptableObject
 
     public int GetDamagePerUnitLevel(int unitLevel)
     {
-        Debug.Log(BaseDamage * (1f + unitLevel / (float)MaxUnitLevel));
         return (int)Mathf.Floor(BaseDamage * (1f + unitLevel / (float)MaxUnitLevel));
     }
 

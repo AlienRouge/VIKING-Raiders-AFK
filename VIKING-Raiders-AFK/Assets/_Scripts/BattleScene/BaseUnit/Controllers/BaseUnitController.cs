@@ -30,7 +30,6 @@ public class BaseUnitController : MonoBehaviour
         get => _currentMoveState;
         set
         {
-            Debug.Log(characterName);
             if (value == MoveState.Move)
             {
                 _movementController.Resume();
@@ -56,7 +55,7 @@ public class BaseUnitController : MonoBehaviour
             _isTargetInRange = value;
         }
     }
-
+    
     private bool CheckAttackRange =>
         Vector3.Distance(transform.position, _currentTarget.transform.position) <= _attackRange;
 
@@ -188,6 +187,7 @@ public class BaseUnitController : MonoBehaviour
     {
         while (!isDead && !_isBattleEnd)
         {
+            
             if (_isAbilityReady)
             {
                 if (CheckAbilityRange)
