@@ -1,16 +1,20 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
+using Debug = UnityEngine.Debug;
 
 public class AbilityController : MonoBehaviour
 {
     private BaseAbility _ability;
+    private BaseAbility _activeAbility;
     private float _cooldownTime;
     private float _activeTime;
 
-    enum AbilityState
+    private enum AbilityState
     {
         Ready,
         Active,
@@ -25,63 +29,81 @@ public class AbilityController : MonoBehaviour
 
     [SerializeField] private AbilityState _state;
     public UnityAction AbilityReady;
-    
-    public async Task ActivateAbility(BaseUnitController target)
-    {
-        await _ability.OnActivate(target);
 
-        if (_ability.ActiveTime>0)
-        {
-            _activeTime = _ability.ActiveTime;
-            _state = AbilityState.Active;
-        }
-        else
-        {
-            _cooldownTime = _ability.CooldownTime;
-            _state = AbilityState.Cooldown;
-        }
-        
-    }
-
-    private void Update()
+    public async Task ActivateAbility(BaseUnitController parent, BaseUnitController target)
     {
         if (_state == AbilityState.Ready)
-            return;
-
-        switch (_state)
         {
-            case AbilityState.Active:
-                Debug.Log("ability active");
-                if (_activeTime > 0)
-                {
-                    _activeTime -= Time.deltaTime;
-                }
-                else
-                {
-                    _ability.OnAbilityBeginCooldown();
-                    _state = AbilityState.Cooldown;
-                    _cooldownTime = _ability.CooldownTime;
-                }
+            _state = AbilityState.Active;
+            await _ability.OnActivate(GetTargets(parent, target));
 
+            AbilityCycleAsync();
+        }
+    }
+    
+    
+    public bool CheckAbilityRange(BaseUnitController parent, BaseUnitController target)
+    {
+        return GetTargets(parent, target).Count>0;
+    }
+
+    private List<BaseUnitController> GetTargets(BaseUnitController parent, BaseUnitController target)
+    {
+        List<BaseUnitController> targets;
+        switch (_ability.Target)
+        {
+            case BaseAbility.TargetType.CurrentTarget:
+                targets = new List<BaseUnitController> { target };
                 break;
-
-            case AbilityState.Cooldown:
-                Debug.Log("ability cooldown");
-                if (_cooldownTime > 0)
-                {
-                    _cooldownTime -= Time.deltaTime;
-                }
-                else
-                {
-                    _state = AbilityState.Ready;
-                    AbilityReady?.Invoke();
-                }
-
+              
+            case BaseAbility.TargetType.Self:
+                targets = new List<BaseUnitController> { parent };
                 break;
-
-            case AbilityState.Ready:
+                
+            case BaseAbility.TargetType.MyTeam:
+                targets = new List<BaseUnitController>(BattleController.instance.GetFriendlies(parent.MyTeam));
+                break;
+               
+            case BaseAbility.TargetType.EnemyTeam:
+                targets = new List<BaseUnitController>(BattleController.instance.GetEnemies(parent.MyTeam));
+                break;
+               
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        
+        for (int i = targets.Count - 1; i >= 0; i--)
+        {
+            var distance = Vector3.Distance(parent.transform.position, targets[i].transform.position);
+            if (distance > _ability.CastRange)
+            {
+                targets.Remove(targets[i]);
+            }
+        }
+        
+        return targets;
+    }
+
+    private async Task AbilityCycleAsync()
+    {
+        await ActivityAsync(_ability.ActiveTime);
+        await CooldownAsync(_ability.CooldownTime);
+        AbilityReady?.Invoke();
+    }
+
+    private async Task ActivityAsync(float time)
+    {
+        // _ability.OnStartActivity(null);
+        await Task.Delay((int)(time * 1000f));
+        // _ability.OnEndActivity(null);
+        _state = AbilityState.Cooldown;
+    }
+
+    private async Task CooldownAsync(float time)
+    {
+        // _ability.OnStartCooldown(null);
+        await Task.Delay((int)(time * 1000f));
+        // _ability.OnEndCooldown(null);
+        _state = AbilityState.Ready;
     }
 }

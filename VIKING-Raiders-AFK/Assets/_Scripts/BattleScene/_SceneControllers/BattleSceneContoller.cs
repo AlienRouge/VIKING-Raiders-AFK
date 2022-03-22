@@ -46,7 +46,6 @@ public class BattleSceneContoller : MonoBehaviour
     // Start button or smth else
     public void OnStartButtonHandler()
     {
-        Debug.Log(_spawnController);
         if (_spawnController.PlayerTeamSize <= 0) return;
         
         EventController.BattleStarted?.Invoke();

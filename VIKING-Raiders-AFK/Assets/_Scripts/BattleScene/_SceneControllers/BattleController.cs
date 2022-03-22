@@ -39,10 +39,10 @@ public class BattleController : MonoBehaviour
      public void StartBattle(List<BaseUnitController> units)
      {
          Init();
-        
+
+         EventController.UnitDied += OnUnitDied;
          foreach (var unit in units)
          {
-             unit.UnitDead += OnUnitDied;
              _unitsByTeams[unit.MyTeam].Add(unit);
          }
 
@@ -53,6 +53,11 @@ public class BattleController : MonoBehaviour
     public List<BaseUnitController> GetEnemies(Team myTeam)
     {
         return myTeam == Team.Team1 ? _unitsByTeams[Team.Team2] : _unitsByTeams[Team.Team1];
+    }
+    
+    public List<BaseUnitController> GetFriendlies(Team myTeam)
+    {
+        return _unitsByTeams[myTeam];
     }
 
     
@@ -66,10 +71,9 @@ public class BattleController : MonoBehaviour
         }
     }
     
-    private void OnUnitDied(Team team, BaseUnitController unit)
+    private void OnUnitDied(BaseUnitController unit)
     {
-        unit.UnitDead -= OnUnitDied; 
-        _unitsByTeams[team] = _unitsByTeams[team]
+        _unitsByTeams[unit.MyTeam] = _unitsByTeams[unit.MyTeam]
             .Where(value => value.gameObject.GetInstanceID() != unit.gameObject.GetInstanceID()).ToList();
         
         /*Destroy(unit.gameObject);*/

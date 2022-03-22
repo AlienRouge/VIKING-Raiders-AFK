@@ -14,12 +14,13 @@ public class BaseUnitController : MonoBehaviour
     [field: SerializeField] public Team MyTeam { get; private set; }
 
     [SerializeField] private int _level;
-    [SerializeField] private float _health;
+    [SerializeField] private float _currentHealth;
+
     [SerializeField] private MoveState _currentMoveState;
-    public UnityAction<Team, BaseUnitController> UnitDead;
+    
     private float _attackDeltaTime;
     private bool _isBattleEnd;
-    private bool isDead => _health <= 0;
+    public bool isDead => _currentHealth <= 0;
     public string characterName => _model.CharacterName;
 
     private float _attackRange => _model.AttackRange;
@@ -47,6 +48,7 @@ public class BaseUnitController : MonoBehaviour
 
     private bool TargetInRange
     {
+        get => _isTargetInRange;
         set
         {
             if (_isTargetInRange == value) return;
@@ -55,13 +57,13 @@ public class BaseUnitController : MonoBehaviour
             _isTargetInRange = value;
         }
     }
-    
+
     private bool CheckAttackRange =>
         Vector3.Distance(transform.position, _currentTarget.transform.position) <= _attackRange;
 
-    private bool CheckAbilityRange =>
-        Vector3.Distance(transform.position, _currentTarget.transform.position) <= _abilityRange;
-    
+    // private bool CheckAbilityRange =>
+    //     Vector3.Distance(transform.position, _currentTarget.transform.position) <= _abilityRange;
+
 
     [SerializeField] private bool _isAbilityReady;
 
@@ -80,6 +82,7 @@ public class BaseUnitController : MonoBehaviour
     {
         _movementController.Enable();
         _dragDropController.enabled = false;
+        EventController.UnitDied += OnTargetDeadHandler;
 
         FindTarget();
         StartBattleCycle();
@@ -90,12 +93,12 @@ public class BaseUnitController : MonoBehaviour
         InitializeData(model, team, unitLevel);
         InitializeControllers(isDraggable);
     }
-    
+
     private void InitializeData(BaseUnitModel model, Team team, int unitLevel)
     {
         _model = model;
         _level = unitLevel;
-        _health = model.BaseHealth;
+        _currentHealth = model.BaseHealth;
         _attackDeltaTime = 1 / model.AttackSpeed;
         MyTeam = team;
     }
@@ -106,15 +109,18 @@ public class BaseUnitController : MonoBehaviour
         _baseUnitView = GetComponentInChildren<BaseUnitView>();
         _dragDropController = GetComponent<DragDropController>();
         _abilityController = GetComponent<AbilityController>();
-        
+
         _movementController.Init(_model.MoveSpeed);
         _baseUnitView.Init(_model);
         _dragDropController.Init(MyTeam, isDraggable);
-        
+
         if (_model.Ability)
         {
             _isAbilityReady = true;
-            _abilityController.AbilityReady += () => _isAbilityReady = true;
+            _abilityController.AbilityReady += () =>
+            {
+                _isAbilityReady = true; // TODO Спрятать все сеттеры 
+            };
             _abilityController.Init(_model.Ability);
         }
     }
@@ -169,7 +175,6 @@ public class BaseUnitController : MonoBehaviour
 
         if (_currentTarget)
         {
-            _currentTarget.UnitDead += OnTargetDeadHandler;
             _movementController.SetTarget(_currentTarget);
         }
 
@@ -178,28 +183,30 @@ public class BaseUnitController : MonoBehaviour
             : $"{characterName}: No targets.");
     }
 
-    private void OnTargetDeadHandler(Team team, BaseUnitController unit)
+    private void OnTargetDeadHandler(BaseUnitController unit)
     {
-        FindTarget();
+        if (unit == _currentTarget)
+        {
+            FindTarget();
+        }
     }
 
     private async void StartBattleCycle()
     {
         while (!isDead && !_isBattleEnd)
         {
-            
             if (_isAbilityReady)
             {
-                if (CheckAbilityRange)
+                TargetInRange = _abilityController.CheckAbilityRange(this, _currentTarget);
+                if (TargetInRange)
                 {
-                    TargetInRange = CheckAbilityRange;
                     await UseAbility();
                     continue;
                 }
             }
-            
-            TargetInRange = CheckAttackRange;
-            if (CheckAttackRange)
+
+            TargetInRange = CheckAttackRange; //? 
+            if (TargetInRange)
             {
                 await Attack();
             }
@@ -207,39 +214,38 @@ public class BaseUnitController : MonoBehaviour
             await Task.Yield();
         }
     }
-    
+
     private async Task Attack()
     {
         if (isDead || _isBattleEnd || _currentTarget.isDead) return;
 
         var damage = CalculateDamage();
         Debug.Log($"{_model.CharacterName} --> {_currentTarget.characterName} [{damage}]dmg");
-        _currentTarget.TakeDamage(damage);
+        _currentTarget.ChangeHealth(-damage);
         await Task.Delay(Mathf.RoundToInt(_attackDeltaTime * 1000));
     }
-    
+
     private async Task UseAbility()
     {
         if (isDead || _isBattleEnd || _currentTarget.isDead) return;
 
-        await _abilityController.ActivateAbility(_currentTarget);
+        await _abilityController.ActivateAbility(this, _currentTarget);
         _isAbilityReady = false;
     }
 
-    public void TakeDamage(float dmg)
+    public void ChangeHealth(float amount)
     {
-        if (dmg < 0)
-            throw new ArgumentOutOfRangeException(nameof(dmg));
+        _currentHealth += amount;
+        _currentHealth = Mathf.Clamp(_currentHealth, 0, _model.BaseHealth);
 
-        _health -= dmg;
-        _baseUnitView.OnTakeDamage(_health);
+        _baseUnitView.OnChangeHealth(_currentHealth);
         if (isDead)
         {
-            /*EventController.UnitDied?.Invoke(_myTeam, this);*/
             _currentTarget = null;
-            UnitDead.Invoke(MyTeam, this);
+            EventController.UnitDied?.Invoke(this);
         }
     }
+    // OnHealthChanged?.Invoke();
 
     private float GetArmourValue()
     {

@@ -18,3 +18,7 @@ MonoBehaviour:
   _heroList:
   - _heroLevel: 1
     _heroModel: {fileID: 11400000, guid: a9de744f32b5f9d4390af39adf242c8c, type: 2}
+  - _heroLevel: 1
+    _heroModel: {fileID: 11400000, guid: a9de744f32b5f9d4390af39adf242c8c, type: 2}
+  - _heroLevel: 1
+    _heroModel: {fileID: 11400000, guid: a9de744f32b5f9d4390af39adf242c8c, type: 2}

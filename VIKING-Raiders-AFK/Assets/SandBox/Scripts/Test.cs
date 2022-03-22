@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public class Test : MonoBehaviour
 {
     [SerializeField] private bool _isWorking = true;
+    private IEnumerator firstCorutine;
     private async Task Async1()
     {
         int counter = 0;
@@ -21,10 +23,27 @@ public class Test : MonoBehaviour
         Debug.Log("Second done");
     }
 
+    private IEnumerator Corutine()
+    {
+        int counter = 0;
+        while (_isWorking)
+        {
+            counter += 1;
+            Debug.Log(counter);
+            yield return new WaitForSeconds(1);
+        }
+    }
+
     public async void StartAsync()
     {
-        var a= Async1();
-        await Async2();
+        firstCorutine =  Corutine();
+        StartCoroutine(firstCorutine);
+        Debug.Log("Done!");
+    }
+    
+    public async void StopAsync()
+    {
+        StopCoroutine(firstCorutine);
         Debug.Log("Done!");
     }
 }

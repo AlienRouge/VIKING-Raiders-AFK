@@ -16,7 +16,7 @@ public class BaseUnitView : MonoBehaviour
         _viewRectTransform.localScale = scale;
     }
 
-    public void OnTakeDamage(float health)
+    public void OnChangeHealth(float health)
     {
         _healthBar.SetHealth(health);
     }

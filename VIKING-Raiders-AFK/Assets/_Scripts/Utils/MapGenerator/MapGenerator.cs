@@ -50,24 +50,6 @@ public class MapGenerator : MonoBehaviour
         if (_mapController == null)
         {
             _mapController = Instantiate(_mapPrefab);
-            // // world height is always camera's orthographicSize * 2
-            // float worldScreenHeight = Camera.main.orthographicSize * 2;
-            //
-            // // world width is calculated by diving world height with screen heigh
-            // // then multiplying it with screen width
-            // float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
-            //
-            // // to scale the game object we divide the world screen width with the
-            // // size x of the sprite, and we divide the world screen height with the
-            // // size y of the sprite
-            //
-            // Debug.Log(worldScreenWidth / width);
-            // Debug.Log(worldScreenWidth / height);
-            //
-            // var newXScale = worldScreenWidth / width - (worldScreenWidth / width) * 0.25f;
-            // var newYScale = worldScreenHeight / height - (worldScreenWidth / width) * 0.1f;
-            //
-            // _mapController.transform.localScale = new Vector3(newXScale, newYScale, 1);
             _mapController.transform.localPosition = new Vector3(
                 -width/2f,
                 -height/2f, 1);
