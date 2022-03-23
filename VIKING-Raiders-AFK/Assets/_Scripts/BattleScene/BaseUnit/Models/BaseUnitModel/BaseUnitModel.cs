@@ -28,7 +28,8 @@ public abstract class BaseUnitModel : ScriptableObject
     
     [field: SerializeField, Range(1, 7)] public float AttackRange { get; private set; }
     [field: SerializeField] public float MoveSpeed { get; private set; }
-    [field: SerializeField] public BaseAbility Ability { get; private set; }
+    [field: SerializeField] public BaseAbility PassiveAbility { get; private set; }
+    [field: SerializeField] public BaseAbility ActiveAbility { get; private set; }
 
     public int GetDamagePerUnitLevel(int unitLevel)
     {

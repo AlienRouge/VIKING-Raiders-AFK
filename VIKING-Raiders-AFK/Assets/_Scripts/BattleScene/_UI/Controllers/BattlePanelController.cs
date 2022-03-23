@@ -1,23 +1,15 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BattlePanelController : MonoBehaviour
 {
-
-    [SerializeField] private HeroItemController _heroItemPrefab;
+    [SerializeField] private List<HeroItemController> _heroItems;
 
     public void Init(List<BaseUnitController> units)
     {
-        foreach (var unit in units)
+        for (int i = 0; i < units.Count; i++)
         {
-           FillPanel(unit);
+            _heroItems[i].Init(units[i]);
         }
-    }
-
-    private void FillPanel(BaseUnitController unit)
-    {
-        var newItem =  Instantiate(_heroItemPrefab, transform, false);
-        newItem.Init(unit);
     }
 }

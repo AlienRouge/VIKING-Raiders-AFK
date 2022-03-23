@@ -21,7 +21,7 @@ public abstract class BaseAbility : ScriptableObject
         MyTeam,
         EnemyTeam
     }
-
+    // Pattern
     public async Task OnActivate(List<BaseUnitController> targets)
     {
         Debug.Log("Casting..." + AbilityName);
