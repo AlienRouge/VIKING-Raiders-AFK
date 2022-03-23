@@ -14,7 +14,6 @@ public class AbilityController : MonoBehaviour
     [SerializeField] private BaseAbility _passiveAbility;
     [SerializeField] private BaseAbility _activeAbility;
     [SerializeField] private BaseUnitController parent;
-    public UnityAction AbilityReady;
 
     private AbilityState ActiveAbilityState
     {
@@ -43,13 +42,7 @@ public class AbilityController : MonoBehaviour
         Cooldown
     }
 
-    // public enum AbilityType
-    // {
-    //     Passive,
-    //     Active
-    // }
-
-    private void Start()
+    private void Awake()
     {
         parent = gameObject.GetComponent<BaseUnitController>();
     }
@@ -59,13 +52,13 @@ public class AbilityController : MonoBehaviour
     public void InitPassiveAbility(BaseAbility passiveAbility)
     {
         _passiveAbility = passiveAbility;
-        PassiveAbilityState = AbilityState.Ready;
+        SetAbilityState(passiveAbility, AbilityState.Ready);
     }
 
     public void InitActiveAbility(BaseAbility activeAbility)
     {
         _activeAbility = activeAbility;
-        ActiveAbilityState = AbilityState.Ready;
+        SetAbilityState(_activeAbility, AbilityState.Ready);
     }
 
     public async Task ActivatePassiveAbility(BaseUnitController target)
@@ -86,7 +79,7 @@ public class AbilityController : MonoBehaviour
         if (abilityState == AbilityState.Ready)
         {
             SetAbilityState(ability, AbilityState.Active);
-            await ability.OnActivate(GetTargets(ability, target));
+            await ability.OnActivate(parent, GetTargets(ability, target));
 
             AbilityCycleAsync(ability);
         }
@@ -95,7 +88,7 @@ public class AbilityController : MonoBehaviour
 
     private void SetAbilityState(BaseAbility ability, AbilityState state)
     {
-        if (ability == _activeAbility)
+        if (ReferenceEquals(ability, _activeAbility))
         {
             ActiveAbilityState = state;
         }
@@ -104,12 +97,7 @@ public class AbilityController : MonoBehaviour
             PassiveAbilityState = state;
         }
     }
-
-    public bool CheckActiveAbilityRange(BaseUnitController target)
-    {
-        var ability = _activeAbility;
-        return GetTargets(ability, target).Count > 0;
-    }
+    
 
     public bool CheckPassiveAbilityRange(BaseUnitController target)
     {
@@ -158,7 +146,6 @@ public class AbilityController : MonoBehaviour
     {
         await ActivityAsync(ability);
         await CooldownAsync(ability);
-        AbilityReady?.Invoke();
     }
 
     private async Task ActivityAsync(BaseAbility ability)

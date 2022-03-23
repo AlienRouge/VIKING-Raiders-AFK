@@ -6,19 +6,20 @@ using Random = UnityEngine.Random;
 
 public class BaseUnitController : MonoBehaviour
 {
+    // TODO Сортировка полей и методов
     private BaseUnitModel _model;
     private BaseUnitController _currentTarget;
 
     [field: SerializeField] public Team MyTeam { get; private set; }
 
-    [SerializeField] private int _level;
+    private int _level;
     [SerializeField] private float _currentHealth;
 
     [SerializeField] private MoveState _currentMoveState;
 
     private float _attackDeltaTime;
     private bool _isBattleEnd;
-    [SerializeField] private bool isCastingActiveAbility;
+    private bool isCastingActiveAbility;
     public bool isDead => _currentHealth <= 0;
     public string characterName => _model.CharacterName;
 
@@ -29,20 +30,12 @@ public class BaseUnitController : MonoBehaviour
         get => _currentMoveState;
         set
         {
-            if (value == MoveState.Move)
-            {
-                _movementController.Resume(); // TODO Переделать
-            }
-            else
-            {
-                _movementController.Stop();
-            }
-
+            OnCurrentMoveStateSet(value);
             _currentMoveState = value;
         }
     }
 
-    [SerializeField] private bool _isTargetInRange;
+    private bool _isTargetInRange;
 
     private bool TargetInRange
     {
@@ -50,8 +43,7 @@ public class BaseUnitController : MonoBehaviour
         set
         {
             if (_isTargetInRange == value) return;
-            var newMoveState = CurrentMoveState == MoveState.Move ? MoveState.Stop : MoveState.Move;
-            CurrentMoveState = newMoveState;
+            OnTargetInRangeSet();
             _isTargetInRange = value;
         }
     }
@@ -59,7 +51,8 @@ public class BaseUnitController : MonoBehaviour
     private bool CheckAttackRange =>
         Vector3.Distance(transform.position, _currentTarget.transform.position) <= _attackRange;
 
-    [SerializeField] private bool _isAbilityReady;
+    private bool _isPassiveAbilityReady;
+    private bool _isActiveAbilityReady;
 
     private enum MoveState
     {
@@ -74,12 +67,15 @@ public class BaseUnitController : MonoBehaviour
 
     public void StartBattle()
     {
-        _movementController.Enable();
-        _dragDropController.enabled = false;
-        EventController.UnitDied += OnTargetDeadHandler;
-
+        PreFightSetup();
         FindTarget();
         StartBattleCycle();
+    }
+
+    private void PreFightSetup()
+    {
+        _movementController.Enable();
+        _dragDropController.enabled = false;
     }
 
     public void Init(BaseUnitModel model, Team team, int unitLevel, bool isDraggable)
@@ -103,36 +99,24 @@ public class BaseUnitController : MonoBehaviour
         _baseUnitView = GetComponentInChildren<BaseUnitView>();
         _dragDropController = GetComponent<DragDropController>();
         _abilityController = GetComponent<AbilityController>();
-
+        
         _movementController.Init(_model.MoveSpeed);
         _baseUnitView.Init(_model);
         _dragDropController.Init(MyTeam, isDraggable);
 
         if (_model.PassiveAbility)
         {
-            _isAbilityReady = true; //TODO Заменить?
-            _abilityController.AbilityReady += () =>
-            {
-                _isAbilityReady = true; // TODO Спрятать все сеттеры 
-            };
+            EventController.PassiveAbilityStateChanged += OnPassiveAbilityStateChange;
             _abilityController.InitPassiveAbility(_model.PassiveAbility);
         }
 
         if (_model.ActiveAbility)
         {
+            EventController.UseUnitActiveAbility += OnUseActiveAbility;
             _abilityController.InitActiveAbility(_model.ActiveAbility);
         }
     }
 
-    private async void UseActiveAbility()
-    {
-        if (!_model.ActiveAbility) return;
-        
-        isCastingActiveAbility = true;
-        CurrentMoveState = MoveState.Stop;
-        await _abilityController.ActivateActiveAbility(_currentTarget);
-        isCastingActiveAbility = false;
-    }
 
     private void OnDrawGizmosSelected()
     {
@@ -152,25 +136,17 @@ public class BaseUnitController : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, _model.ActiveAbility.CastRange);
         }
     }
-
-    private void OnUseActiveAbility(BaseUnitController unit)
-    {
-        if (ReferenceEquals(unit, this))
-        {
-            UseActiveAbility();
-        }
-    }
-
+    
     private void OnEnable()
     {
         EventController.BattleEnded += OnBattleEnded;
-        EventController.UseUnitActiveAbility += OnUseActiveAbility;
+        EventController.UnitDied += OnTargetDeathHandler;
     }
 
     private void OnDisable()
     {
         EventController.BattleEnded -= OnBattleEnded;
-        EventController.UseUnitActiveAbility -= OnUseActiveAbility;
+        EventController.UnitDied -= OnTargetDeathHandler;
     }
 
     private void OnBattleEnded()
@@ -210,10 +186,12 @@ public class BaseUnitController : MonoBehaviour
             : $"{characterName}: No targets.");
     }
 
-    private void OnTargetDeadHandler(BaseUnitController unit)
+    private void OnTargetDeathHandler(BaseUnitController unit)
     {
+        Debug.Log("DEAD: "+unit);
         if (unit == _currentTarget)
         {
+            Debug.Log("NO problem find new one");
             FindTarget();
         }
     }
@@ -224,7 +202,7 @@ public class BaseUnitController : MonoBehaviour
         {
             if (!isCastingActiveAbility)
             {
-                if (_isAbilityReady)
+                if (_isPassiveAbilityReady)
                 {
                     TargetInRange = _abilityController.CheckPassiveAbilityRange(_currentTarget);
                     if (TargetInRange)
@@ -263,7 +241,44 @@ public class BaseUnitController : MonoBehaviour
         if (isDead || _isBattleEnd || _currentTarget.isDead) return;
 
         await _abilityController.ActivatePassiveAbility(_currentTarget);
-        _isAbilityReady = false;
+    }
+
+    private async void UseActiveAbility()
+    {
+        if (!_model.ActiveAbility) return;
+
+        isCastingActiveAbility = true;
+        CurrentMoveState = MoveState.Stop;
+        await _abilityController.ActivateActiveAbility(_currentTarget);
+        isCastingActiveAbility = false;
+    }
+
+    private void OnUseActiveAbility(BaseUnitController unit)
+    {
+        if (ReferenceEquals(unit, this))
+        {
+            UseActiveAbility();
+        }
+    }
+
+    private void OnPassiveAbilityStateChange(BaseUnitController unit, AbilityController.AbilityState state)
+    {
+        Debug.Log(unit);
+        if (!ReferenceEquals(unit, this)) return;
+        
+        _isPassiveAbilityReady = state == AbilityController.AbilityState.Ready;
+    }
+
+    private void OnCurrentMoveStateSet(MoveState value)
+    {
+        var moveFlag = value == MoveState.Stop;
+        _movementController.IsStopped(moveFlag);
+    }
+
+    private void OnTargetInRangeSet()
+    {
+        var oppositeMoveState = CurrentMoveState == MoveState.Move ? MoveState.Stop : MoveState.Move;
+        CurrentMoveState = oppositeMoveState;
     }
 
     public void ChangeHealth(float amount)
@@ -275,10 +290,21 @@ public class BaseUnitController : MonoBehaviour
         if (isDead)
         {
             _currentTarget = null;
+            
+            if (_model.PassiveAbility)
+            {
+                EventController.PassiveAbilityStateChanged -= OnPassiveAbilityStateChange;
+
+            }
+            if (_model.ActiveAbility)
+            {
+                EventController.UseUnitActiveAbility -= OnUseActiveAbility;
+            }
+            
+            BattleController.instance.OnUnitDied(this);
             EventController.UnitDied?.Invoke(this);
         }
     }
-    // OnHealthChanged?.Invoke();
 
     private float GetArmourValue()
     {

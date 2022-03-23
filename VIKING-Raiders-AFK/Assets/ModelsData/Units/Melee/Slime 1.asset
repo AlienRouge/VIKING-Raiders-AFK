@@ -19,11 +19,12 @@ MonoBehaviour:
   <UnitType>k__BackingField: 0
   <MaxUnitLevel>k__BackingField: 20
   <BaseHealth>k__BackingField: 2000
-  <BaseDamage>k__BackingField: 10
+  <BaseDamage>k__BackingField: 20
   <BaseArmour>k__BackingField: 10
-  <AttackSpeed>k__BackingField: 0.1
+  <AttackSpeed>k__BackingField: 4
   <CriticalRate>k__BackingField: 0
   <AttackRange>k__BackingField: 2
   <MoveSpeed>k__BackingField: 0
-  <Ability>k__BackingField: {fileID: 0}
+  <PassiveAbility>k__BackingField: {fileID: 0}
+  <ActiveAbility>k__BackingField: {fileID: 0}
   additionalArmor: 0

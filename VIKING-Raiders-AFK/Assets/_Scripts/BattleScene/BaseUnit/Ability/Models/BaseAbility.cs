@@ -22,12 +22,13 @@ public abstract class BaseAbility : ScriptableObject
         EnemyTeam
     }
     // Pattern
-    public async Task OnActivate(List<BaseUnitController> targets)
+    public async Task OnActivate(BaseUnitController parent, List<BaseUnitController> targets)
     {
         Debug.Log("Casting..." + AbilityName);
         await Task.Delay(Mathf.RoundToInt(CastTime * 1000));
         Debug.Log("Piu!");
-
+        
+        if (parent.isDead) return;
         foreach (var unit in targets)
         {
             if (!unit.isDead)
@@ -37,7 +38,7 @@ public abstract class BaseAbility : ScriptableObject
         }
     }
 
-    public void OnStartActivity(List<BaseUnitController> targets)
+    public void OnStartActivity(BaseUnitController parent, List<BaseUnitController> targets)
     {
         Debug.Log("Ability activity started.");
         foreach (var unit in targets)
@@ -49,7 +50,7 @@ public abstract class BaseAbility : ScriptableObject
         }
     }
 
-    public void OnEndActivity(List<BaseUnitController> targets)
+    public void OnEndActivity(BaseUnitController parent, List<BaseUnitController> targets)
     {
         Debug.Log("Ability activity started.");
         foreach (var unit in targets)
@@ -61,7 +62,7 @@ public abstract class BaseAbility : ScriptableObject
         }
     }
 
-    public void OnStartCooldown(List<BaseUnitController> targets)
+    public void OnStartCooldown(BaseUnitController parent, List<BaseUnitController> targets)
     {
         Debug.Log("Ability activity started.");
         foreach (var unit in targets)
@@ -73,7 +74,7 @@ public abstract class BaseAbility : ScriptableObject
         }
     }
 
-    public void OnEndCooldown(List<BaseUnitController> targets)
+    public void OnEndCooldown(BaseUnitController parent, List<BaseUnitController> targets)
     {
         Debug.Log("Ability activity started.");
         foreach (var unit in targets)

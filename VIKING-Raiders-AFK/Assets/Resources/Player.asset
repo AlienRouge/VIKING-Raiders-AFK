@@ -24,3 +24,9 @@ MonoBehaviour:
     _heroModel: {fileID: 11400000, guid: f0f8b24a625247542b50c7f777c9acb9, type: 2}
   - _heroLevel: 5
     _heroModel: {fileID: 11400000, guid: f0f8b24a625247542b50c7f777c9acb9, type: 2}
+  - _heroLevel: 5
+    _heroModel: {fileID: 11400000, guid: a754ef786c05155429226647ec435cff, type: 2}
+  - _heroLevel: 5
+    _heroModel: {fileID: 11400000, guid: a754ef786c05155429226647ec435cff, type: 2}
+  - _heroLevel: 5
+    _heroModel: {fileID: 11400000, guid: a754ef786c05155429226647ec435cff, type: 2}

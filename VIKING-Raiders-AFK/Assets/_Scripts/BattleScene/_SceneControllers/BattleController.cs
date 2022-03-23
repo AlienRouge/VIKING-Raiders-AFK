@@ -19,10 +19,7 @@ public class BattleController : MonoBehaviour
             return _instance;
         }
     }
-    
-    [SerializeField] private BaseUnitController unitPrefab;
-   
-   
+
     private readonly Dictionary<Team, List<BaseUnitController>> _unitsByTeams = new Dictionary<Team, List<BaseUnitController>>();
     
     private void Start()
@@ -39,8 +36,7 @@ public class BattleController : MonoBehaviour
      public void StartBattle(List<BaseUnitController> units)
      {
          Init();
-
-         EventController.UnitDied += OnUnitDied;
+         
          foreach (var unit in units)
          {
              _unitsByTeams[unit.MyTeam].Add(unit);
@@ -60,26 +56,12 @@ public class BattleController : MonoBehaviour
         return _unitsByTeams[myTeam];
     }
 
-    
-    
-    private async void WaitInit(BaseUnitController newUnit)
-    {
-        await Task.Delay(10);
-        if (newUnit != null)
-        {
-            newUnit.GetComponent<NavMeshAgent>().enabled = true;
-        }
-    }
-    
-    private void OnUnitDied(BaseUnitController unit)
+    public void OnUnitDied(BaseUnitController unit)
     {
         _unitsByTeams[unit.MyTeam] = _unitsByTeams[unit.MyTeam]
             .Where(value => value.gameObject.GetInstanceID() != unit.gameObject.GetInstanceID()).ToList();
-        
-        /*Destroy(unit.gameObject);*/
-        /*unit.gameObject.SetActive(false);*/
+      
         unit.gameObject.SetActive(false);
-        
         if (_unitsByTeams[Team.Team1].Count == 0 || _unitsByTeams[Team.Team2].Count == 0 )
         {
             EventController.BattleEnded?.Invoke();

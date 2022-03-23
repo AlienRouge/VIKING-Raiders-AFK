@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Damage
   m_EditorClassIdentifier: 
   <AbilityName>k__BackingField: Firaball
-  <CooldownTime>k__BackingField: 2
+  <CooldownTime>k__BackingField: 5
   <ActiveTime>k__BackingField: 0
   <CastRange>k__BackingField: 10
   <CastTime>k__BackingField: 1
   <Target>k__BackingField: 3
   _magicalDamageType: 0
-  baseDamage: 300
+  baseDamage: 3

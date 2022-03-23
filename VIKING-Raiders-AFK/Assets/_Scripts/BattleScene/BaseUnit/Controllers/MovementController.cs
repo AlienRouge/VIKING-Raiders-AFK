@@ -51,19 +51,12 @@ public class MovementController : MonoBehaviour
         return pathLength;
     }
 
+    public void IsStopped(bool flag)
+    {
+        if (_navMeshAgent.isActiveAndEnabled)
+            _navMeshAgent.isStopped = flag;
+    }
     
-    public void Stop()
-    {
-        if (_navMeshAgent.isActiveAndEnabled)
-            _navMeshAgent.isStopped = true;
-    }
-
-    public void Resume()
-    {
-        if (_navMeshAgent.isActiveAndEnabled)
-            _navMeshAgent.isStopped = false;
-    }
-
     public void Disable()
     {
         enabled = false;
