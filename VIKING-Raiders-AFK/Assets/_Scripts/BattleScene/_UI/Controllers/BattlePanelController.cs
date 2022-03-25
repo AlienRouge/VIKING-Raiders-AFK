@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO rename
 public class BattlePanelController : MonoBehaviour
 {
     [SerializeField] private List<HeroItemController> _heroItems;

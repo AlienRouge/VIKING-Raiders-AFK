@@ -45,4 +45,5 @@ public abstract class BaseUnitModel : ScriptableObject
     {
         return (int)Mathf.Floor(BaseArmour * (1f + unitLevel / (float)MaxUnitLevel));
     }
+    
 }

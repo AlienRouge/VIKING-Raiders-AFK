@@ -17,5 +17,5 @@ MonoBehaviour:
   <ActiveTime>k__BackingField: 0
   <CastRange>k__BackingField: 20
   <CastTime>k__BackingField: 1
-  <Target>k__BackingField: 3
+  <Target>k__BackingField: 0
   healAmount: 300

@@ -84,6 +84,10 @@ public class BaseUnitController : MonoBehaviour
         InitializeControllers(isDraggable);
     }
 
+    public BaseUnitModel GetUnitModel()
+    {
+        return _model;
+    }
     private void InitializeData(BaseUnitModel model, Team team, int unitLevel)
     {
         _model = model;
