@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenuScene.unity
     guid: 7eda6d29ee054ed48982fd1f42bda6b1
   - enabled: 1
-    path: Assets/Scenes/BattleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
     path: Assets/Scenes/Network/Lobby.unity
     guid: 6abca7a792e42994598632a7df4d8674
   - enabled: 1
@@ -23,4 +20,25 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InventoryScene.unity
     guid: 5e4fd3648bf156f418edd9eccdd80d6c
+  - enabled: 1
+    path: Assets/Scenes/ScenesLevels/Bridge.unity
+    guid: 0cfa2879c80e55a49b963b0f6008ec29
+  - enabled: 1
+    path: Assets/Scenes/ScenesLevels/Cave.unity
+    guid: c22af5b6e593cc945baf7fa421ad6906
+  - enabled: 1
+    path: Assets/Scenes/ScenesLevels/Field.unity
+    guid: fcace0382d560874795c0f4587d24a6a
+  - enabled: 1
+    path: Assets/Scenes/ScenesLevels/Main menu.unity
+    guid: 7f15a520edeb8c24d950d393f251a82b
+  - enabled: 1
+    path: Assets/Scenes/ScenesLevels/Start location.unity
+    guid: f4a534a6fbc33294eb2b6fee02696e15
+  - enabled: 1
+    path: Assets/Scenes/ScenesLevels/Start scene.unity
+    guid: 7e4a480ed9b44a240b1674ba93e8ebee
+  - enabled: 1
+    path: Assets/Scenes/ScenesLevels/Town Location.unity
+    guid: 5dfefb0b9212cba4ab5932c7b06b4d59
   m_configObjects: {}
