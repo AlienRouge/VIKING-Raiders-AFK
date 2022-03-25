@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using _Scripts.Enums;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -20,6 +17,7 @@ public class UIController : MonoBehaviour
     }
     
     [SerializeField] private PanelController _panelController;
+    [SerializeField] private BattlePanelController _battlePanelController;
     
     private bool _isVisible;
 
@@ -40,15 +38,21 @@ public class UIController : MonoBehaviour
         EventController.UnitDragged -= (arg0 => SwitchSpawnUIVisible());
     }
 
-    public void Init(List<User.Hero> playerUnitModels)
+    public void Init(List<User.Hero> playerHeroes)
     {
         _isVisible = true;
-        _panelController.FillUnitPanel(playerUnitModels);
+        _panelController.FillUnitPanel(playerHeroes);
+        
     }
     
     public void SwitchSpawnUIVisible()
     {
         _isVisible = !_isVisible;
         _panelController.gameObject.SetActive(_isVisible);
+    }
+
+    public void Show_BP(List<BaseUnitController> list)
+    {
+        _battlePanelController.Init(list);
     }
 }

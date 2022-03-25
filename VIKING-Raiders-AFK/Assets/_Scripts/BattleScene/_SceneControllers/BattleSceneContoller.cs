@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleSceneContoller : MonoBehaviour
@@ -47,10 +46,10 @@ public class BattleSceneContoller : MonoBehaviour
     // Start button or smth else
     public void OnStartButtonHandler()
     {
-        Debug.Log(_spawnController);
         if (_spawnController.PlayerTeamSize <= 0) return;
         
         EventController.BattleStarted?.Invoke();
+        UIController.Instance.Show_BP(SpawnContoller.Instance.GetPlayerUnits());
         BattleController.instance.StartBattle(SpawnContoller.Instance.GetSpawnedUnits());
     }
 }
