@@ -1,13 +1,17 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using _Scripts.Enums;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New ability", menuName = "Abilities/Heal")]
-public class HealAbility : BaseAbility
+[CreateAssetMenu(fileName = "New ability", menuName = "Abilities/InstantDamage")]
+public class MagicAbility : BaseAbility
 {
-    [SerializeField] private float healAmount;
+    [SerializeField] private MagicalDamageType _magicalDamageType;
+    [SerializeField] private float baseDamage;
     
     protected override void DoOnActivate(BaseUnitController target)
     {
-        target.ChangeHealth(healAmount);
+        target.ChangeHealth(-baseDamage);
     }
 
     protected override void DoOnStartActivity(BaseUnitController target)

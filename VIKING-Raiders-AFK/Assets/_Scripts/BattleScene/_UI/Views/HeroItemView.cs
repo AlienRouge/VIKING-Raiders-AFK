@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,7 +45,6 @@ public class HeroItemView : MonoBehaviour
     {
         _cooldownImage.fillAmount = 0f;
         _isCooldown = true;
-
     }
 
     public void UnitDied()
@@ -64,6 +62,5 @@ public class HeroItemView : MonoBehaviour
         if (!(_cooldownImage.fillAmount >= 1f)) return;
         _cooldownImage.fillAmount = 1f;
         _isCooldown = false;
-
     }
 }

@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1318587e5ff51684aa6a2ea108b400c9, type: 3}
-  m_Name: Heal
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 0}
+  m_Name: HealMyself
+  m_EditorClassIdentifier: Assembly-CSharp::HealAbility
   <AbilityName>k__BackingField: Heal
-  <CooldownTime>k__BackingField: 2
+  <CooldownTime>k__BackingField: 5
   <ActiveTime>k__BackingField: 0
-  <CastRange>k__BackingField: 20
-  <CastTime>k__BackingField: 1
+  <CastRange>k__BackingField: 0
+  <CastTime>k__BackingField: 1.5
   <Target>k__BackingField: 0
-  healAmount: 300
+  healAmount: 100

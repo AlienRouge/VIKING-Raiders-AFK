@@ -9,14 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adbf08c762a4147478e855d878b7ded2, type: 3}
-  m_Name: Damage
-  m_EditorClassIdentifier: 
-  <AbilityName>k__BackingField: Firaball
-  <CooldownTime>k__BackingField: 5
+  m_Script: {fileID: 0}
+  m_Name: HealMyTeam
+  m_EditorClassIdentifier: Assembly-CSharp::HealAbility
+  <AbilityName>k__BackingField: MassHeal
+  <CooldownTime>k__BackingField: 7
   <ActiveTime>k__BackingField: 0
   <CastRange>k__BackingField: 10
-  <CastTime>k__BackingField: 1
-  <Target>k__BackingField: 3
-  _magicalDamageType: 0
-  baseDamage: 3
+  <CastTime>k__BackingField: 3
+  <Target>k__BackingField: 2
+  healAmount: 250
