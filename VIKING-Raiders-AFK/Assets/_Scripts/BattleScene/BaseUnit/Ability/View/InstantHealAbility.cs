@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New ability", menuName = "Abilities/InstantHeal")]
-public class HealAbility : BaseAbility
+public class InstantHealAbility : BaseAbility
 {
     [SerializeField] private float healAmount;
     

@@ -2,7 +2,7 @@ using _Scripts.Enums;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New ability", menuName = "Abilities/InstantDamage")]
-public class MagicAbility : BaseAbility
+public class InstantDamageAbility : BaseAbility
 {
     [SerializeField] private MagicalDamageType _magicalDamageType;
     [SerializeField] private float baseDamage;
