@@ -1523,7 +1523,7 @@ MonoBehaviour:
   _userData: {fileID: 11400000, guid: 73d9bb9f0a2c19842a955cef5f85bb80, type: 2}
   _userName: {fileID: 1288219976}
   _userlvl: {fileID: 667186410}
-  _sceneLoader: {fileID: 0}
+  _sceneLoader: {fileID: 1890634834}
 --- !u!4 &1890634833
 Transform:
   m_ObjectHideFlags: 0

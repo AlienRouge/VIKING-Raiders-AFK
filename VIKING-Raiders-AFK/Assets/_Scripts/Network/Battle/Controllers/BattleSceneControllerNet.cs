@@ -1,7 +1,7 @@
-﻿using _Scripts.Network.Map;
-using UnityEngine;
+﻿using UnityEngine;
+using _Scripts.Network.Map;
 
-public class BattleSceneControllerNet : BattleSceneContoller
+public class BattleSceneControllerNet : BattleSceneController
 {
     [SerializeField] private MapGeneratorNet mapGenerator;
     private void Start()

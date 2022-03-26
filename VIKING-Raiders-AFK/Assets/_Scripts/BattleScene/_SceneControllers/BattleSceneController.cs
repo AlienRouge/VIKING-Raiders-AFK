@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class BattleSceneContoller : MonoBehaviour
+public class BattleSceneController : MonoBehaviour
 {
-    protected static BattleSceneContoller _instance;
+    protected static BattleSceneController _instance;
 
-    public static BattleSceneContoller instance
+    public static BattleSceneController instance
     {
         get
         {
             if (_instance == null)
-                Debug.LogError(nameof(BattleSceneContoller) + "is NULL!");
+                Debug.LogError(nameof(BattleSceneController) + "is NULL!");
 
             return _instance;
         }
