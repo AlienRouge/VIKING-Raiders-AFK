@@ -1,11 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using _Scripts.Enums;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-public class BaseUnitController : MonoBehaviour
+public class BaseUnitController : MonoBehaviourPun
 {
     private BaseUnitModel _model;
     private BaseUnitController _currentTarget;
@@ -58,7 +59,7 @@ public class BaseUnitController : MonoBehaviour
         _attackDeltaTime = 1 / model.AttackSpeed;
         MyTeam = team;
 
-
+    
         _movementController.Init(model.MoveSpeed);
         _baseUnitView.Init(_model);
         _dragDropController.Init(MyTeam);

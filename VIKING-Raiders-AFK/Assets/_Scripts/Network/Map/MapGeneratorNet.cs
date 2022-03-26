@@ -18,11 +18,9 @@ namespace _Scripts.Network.Map
 
         public void OnEvent(EventData photonEvent)
         {
-            Debug.Log(23);
             switch (photonEvent.Code)
             {
-                case 23:
-                    Debug.Log(photonEvent.CustomData);
+                case (byte)NetEvents.StartBattle:
                     var data = (float[]) photonEvent.CustomData;
 
                     SetMapData(data);
@@ -77,7 +75,7 @@ namespace _Scripts.Network.Map
                     Reliability = true
                 };
 
-                PhotonNetwork.RaiseEvent(23, noiseMap, riseEventOptions, sendOptions);
+                PhotonNetwork.RaiseEvent((byte)NetEvents.StartBattle, noiseMap, riseEventOptions, sendOptions);
             }
         }
 

@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Enums;
+using Photon.Pun;
 using UnityEngine;
 
-public class SpawnContoller : MonoBehaviour
+public class SpawnContoller : MonoBehaviourPun
 {
     protected const int MAX_PLAYER_TEAM_SIZE = 4;
 

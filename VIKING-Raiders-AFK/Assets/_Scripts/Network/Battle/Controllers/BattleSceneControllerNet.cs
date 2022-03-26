@@ -16,9 +16,7 @@ public class BattleSceneControllerNet : BattleSceneContoller
 
     public void InitScene()
     {
-        Debug.Log("init scene"+1541);
         _mapController = mapGenerator.GenerateMap();
         InitializeScene(_player, _enemy, _mapController);
-        Debug.Log(123);
     }
 }

@@ -16,6 +16,7 @@ public class SpawnControllerNet : SpawnContoller
         _spawnPointController.TakeSpawnPoint(spawnPoint);
         var newUnit = spawnedObject.GetComponent<BaseUnitController>();
         newUnit.Init(hero._heroModel, team, hero._heroLevel, team == Team.Team1);
+        Debug.Log(hero._heroModel.ViewSprite);
         newUnit.name = hero._heroModel.CharacterName;
 
         if (team == Team.Team1)
