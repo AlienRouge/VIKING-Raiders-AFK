@@ -50,7 +50,8 @@ public class MapGenerator : MonoBehaviour
             _mapController = Instantiate(_mapPrefab);
             _mapController.transform.localPosition = new Vector3(
                 -width/2f,
-                -height/2f, 1);
+                -height/2f,
+                1);
         }
         
         _noiseMapRenderer.Init(_mapController.walkableTilemap, _mapController.notWalkableTilemap,
