@@ -18,8 +18,6 @@ public class MapController : MonoBehaviour
         spawnAreaController = GetComponent<SpawnAreaController>();
         spawnPointController = GetComponent<SpawnPointController>();
     }
-    
-    
     public void BakeMap()
     {
         _navMeshSurface2d.BuildNavMeshAsync();

@@ -19,12 +19,12 @@ public class NetController : MonoBehaviourPunCallbacks
     
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 2 && PhotonNetwork.IsMasterClient)
+        if(PhotonNetwork.CurrentRoom.PlayerCount != 2) return;
+
+        if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("enter");
             _battleSceneController.InitScene();
         }
-
 
         Debug.Log($"player {newPlayer.NickName} joined to game");
     }

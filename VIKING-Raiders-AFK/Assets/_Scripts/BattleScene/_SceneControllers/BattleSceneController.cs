@@ -35,7 +35,7 @@ public class BattleSceneController : MonoBehaviour
         _spawnController = SpawnContoller.Instance;
     }
 
-    protected void InitializeScene(User player, User enemy, MapController map)
+    protected virtual void InitializeScene(User player, User enemy, MapController map)
     {
         UIController.Instance.Init(player._heroList);
         _spawnController.Init(map.spawnPointController);
