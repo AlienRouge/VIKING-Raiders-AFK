@@ -108,6 +108,11 @@ public class SpawnContoller : MonoBehaviourPun
     {
         return _playerTeam.Select(unit => unit.unitController).Concat(_enemyTeam).ToList();
     }
+    
+    public List<BaseUnitController> GetPlayerUnits()
+    {
+        return _playerTeam.Select(unit => unit.unitController).ToList();
+    }
 
 
     private void InstantiateUnit(Team team, User.Hero hero, SpawnPoint spawnPoint, int buttonID = -1)
@@ -117,6 +122,7 @@ public class SpawnContoller : MonoBehaviourPun
 
         newUnit.Init(hero._heroModel, team,  hero._heroLevel, team==Team.Team1);
         newUnit.name = hero._heroModel.CharacterName;
+        newUnit.transform.SetParent(_spawnPointController.transform);
 
         if (team == Team.Team1)
         {

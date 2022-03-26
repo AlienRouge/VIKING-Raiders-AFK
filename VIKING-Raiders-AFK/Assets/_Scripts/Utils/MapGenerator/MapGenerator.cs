@@ -1,10 +1,10 @@
 using _Scripts.Enums;
-using Photon.Pun;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
     protected static MapGenerator _instance;
+    
     [Header("Map settings")] [SerializeField]
     protected MapController _mapPrefab;
 
@@ -35,6 +35,7 @@ public class MapGenerator : MonoBehaviour
             return _instance;
         }
     }
+
     private void Awake()
     {
         _instance = this;
@@ -47,6 +48,9 @@ public class MapGenerator : MonoBehaviour
         if (_mapController == null)
         {
             _mapController = Instantiate(_mapPrefab);
+            _mapController.transform.localPosition = new Vector3(
+                -width/2f,
+                -height/2f, 1);
         }
         
         _noiseMapRenderer.Init(_mapController.walkableTilemap, _mapController.notWalkableTilemap,

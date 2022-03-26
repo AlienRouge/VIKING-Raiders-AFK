@@ -25,5 +25,6 @@ MonoBehaviour:
   <CriticalRate>k__BackingField: 0.5
   <AttackRange>k__BackingField: 1.5
   <MoveSpeed>k__BackingField: 2
-  <Ability>k__BackingField: {fileID: 0}
+  <PassiveAbility>k__BackingField: {fileID: 0}
+  <ActiveAbility>k__BackingField: {fileID: 0}
   additionalArmor: 0

@@ -6,14 +6,7 @@ using UnityEngine.AI;
 public class MovementController : MonoBehaviour
 {
     [SerializeField] private Transform target;
-
-    /*private BaseUnitView parentUnit;*/
     private NavMeshAgent _navMeshAgent;
-    /*private float distanceRange;*/
-
-    /*
-    public bool canAttack => agent.destination.magnitude <= distanceRange;
-    */
 
     private void Awake()
     {
@@ -58,18 +51,12 @@ public class MovementController : MonoBehaviour
         return pathLength;
     }
 
-    public void Stop()
+    public void IsStopped(bool flag)
     {
         if (_navMeshAgent.isActiveAndEnabled)
-            _navMeshAgent.isStopped = true;
+            _navMeshAgent.isStopped = flag;
     }
-
-    public void Resume()
-    {
-        if (_navMeshAgent.isActiveAndEnabled)
-            _navMeshAgent.isStopped = false;
-    }
-
+    
     public void Disable()
     {
         enabled = false;
