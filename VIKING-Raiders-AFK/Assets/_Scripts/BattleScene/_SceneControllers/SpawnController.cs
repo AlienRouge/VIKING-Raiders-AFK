@@ -1,37 +1,34 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Enums;
 using Photon.Pun;
 using UnityEngine;
 
-public class SpawnContoller : MonoBehaviourPun
+public class SpawnController : MonoBehaviourPun
 {
     protected const int MAX_PLAYER_TEAM_SIZE = 4;
 
-    private static SpawnContoller _instance;
+    private static SpawnController _instance;
 
-    public static SpawnContoller Instance
+    public static SpawnController Instance
     {
         get
         {
             if (_instance == null)
-                Debug.LogError(nameof(SpawnContoller) + "is NULL!");
+                Debug.LogError(nameof(SpawnController) + "is NULL!");
 
             return _instance;
         }
     }
 
     protected SpawnPointController _spawnPointController;
-
+    protected Team _currentTeam;
     protected struct SpawnedUnit
     {
         public int ButtonID;
         public BaseUnitController unitController;
         public SpawnPoint SpawnPoint;
     }
-
-    public int PlayerTeamSize => _playerTeam.Count;
 
     [SerializeField] protected BaseUnitController _baseUnitPrefab;
 
@@ -40,6 +37,8 @@ public class SpawnContoller : MonoBehaviourPun
 
     protected delegate void SpawnAction(Team team, User.Hero unitModel, SpawnPoint spawnPoint, int buttonID = -1);
     protected SpawnAction SpawnUnit;
+    public int PlayerTeamSize => _playerTeam.Count;
+    public int EnemyTeamSize => _enemyTeam.Count;
     
     private void Awake()
     {
@@ -50,6 +49,7 @@ public class SpawnContoller : MonoBehaviourPun
     private void Start()
     {
         SpawnUnit = InstantiateUnit;
+        _currentTeam = Team.Team1;
     }
 
     public void Init(SpawnPointController spawnPointController)
@@ -65,7 +65,7 @@ public class SpawnContoller : MonoBehaviourPun
             return false;
         }
 
-        var sp = _spawnPointController.GetFreeSpawnPoints(Team.Team1);
+        var sp = _spawnPointController.GetFreeSpawnPoints(_currentTeam);
         if (sp.Count <= 0)
         {
             Debug.Log("No free spawn points." + hero._heroModel.CharacterName);
@@ -73,7 +73,7 @@ public class SpawnContoller : MonoBehaviourPun
         }
 
         Debug.Log("Spawned:" + hero._heroModel.CharacterName);
-        SpawnUnit(Team.Team1, hero, sp[0], buttonID);
+        SpawnUnit(_currentTeam, hero, sp[0], buttonID);
         return true;
     }
 
@@ -124,7 +124,7 @@ public class SpawnContoller : MonoBehaviourPun
         newUnit.name = hero._heroModel.CharacterName;
         newUnit.transform.SetParent(_spawnPointController.transform);
 
-        if (team == Team.Team1)
+        if (team == _currentTeam)
         {
             _playerTeam.Add(new SpawnedUnit
             {

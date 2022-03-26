@@ -53,6 +53,7 @@ public class UIController : MonoBehaviour
 
     public void Show_BP(List<BaseUnitController> list)
     {
+        Debug.Log(_battlePanelController);
         _battlePanelController.Init(list);
     }
 }
