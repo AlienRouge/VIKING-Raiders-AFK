@@ -429,6 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _panelController: {fileID: 116996581}
+  _battlePanelController: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,9 +466,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a7441419efe49c4783b98bde7e09067, type: 3}
+  m_Script: {fileID: 11500000, guid: dfc43b977e287774baba4780c2ba0de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wireColor: {r: 1, g: 1, b: 1, a: 1}
+  UnitsSize: 22.5
+  constraint: 0
+  camera: {fileID: 519420031}
+  executeInUpdate: 1
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -495,7 +501,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.3
+  orthographic size: 5.328947
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -519,7 +525,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8, y: 5, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -785,6 +791,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 11400000, guid: 73d9bb9f0a2c19842a955cef5f85bb80, type: 2}
   _enemy: {fileID: 11400000, guid: 7ca183dbf7a833a4d8ccd85db1e4b3a3, type: 2}
+  mapGenerator: {fileID: 1563126441}
 --- !u!1 &872518357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,6 +1168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f856da8e6c49b6646b5a693bd4c1ee52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _battleSceneController: {fileID: 708460295}
 --- !u!4 &1088288435
 Transform:
   m_ObjectHideFlags: 0
@@ -1184,7 +1192,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1161712206}
-  - component: {fileID: 1161712205}
   - component: {fileID: 1161712207}
   m_Layer: 0
   m_Name: SpawnContoller
@@ -1193,20 +1200,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1161712205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1161712204}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c6c6f03bb26264b8c6796e9fb3f736, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _baseUnitPrefab: {fileID: 8373044224295067024, guid: 56846947b1023d34c872e8df936c1059, type: 3}
-  _enemyTeam: []
 --- !u!4 &1161712206
 Transform:
   m_ObjectHideFlags: 0
@@ -1476,7 +1469,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7c758df934cea4db8f890d540400e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 8373044224295067024, guid: 56846947b1023d34c872e8df936c1059, type: 3}
 --- !u!4 &1459515374
 Transform:
   m_ObjectHideFlags: 0
@@ -1577,8 +1569,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1563126442}
-  - component: {fileID: 1563126441}
   - component: {fileID: 1563126440}
+  - component: {fileID: 1563126441}
   m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -1620,7 +1612,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1563126439}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e56ba1e1282e10043b1b58465fdda078, type: 3}
+  m_Script: {fileID: 11500000, guid: 464cb7c388f945ceb56d029fda09b5a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _mapPrefab: {fileID: 7149745937407577528, guid: 380ce949bc0d49c449cbfde970ca128a, type: 3}

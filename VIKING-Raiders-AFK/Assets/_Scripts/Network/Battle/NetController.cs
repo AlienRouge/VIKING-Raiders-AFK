@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class NetController : MonoBehaviourPunCallbacks
 {
+    [SerializeField] private BattleSceneControllerNet _battleSceneController;
+
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene("Lobby");
@@ -17,6 +19,13 @@ public class NetController : MonoBehaviourPunCallbacks
     
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2 && PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("enter");
+            _battleSceneController.InitScene();
+        }
+
+
         Debug.Log($"player {newPlayer.NickName} joined to game");
     }
 

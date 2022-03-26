@@ -1,10 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using _Scripts.Enums;
+using Photon.Pun;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class BaseUnitController : MonoBehaviour
+public class BaseUnitController : MonoBehaviourPun
 {
     // TODO Сортировка полей и методов
     private BaseUnitModel _model;
@@ -120,7 +121,6 @@ public class BaseUnitController : MonoBehaviour
             _abilityController.InitActiveAbility(_model.ActiveAbility);
         }
     }
-
 
     private void OnDrawGizmosSelected()
     {
