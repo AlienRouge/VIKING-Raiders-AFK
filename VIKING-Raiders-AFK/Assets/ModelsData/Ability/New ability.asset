@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adbf08c762a4147478e855d878b7ded2, type: 3}
+  m_Name: New ability
+  m_EditorClassIdentifier: 
+  <AbilityName>k__BackingField: FireBall
+  <CooldownTime>k__BackingField: 5
+  <ActiveTime>k__BackingField: 0
+  <CastRange>k__BackingField: 30
+  <CastTime>k__BackingField: 1
+  <Target>k__BackingField: 1
+  _magicalDamageType: 0
+  baseDamage: 1000
