@@ -1,14 +1,23 @@
-﻿using Photon.Pun;
+﻿using System.Collections.Generic;
+using _Scripts.Network.UI;
+using Photon.Pun;
 using UnityEngine;
 
-public class PanelControllerNet : PanelController
+public class PanelControllerNet : Panel
 {
-    protected override LayoutElement InstantiateLayoutElement()
+    [SerializeField] private LayoutElementNet _layoutElementPrefab;
+    [SerializeField] private GameObject _layoutGroup;
+    [SerializeField] private List<LayoutElementNet> _elements;
+    
+    public override void FillUnitPanel(List<User.Hero> heroes)
     {
-        var transform = _layoutElementPrefab.transform;
-        var currentElement =
-            PhotonNetwork.Instantiate(_layoutElementPrefab.name, transform.position, transform.rotation);
-        currentElement.transform.SetParent(_layoutGroup.transform);
-        return currentElement.GetComponent<LayoutElement>();
+        foreach (var hero in heroes)
+        {
+            LayoutElementNet newElement = Instantiate(_layoutElementPrefab, _layoutGroup.transform, false);
+            Debug.Log(newElement.GetType());
+            newElement.Init(hero);
+            newElement.name = hero._heroModel.CharacterName;
+            _elements.Add(newElement);
+        }   
     }
 }

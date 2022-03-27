@@ -16,7 +16,7 @@ public class UIController : MonoBehaviour
         }
     }
     
-    [SerializeField] private PanelController _panelController;
+    [SerializeField] private Panel _panelController;
     [SerializeField] private BattlePanelController _battlePanelController;
     
     private bool _isVisible;
@@ -44,6 +44,10 @@ public class UIController : MonoBehaviour
         _panelController.FillUnitPanel(playerHeroes);
         
     }
+    
+    /// <summary>
+    /// Пожарная тревога минут 10-20
+    /// </summary>
     
     public void SwitchSpawnUIVisible()
     {

@@ -44,7 +44,7 @@ public class BattleSceneController : MonoBehaviour
     }
     
     // Start button or smth else
-    public void OnStartButtonHandler()
+    public virtual void OnStartButtonHandler()
     {
         if (_spawnController.PlayerTeamSize <= 0 || _spawnController.EnemyTeamSize <= 0) return;
         

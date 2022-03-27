@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 116996578}
   - component: {fileID: 116996580}
-  - component: {fileID: 116996581}
+  - component: {fileID: 116996579}
   m_Layer: 5
   m_Name: HeroesPanel
   m_TagString: Untagged
@@ -162,15 +162,7 @@ RectTransform:
   m_AnchoredPosition: {x: -0.000020027, y: 0.000015259}
   m_SizeDelta: {x: 370, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &116996580
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 116996577}
-  m_CullTransparentMesh: 1
---- !u!114 &116996581
+--- !u!114 &116996579
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,12 +171,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 116996577}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23e5a45ca1413604287ee2f7bef11f19, type: 3}
+  m_Script: {fileID: 11500000, guid: 292e3b4d798b492c9ecb837532bb0790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _layoutElementPrefab: {fileID: 2396745206769525908, guid: 566f46c450758584dbc051d1566bbb12, type: 3}
+  _layoutElementPrefab: {fileID: -2103349999033393825, guid: 8cdb31130083ca949863ec4b3d01cd6a, type: 3}
   _layoutGroup: {fileID: 1536983060}
   _elements: []
+--- !u!222 &116996580
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116996577}
+  m_CullTransparentMesh: 1
 --- !u!1 &215702703
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17db8790fec8b5a4790f58603f63d959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _panelController: {fileID: 116996581}
+  _panelController: {fileID: 116996579}
   _battlePanelController: {fileID: 446734018}
 --- !u!1 &446734016
 GameObject:
@@ -1614,8 +1614,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825f02529fbb0aa41a21f107b605fadc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseUnitPrefab: {fileID: 8373044224295067024, guid: 75ea0a126d863fb49bbafdbefa1af2ec, type: 3}
+  _baseUnitPrefab: {fileID: 8373044224295067024, guid: 56846947b1023d34c872e8df936c1059, type: 3}
   _enemyTeam: []
+  _models: {fileID: 11400000, guid: a32faf5aa41d6a344886b4ea7db93520, type: 2}
+  _netModel: {fileID: -281411665677591873, guid: 75ea0a126d863fb49bbafdbefa1af2ec, type: 3}
 --- !u!1 &1279503503
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,6 @@
+using System;
+using _Scripts.Network.SyncData;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -6,6 +9,11 @@ using UnityEngine.SceneManagement;
 public class NetController : MonoBehaviourPunCallbacks
 {
     [SerializeField] private BattleSceneControllerNet _battleSceneController;
+
+    private void Start()
+    {
+        PhotonPeer.RegisterType(typeof(SyncData), 240, SyncData.Serialize, SyncData.Deserialize);
+    }
 
     public override void OnLeftRoom()
     {

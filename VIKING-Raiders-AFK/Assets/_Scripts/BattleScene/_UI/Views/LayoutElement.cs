@@ -5,17 +5,15 @@ using UnityEngine.UI;
 
 public class LayoutElement : MonoBehaviour
 {
-    private int ButtonID => GetInstanceID();
-    private User.Hero _hero;
+    protected int ButtonID => GetInstanceID();
+    protected User.Hero _hero;
 
     [SerializeField] private Text _textContent;
-    private Button selectButton;
-    private Image image;
+    protected Button selectButton;
+    protected Image image;
 
-    private Color inactiveColor;
-
-    
-    private bool isSelected;
+    protected Color inactiveColor;
+    protected bool isSelected;
 
     private void Awake()
     {
@@ -40,7 +38,7 @@ public class LayoutElement : MonoBehaviour
         _textContent.text = _hero._heroModel.CharacterName;
     }
 
-    private void SelectElement()
+    protected virtual void SelectElement()
     {
         if (isSelected)
         {
@@ -52,6 +50,11 @@ public class LayoutElement : MonoBehaviour
                 return;
         }
 
+        SetIsSelected();
+    }
+
+    protected void SetIsSelected()
+    {
         isSelected = !isSelected;
         image.color = isSelected ? Color.red : inactiveColor;
     }

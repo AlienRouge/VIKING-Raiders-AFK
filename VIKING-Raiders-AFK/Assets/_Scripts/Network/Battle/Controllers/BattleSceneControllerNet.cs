@@ -46,4 +46,13 @@ public class BattleSceneControllerNet : BattleSceneController
         ShowUi();
         /*InitializeScene(_player, _enemy, _mapController);*/
     }
+    
+    public override void OnStartButtonHandler()
+    {
+        if (_spawnController.PlayerTeamSize <= 0 || _spawnController.EnemyTeamSize <= 0) return;
+        
+        EventController.BattleStarted?.Invoke();
+        UIController.Instance.Show_BP(SpawnControllerNet.Instance.GetPlayerUnits());
+        BattleController.instance.StartBattle(SpawnControllerNet.Instance.GetSpawnedUnits());
+    }
 }

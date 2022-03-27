@@ -42,6 +42,7 @@ public class DragDropController : MonoBehaviour, IPointerDownHandler, IBeginDrag
     public void OnEndDrag(PointerEventData eventData)
     {
         EventController.UnitDragged.Invoke(_unitTeam);
+        Debug.Log(_unitTeam);
         
         Vector2 mousePos = GetMousePos();
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
@@ -50,7 +51,10 @@ public class DragDropController : MonoBehaviour, IPointerDownHandler, IBeginDrag
         {
             if (hit.transform.TryGetComponent(out SpawnArea spawnArea))
             {
-                _originalPos = UnitPositon;
+                if (spawnArea.Team == _unitTeam)
+                {
+                    _originalPos = UnitPositon;
+                }
             }
         }
         
