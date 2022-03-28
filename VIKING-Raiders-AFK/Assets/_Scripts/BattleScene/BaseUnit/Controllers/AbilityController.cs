@@ -1,11 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
-using Debug = UnityEngine.Debug;
 
 public class AbilityController : MonoBehaviour
 {
@@ -151,7 +147,7 @@ public class AbilityController : MonoBehaviour
     private async Task ActivityAsync(BaseAbility ability)
     {
         // _ability.OnStartActivity(null);
-        await Task.Delay((int)(ability.ActiveTime * 1000f));
+        await Task.Delay((int)(ability.ActiveTime * Consts.ONE_SECOND_VALUE));
         // _ability.OnEndActivity(null);
         SetAbilityState(ability, AbilityState.Cooldown);
     }
@@ -159,7 +155,7 @@ public class AbilityController : MonoBehaviour
     private async Task CooldownAsync(BaseAbility ability)
     {
         // _ability.OnStartCooldown(null);
-        await Task.Delay((int)(ability.CooldownTime * 1000f));
+        await Task.Delay((int)(ability.CooldownTime * Consts.ONE_SECOND_VALUE));
         // _ability.OnEndCooldown(null);
         SetAbilityState(ability, AbilityState.Ready);
     }

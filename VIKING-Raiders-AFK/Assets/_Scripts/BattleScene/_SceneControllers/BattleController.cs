@@ -61,7 +61,7 @@ public class BattleController : MonoBehaviour
     public void OnUnitDied(BaseUnitController unit)
     {
         _unitsByTeams[unit.MyTeam] = _unitsByTeams[unit.MyTeam]
-            .Where(value => value.gameObject.GetInstanceID() != unit.gameObject.GetInstanceID()).ToList();
+            .Where(value => !ReferenceEquals(value, unit)).ToList();
 
         unit.gameObject.SetActive(false);
         if (_unitsByTeams[Team.Team1].Count == 0 || _unitsByTeams[Team.Team2].Count == 0)

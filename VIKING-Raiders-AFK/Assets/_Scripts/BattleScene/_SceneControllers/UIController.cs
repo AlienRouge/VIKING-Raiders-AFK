@@ -17,7 +17,7 @@ public class UIController : MonoBehaviour
     }
     
     [SerializeField] private Panel _panelController;
-    [SerializeField] private BattlePanelController _battlePanelController;
+    [SerializeField] private AbilitiesPanelController abilitiesPanelController;
     
     private bool _isVisible;
 
@@ -57,7 +57,7 @@ public class UIController : MonoBehaviour
 
     public void Show_BP(List<BaseUnitController> list)
     {
-        Debug.Log(_battlePanelController);
-        _battlePanelController.Init(list);
+        Debug.Log(abilitiesPanelController);
+        abilitiesPanelController.Init(list);
     }
 }

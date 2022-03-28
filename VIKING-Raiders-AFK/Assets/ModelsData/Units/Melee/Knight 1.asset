@@ -18,8 +18,8 @@ MonoBehaviour:
   <ViewSpriteScale>k__BackingField: {x: 60, y: 60, z: 60}
   <UnitType>k__BackingField: 0
   <MaxUnitLevel>k__BackingField: 20
-  <BaseHealth>k__BackingField: 150
-  <BaseDamage>k__BackingField: 30
+  <BaseHealth>k__BackingField: 3000
+  <BaseDamage>k__BackingField: 500
   <BaseArmour>k__BackingField: 30
   <AttackSpeed>k__BackingField: 1.5
   <CriticalRate>k__BackingField: 0.5
@@ -28,6 +28,6 @@ MonoBehaviour:
   <PassiveAbility>k__BackingField: {fileID: 0}
   <ActiveAbility>k__BackingField: {fileID: 11400000, guid: 934de18d78be423459fb3a12245af454, type: 2}
   _targetWeights:
-    hpWeight: 1
-    distanceWeight: 1
+    hpWeight: 10
+    distanceWeight: 2
   additionalArmor: 0

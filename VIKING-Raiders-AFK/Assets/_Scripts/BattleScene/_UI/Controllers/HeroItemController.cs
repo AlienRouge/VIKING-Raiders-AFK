@@ -57,6 +57,11 @@ public class HeroItemController : MonoBehaviour
         }
     }
 
+    private void OnBattleEnded()
+    {
+        _button.enabled = false;
+    }
+
     private void OnUnitDied(BaseUnitController unit)
     {
         if (!ReferenceEquals(_unit, unit)) return;
@@ -70,10 +75,12 @@ public class HeroItemController : MonoBehaviour
     {
         EventController.ActiveAbilityStateChanged += OnAbilityStateChange;
         EventController.UnitDied += OnUnitDied;
+        EventController.BattleEnded += OnBattleEnded;
     }
 
     private void OnDisable()
     {
         EventController.ActiveAbilityStateChanged -= OnAbilityStateChange;
+        EventController.BattleEnded -= OnBattleEnded;
     }
 }

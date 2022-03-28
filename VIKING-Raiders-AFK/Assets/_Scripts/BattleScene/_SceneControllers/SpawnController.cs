@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class SpawnController : MonoBehaviourPun
 {
-    protected const int MAX_PLAYER_TEAM_SIZE = 4;
-
     private static SpawnController _instance;
 
     public static SpawnController Instance
@@ -59,7 +57,7 @@ public class SpawnController : MonoBehaviourPun
 
     public bool TrySpawnUnit(User.Hero hero, int buttonID)
     {
-        if (_playerTeam.Count >= MAX_PLAYER_TEAM_SIZE)
+        if (_playerTeam.Count >= Consts.MAX_PLAYER_TEAM_SIZE)
         {
             Debug.Log("Team overflow. " + hero._heroModel.CharacterName);
             return false;
