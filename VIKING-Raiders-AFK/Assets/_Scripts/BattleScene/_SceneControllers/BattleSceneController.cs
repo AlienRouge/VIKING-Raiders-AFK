@@ -17,7 +17,7 @@ public class BattleSceneController : MonoBehaviour
 
     [SerializeField] protected User _player;
     [SerializeField] protected User _enemy;
-    protected SpawnContoller _spawnController;
+    protected SpawnController _spawnController;
 
     protected MapController _mapController;
 
@@ -32,10 +32,10 @@ public class BattleSceneController : MonoBehaviour
 
     protected virtual void SetSpawnController()
     {
-        _spawnController = SpawnContoller.Instance;
+        _spawnController = SpawnController.Instance;
     }
 
-    protected void InitializeScene(User player, User enemy, MapController map)
+    protected virtual void InitializeScene(User player, User enemy, MapController map)
     {
         UIController.Instance.Init(player._heroList);
         _spawnController.Init(map.spawnPointController);
@@ -44,12 +44,12 @@ public class BattleSceneController : MonoBehaviour
     }
     
     // Start button or smth else
-    public void OnStartButtonHandler()
+    public virtual void OnStartButtonHandler()
     {
-        if (_spawnController.PlayerTeamSize <= 0) return;
+        if (_spawnController.PlayerTeamSize <= 0 || _spawnController.EnemyTeamSize <= 0) return;
         
         EventController.BattleStarted?.Invoke();
-        UIController.Instance.Show_BP(SpawnContoller.Instance.GetPlayerUnits());
-        BattleController.instance.StartBattle(SpawnContoller.Instance.GetSpawnedUnits());
+        UIController.Instance.Show_BP(SpawnController.Instance.GetPlayerUnits());
+        BattleController.instance.StartBattle(SpawnController.Instance.GetSpawnedUnits());
     }
 }

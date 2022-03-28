@@ -24,6 +24,8 @@ namespace _Scripts.Network.Map
                     var data = (float[]) photonEvent.CustomData;
 
                     SetMapData(data);
+                    BattleSceneControllerNet.instance.SetMapController(_mapController);
+                    BattleSceneControllerNet.instance.ShowUi();
                     break;
                 default:
                     break;
@@ -77,6 +79,22 @@ namespace _Scripts.Network.Map
 
                 PhotonNetwork.RaiseEvent((byte)NetEvents.StartBattle, noiseMap, riseEventOptions, sendOptions);
             }
+        }
+        
+        public override void TryInstantiateMap()
+        {
+            _mapController = FindObjectOfType<MapController>();
+            if (_mapController == null)
+            {
+                _mapController = Instantiate(_mapPrefab);
+                _mapController.transform.localPosition = new Vector3(
+                    -width/2f,
+                    -height/2f,
+                    1);
+            }
+        
+            _noiseMapRenderer.Init(_mapController.walkableTilemap, _mapController.notWalkableTilemap,
+                _mapController.decorTilemap);
         }
 
         private void OnEnable()

@@ -16,7 +16,7 @@ public class UIController : MonoBehaviour
         }
     }
     
-    [SerializeField] private PanelController _panelController;
+    [SerializeField] private Panel _panelController;
     [SerializeField] private BattlePanelController _battlePanelController;
     
     private bool _isVisible;
@@ -45,6 +45,10 @@ public class UIController : MonoBehaviour
         
     }
     
+    /// <summary>
+    /// Пожарная тревога минут 10-20
+    /// </summary>
+    
     public void SwitchSpawnUIVisible()
     {
         _isVisible = !_isVisible;
@@ -53,6 +57,7 @@ public class UIController : MonoBehaviour
 
     public void Show_BP(List<BaseUnitController> list)
     {
+        Debug.Log(_battlePanelController);
         _battlePanelController.Init(list);
     }
 }

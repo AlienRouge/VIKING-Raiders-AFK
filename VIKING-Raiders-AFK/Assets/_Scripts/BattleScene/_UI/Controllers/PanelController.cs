@@ -1,14 +1,18 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public class PanelController : MonoBehaviour
+public abstract class Panel: MonoBehaviour
 {
-    [SerializeField] protected LayoutElement _layoutElementPrefab;
-    [SerializeField] protected GameObject _layoutGroup;
+    public abstract void FillUnitPanel(List<User.Hero> heroes);
+}
+
+public class PanelController : Panel
+{
+    [SerializeField] private LayoutElement _layoutElementPrefab;
+    [SerializeField] private GameObject _layoutGroup;
     [SerializeField] private List<LayoutElement> _elements;
     
-    public void FillUnitPanel(List<User.Hero> heroes)
+    public override void FillUnitPanel(List<User.Hero> heroes)
     {
         foreach (var hero in heroes)
         {

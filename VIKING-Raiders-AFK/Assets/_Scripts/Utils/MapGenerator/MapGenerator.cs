@@ -42,7 +42,7 @@ public class MapGenerator : MonoBehaviour
         _noiseMapRenderer = GetComponent<NoiseMapRenderer>();
     }
 
-    public void TryInstantiateMap()
+    public virtual void TryInstantiateMap()
     {
         _mapController = FindObjectOfType<MapController>();
         if (_mapController == null)

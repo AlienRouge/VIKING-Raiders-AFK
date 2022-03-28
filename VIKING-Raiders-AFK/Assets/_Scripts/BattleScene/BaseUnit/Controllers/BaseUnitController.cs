@@ -8,12 +8,12 @@ using Random = UnityEngine.Random;
 public class BaseUnitController : MonoBehaviourPun
 {
     // TODO Сортировка полей и методов
-    private BaseUnitModel _model;
+    protected BaseUnitModel _model;
     private BaseUnitController _currentTarget;
 
-    [field: SerializeField] public Team MyTeam { get; private set; }
+    [field: SerializeField] public Team MyTeam { get; protected set; }
 
-    private int _level;
+    protected int _level;
     [SerializeField] private float _currentHealth;
 
     [SerializeField] private MoveState _currentMoveState;
@@ -89,7 +89,7 @@ public class BaseUnitController : MonoBehaviourPun
     {
         return _model;
     }
-    private void InitializeData(BaseUnitModel model, Team team, int unitLevel)
+    protected void InitializeData(BaseUnitModel model, Team team, int unitLevel)
     {
         _model = model;
         _level = unitLevel;
