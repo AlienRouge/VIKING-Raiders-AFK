@@ -26,5 +26,8 @@ MonoBehaviour:
   <AttackRange>k__BackingField: 1.5
   <MoveSpeed>k__BackingField: 2
   <PassiveAbility>k__BackingField: {fileID: 0}
-  <ActiveAbility>k__BackingField: {fileID: 11400000, guid: cc538ad0adcb9d44a97c9e814654d4ce, type: 2}
+  <ActiveAbility>k__BackingField: {fileID: 11400000, guid: 934de18d78be423459fb3a12245af454, type: 2}
+  _targetWeights:
+    hpWeight: 1
+    distanceWeight: 1
   additionalArmor: 0

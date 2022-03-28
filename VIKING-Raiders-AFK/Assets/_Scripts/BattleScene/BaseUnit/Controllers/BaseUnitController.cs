@@ -3,17 +3,18 @@ using System.Threading.Tasks;
 using _Scripts.Enums;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class BaseUnitController : MonoBehaviourPun
 {
     // TODO Сортировка полей и методов
-    protected BaseUnitModel _model;
+    private BaseUnitModel _model;
     private BaseUnitController _currentTarget;
 
     [field: SerializeField] public Team MyTeam { get; protected set; }
 
-    protected int _level;
+    private int _level;
     [SerializeField] private float _currentHealth;
 
     [SerializeField] private MoveState _currentMoveState;
@@ -47,6 +48,12 @@ public class BaseUnitController : MonoBehaviourPun
             OnTargetInRangeSet();
             _isTargetInRange = value;
         }
+    }
+
+    public float CurrentHealth
+    {
+        get => _currentHealth;
+        set {}
     }
 
     private bool CheckAttackRange =>
@@ -89,7 +96,7 @@ public class BaseUnitController : MonoBehaviourPun
     {
         return _model;
     }
-    protected void InitializeData(BaseUnitModel model, Team team, int unitLevel)
+    private void InitializeData(BaseUnitModel model, Team team, int unitLevel)
     {
         _model = model;
         _level = unitLevel;
@@ -161,24 +168,7 @@ public class BaseUnitController : MonoBehaviourPun
 
     private void FindTarget()
     {
-        var enemies = BattleController.instance.GetEnemies(MyTeam);
-        float minDistance = Mathf.Infinity;
-        BaseUnitController supposedEnemy = null;
-        _currentTarget = null;
-
-        // TODO Find with priority
-
-        foreach (var enemy in enemies)
-        {
-            float distance = _movementController.CalculatePathLength(enemy.transform.position);
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                supposedEnemy = enemy;
-            }
-        }
-
-        _currentTarget = supposedEnemy;
+        _currentTarget = BattleController.instance.GetTarget(this);
 
         if (_currentTarget)
         {
@@ -188,6 +178,11 @@ public class BaseUnitController : MonoBehaviourPun
         Debug.Log(_currentTarget
             ? $"{characterName}: New target({_currentTarget.characterName})."
             : $"{characterName}: No targets.");
+    }
+
+    public float GetDistanceToPosition(Vector3 position)
+    {
+        return _movementController.CalculatePathLength(position);
     }
 
     private void OnTargetDeathHandler(BaseUnitController unit)
