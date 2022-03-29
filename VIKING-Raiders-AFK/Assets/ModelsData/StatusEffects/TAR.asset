@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cc6e3d56a0250443b84a450d0313843, type: 3}
-  m_Name: PD
+  m_Script: {fileID: 11500000, guid: 784ff2cc261eb8340abc82cce4590c21, type: 3}
+  m_Name: TAR
   m_EditorClassIdentifier: 
-  <StatusName>k__BackingField: Periodic Damage
+  <StatusName>k__BackingField: Temp Increase Attack Rate
   <DiscriptionName>k__BackingField: 
-  <EffectDuration>k__BackingField: 10
-  <TicksDeltaTime>k__BackingField: 5
-  <TickAmount>k__BackingField: -25
+  <EffectDuration>k__BackingField: 5
+  <TicksDeltaTime>k__BackingField: 0
+  _multiplier: 10

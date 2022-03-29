@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1318587e5ff51684aa6a2ea108b400c9, type: 3}
   m_Name: Heal
   m_EditorClassIdentifier: 
-  <Target>k__BackingField: 3
+  <Target>k__BackingField: 0
   <AbilityName>k__BackingField: Heal
   <CooldownTime>k__BackingField: 3
   <ActiveTime>k__BackingField: 0
   <CastRange>k__BackingField: 3.5
   <CastTime>k__BackingField: 1
-  <StatusEffect>k__BackingField: {fileID: 11400000, guid: 37cb09d8ef9fe994299a0eb2c58b2720, type: 2}
+  <StatusEffect>k__BackingField: {fileID: 11400000, guid: 9962d6581d6cebf448a4f8d1cd207c4a, type: 2}
   <StatusEffectProcRate>k__BackingField: 0
   healAmount: 300

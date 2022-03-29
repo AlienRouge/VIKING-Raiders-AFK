@@ -16,6 +16,7 @@ public class BaseUnitController : MonoBehaviourPun
 
     private int _level;
     [SerializeField] private float _currentHealth;
+    [SerializeField] private float _damageRatioMultiplier; // TODO В отдельный класс?
 
     [SerializeField] private MoveState _currentMoveState;
 
@@ -53,7 +54,7 @@ public class BaseUnitController : MonoBehaviourPun
     public float CurrentHealth
     {
         get => _currentHealth;
-        set {}
+        set { }
     }
 
     private bool CheckAttackRange =>
@@ -97,6 +98,7 @@ public class BaseUnitController : MonoBehaviourPun
     {
         return _model;
     }
+
     private void InitializeData(BaseUnitModel model, Team team, int unitLevel)
     {
         _model = model;
@@ -104,6 +106,7 @@ public class BaseUnitController : MonoBehaviourPun
         _currentHealth = model.BaseHealth;
         _attackDeltaTime = 1 / model.AttackSpeed;
         MyTeam = team;
+        _damageRatioMultiplier = 1f;
     }
 
     private void InitializeControllers(bool isDraggable)
@@ -113,7 +116,7 @@ public class BaseUnitController : MonoBehaviourPun
         _dragDropController = GetComponent<DragDropController>();
         _abilityController = GetComponent<AbilityController>();
         _statusEffectController = GetComponent<StatusEffectController>();
-        
+
         _movementController.Init(_model.MoveSpeed);
         _baseUnitView.Init(_model);
         _dragDropController.Init(MyTeam, isDraggable);
@@ -150,7 +153,7 @@ public class BaseUnitController : MonoBehaviourPun
             Gizmos.DrawWireSphere(transform.position, _model.ActiveAbility.CastRange);
         }
     }
-    
+
     private void OnEnable()
     {
         EventController.BattleEnded += OnBattleEnded;
@@ -195,7 +198,7 @@ public class BaseUnitController : MonoBehaviourPun
 
     private void OnTargetDeathHandler(BaseUnitController unit)
     {
-        Debug.Log("DEAD: "+unit);
+        Debug.Log("DEAD: " + unit);
         if (unit == _currentTarget)
         {
             Debug.Log("NO problem find new one");
@@ -272,7 +275,7 @@ public class BaseUnitController : MonoBehaviourPun
     {
         Debug.Log(unit);
         if (!ReferenceEquals(unit, this)) return;
-        
+
         _isPassiveAbilityReady = state == AbilityController.AbilityState.Ready;
     }
 
@@ -294,24 +297,29 @@ public class BaseUnitController : MonoBehaviourPun
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _model.BaseHealth);
 
         _baseUnitView.OnChangeHealth(_currentHealth); // TODO To event
-        if (isDead)
+        if (isDead) // TODO To method
         {
             _currentTarget = null;
-            
+
             if (_model.PassiveAbility)
             {
                 EventController.PassiveAbilityStateChanged -= OnPassiveAbilityStateChange;
-
             }
+
             if (_model.ActiveAbility)
             {
                 EventController.UseUnitActiveAbility -= OnUseActiveAbility;
             }
-            
+
             _statusEffectController.OnUnitDead();
             BattleController.instance.OnUnitDied(this);
             EventController.UnitDied?.Invoke(this);
         }
+    }
+
+    public void ChangeDamageRatioMultiplier(float mult)
+    {
+        _damageRatioMultiplier = mult;
     }
 
     private float GetArmourValue()
@@ -330,7 +338,8 @@ public class BaseUnitController : MonoBehaviourPun
         var lvlRatio = (_currentTarget._level - _level) * 0.05f; // Value per level
         var critRatio = Random.Range(0f, 1f) < _model.CriticalRate;
         var attackRatio = dmgRatio - lvlRatio + Convert.ToInt32(critRatio);
-        var finalDmg = (int)Mathf.Floor(GetDamageValue() * attackRatio * Random.Range(0.85f, 1f));
+        var finalDmg =
+            (int)Mathf.Floor(_damageRatioMultiplier * GetDamageValue() * attackRatio * Random.Range(0.85f, 1f));
 
         if (critRatio)
         {

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cc6e3d56a0250443b84a450d0313843, type: 3}
-  m_Name: PD
+  m_Name: PH
   m_EditorClassIdentifier: 
-  <StatusName>k__BackingField: Periodic Damage
+  <StatusName>k__BackingField: Periodic Heal
   <DiscriptionName>k__BackingField: 
-  <EffectDuration>k__BackingField: 10
-  <TicksDeltaTime>k__BackingField: 5
-  <TickAmount>k__BackingField: -25
+  <EffectDuration>k__BackingField: 15
+  <TicksDeltaTime>k__BackingField: 3
+  <TickAmount>k__BackingField: 15
