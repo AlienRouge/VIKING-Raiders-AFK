@@ -72,6 +72,7 @@ public class BaseUnitController : MonoBehaviourPun
     private MovementController _movementController;
     private DragDropController _dragDropController;
     private AbilityController _abilityController;
+    private StatusEffectController _statusEffectController;
 
     public void StartBattle()
     {
@@ -111,10 +112,12 @@ public class BaseUnitController : MonoBehaviourPun
         _baseUnitView = GetComponentInChildren<BaseUnitView>();
         _dragDropController = GetComponent<DragDropController>();
         _abilityController = GetComponent<AbilityController>();
+        _statusEffectController = GetComponent<StatusEffectController>();
         
         _movementController.Init(_model.MoveSpeed);
         _baseUnitView.Init(_model);
         _dragDropController.Init(MyTeam, isDraggable);
+        _statusEffectController.Init();
 
         if (_model.PassiveAbility)
         {
@@ -183,6 +186,11 @@ public class BaseUnitController : MonoBehaviourPun
     public float GetDistanceToPosition(Vector3 position)
     {
         return _movementController.CalculatePathLength(position);
+    }
+
+    public void AddStatusEffect(BaseStatusEffect effect)
+    {
+        _statusEffectController.AddStatusEffect(effect);
     }
 
     private void OnTargetDeathHandler(BaseUnitController unit)
@@ -300,6 +308,7 @@ public class BaseUnitController : MonoBehaviourPun
                 EventController.UseUnitActiveAbility -= OnUseActiveAbility;
             }
             
+            _statusEffectController.OnUnitDead();
             BattleController.instance.OnUnitDied(this);
             EventController.UnitDied?.Invoke(this);
         }
