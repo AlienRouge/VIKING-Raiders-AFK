@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using _Scripts.Network.Map;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 
-public class BattleSceneControllerNet : BattleSceneController
+public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
 {
     [SerializeField] private MapGeneratorNet mapGenerator;
 
@@ -44,15 +46,57 @@ public class BattleSceneControllerNet : BattleSceneController
     {
         _mapController = mapGenerator.GenerateMap();
         ShowUi();
-        /*InitializeScene(_player, _enemy, _mapController);*/
     }
     
     public override void OnStartButtonHandler()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         if (_spawnController.PlayerTeamSize <= 0 || _spawnController.EnemyTeamSize <= 0) return;
         
         EventController.BattleStarted?.Invoke();
         UIController.Instance.Show_BP(SpawnControllerNet.Instance.GetPlayerUnits());
         BattleController.instance.StartBattle(SpawnControllerNet.Instance.GetSpawnedUnits());
+        SendStartBattle();
+    }
+
+    private void SendStartBattle()
+    {
+        var riseEventOptions = new RaiseEventOptions()
+        {
+            Receivers = ReceiverGroup.Others
+        };
+        var sendOptions = new SendOptions()
+        {
+            Reliability = true
+        };
+
+        PhotonNetwork.RaiseEvent((byte) NetEvents.BeginFight, null, riseEventOptions, sendOptions);
+    }
+    
+    public void OnEvent(EventData photonEvent)
+    {
+        switch (photonEvent.Code)
+        {
+            case (byte) NetEvents.BeginFight:
+            {
+                EventController.BattleStarted?.Invoke();
+                UIController.Instance.Show_BP(SpawnControllerNet.Instance.GetPlayerUnits());
+                BattleController.instance.StartBattle(SpawnControllerNet.Instance.GetSpawnedUnits());
+                //InstantiateReceivedModal((SyncData) photonEvent.CustomData);
+                break;
+            }
+            default:
+                return;
+        }
+    }
+    
+    private void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
     }
 }

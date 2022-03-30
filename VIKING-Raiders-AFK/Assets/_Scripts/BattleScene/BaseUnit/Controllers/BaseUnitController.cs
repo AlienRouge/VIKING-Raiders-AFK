@@ -5,6 +5,8 @@ using Photon.Pun;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(StatusEffectController), typeof(AbilityController), typeof(DragDropController))]
+[RequireComponent(typeof(BaseUnitView),typeof(MovementController))]
 public class BaseUnitController : MonoBehaviourPun
 {
     private BaseUnitController _currentTarget;
