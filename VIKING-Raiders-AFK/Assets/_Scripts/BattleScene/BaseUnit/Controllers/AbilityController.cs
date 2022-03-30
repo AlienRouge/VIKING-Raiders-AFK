@@ -62,7 +62,7 @@ public class AbilityController : MonoBehaviour
         var ability = _passiveAbility;
         await ActivateAbility(ability, target);
     }
-    
+
     public async Task ActivateActiveAbility(BaseUnitController target)
     {
         var ability = _activeAbility;
@@ -93,7 +93,7 @@ public class AbilityController : MonoBehaviour
             PassiveAbilityState = state;
         }
     }
-    
+
 
     public bool CheckPassiveAbilityRange(BaseUnitController target)
     {
@@ -115,11 +115,13 @@ public class AbilityController : MonoBehaviour
                 break;
 
             case BaseAbility.TargetType.MyTeam:
-                targets = new List<BaseUnitController>(BattleController.instance.GetFriendlies(parent.MyTeam));
+                targets = new List<BaseUnitController>(
+                    BattleController.instance.GetFriendlies(parent.ActualStats.BattleTeam));
                 break;
 
             case BaseAbility.TargetType.EnemyTeam:
-                targets = new List<BaseUnitController>(BattleController.instance.GetEnemies(parent.MyTeam));
+                targets = new List<BaseUnitController>(
+                    BattleController.instance.GetEnemies(parent.ActualStats.BattleTeam));
                 break;
 
             default:

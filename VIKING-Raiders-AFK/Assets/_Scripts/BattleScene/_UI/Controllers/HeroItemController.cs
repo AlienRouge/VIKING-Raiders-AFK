@@ -15,7 +15,7 @@ public class HeroItemController : MonoBehaviour
         _button = GetComponent<Button>();
         
         _unit = unit;
-        _unitModel = _unit.GetUnitModel();
+        _unitModel = _unit.ActualStats.UnitModel;
         
         _view.SetupItemView(_unitModel);
         

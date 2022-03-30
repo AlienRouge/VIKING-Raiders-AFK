@@ -9,24 +9,4 @@ public class InstantHealAbility : BaseAbility
     {
         target.ChangeHealth(healAmount);
     }
-
-    protected override void DoOnStartActivity(BaseUnitController target)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected override void DoOnEndActivity(BaseUnitController target)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected override void DoOnStartCooldown(BaseUnitController target)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected override void DoOnEndCooldown(BaseUnitController target)
-    {
-        throw new System.NotImplementedException();
-    }
 }

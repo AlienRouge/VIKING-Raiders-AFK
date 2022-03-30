@@ -4,10 +4,12 @@ using UnityEngine;
 public class ChangeAttackRateTemp : BaseStatusEffect
 {
     [SerializeField] private float _multiplier;
+    private float _oldMultiplier;
 
     protected override void DoOnApplyEffect(BaseUnitController target)
     {
-        target.ChangeDamageRatioMultiplier(_multiplier);
+        _oldMultiplier = target.ActualStats.DmgMultiplier;
+        target.ActualStats.DmgMultiplier = _multiplier;
     }
 
     protected override void DoOnTickEffect(BaseUnitController target)
@@ -17,6 +19,6 @@ public class ChangeAttackRateTemp : BaseStatusEffect
 
     protected override void DoOnRemoveEffect(BaseUnitController target)
     {
-        target.ChangeDamageRatioMultiplier(1.0f);   //TODO RESTORE VALUE IN UNIT DATA CLASS
+        target.ActualStats.DmgMultiplier = _oldMultiplier;
     }
 }

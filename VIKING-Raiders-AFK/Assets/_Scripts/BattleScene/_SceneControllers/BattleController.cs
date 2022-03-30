@@ -41,7 +41,7 @@ public class BattleController : MonoBehaviour
 
         foreach (var unit in units)
         {
-            _unitsByTeams[unit.MyTeam].Add(unit);
+            _unitsByTeams[unit.ActualStats.BattleTeam].Add(unit);
         }
 
         foreach (var unit in units)
@@ -60,7 +60,7 @@ public class BattleController : MonoBehaviour
 
     public void OnUnitDied(BaseUnitController unit)
     {
-        _unitsByTeams[unit.MyTeam] = _unitsByTeams[unit.MyTeam]
+        _unitsByTeams[unit.ActualStats.BattleTeam] = _unitsByTeams[unit.ActualStats.BattleTeam]
             .Where(value => !ReferenceEquals(value, unit)).ToList();
 
         unit.gameObject.SetActive(false);
@@ -73,14 +73,14 @@ public class BattleController : MonoBehaviour
     public BaseUnitController GetTarget(BaseUnitController unit)
     {
         BaseUnitController supposedEnemy = null;
-        var enemies = GetEnemies(unit.MyTeam);
-        var weights = unit.GetUnitModel().TargetWeights;
+        var enemies = GetEnemies(unit.ActualStats.BattleTeam);
+        var weights = unit.ActualStats.UnitModel.TargetWeights;
         float enemyValue = Mathf.Infinity;
 
         foreach (var enemy in enemies)
         {
             float distance = unit.GetDistanceToPosition(enemy.transform.position);
-            float hp = enemy.CurrentHealth;
+            float hp = enemy.ActualStats.CurrentHealth;
             float mean = GetTargetWeightedMean(hp, distance, weights.hpWeight, weights.distanceWeight);
 
             if (mean <= enemyValue)

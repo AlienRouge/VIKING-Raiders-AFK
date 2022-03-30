@@ -32,10 +32,10 @@ public abstract class BaseAbility : ScriptableObject
         Debug.Log("Casting..." + AbilityName);
         await Task.Delay(Mathf.RoundToInt(CastTime * 1000));
 
-        if (parent.isDead) return;
+        if (parent.ActualStats.IsDead) return;
         foreach (var unit in targets)
         {
-            if (!unit.isDead)
+            if (!unit.ActualStats.IsDead)
             {
                 DoOnActivate(unit);
                 if (StatusEffect && Random.Range(0, 1) - StatusEffectProcRate >= 0)
@@ -45,62 +45,6 @@ public abstract class BaseAbility : ScriptableObject
             }
         }
     }
-
-    public void OnStartActivity(BaseUnitController parent, List<BaseUnitController> targets)
-    {
-        Debug.Log("Ability activity started.");
-        foreach (var unit in targets)
-        {
-            if (!unit.isDead)
-            {
-                DoOnStartActivity(unit);
-            }
-        }
-    }
-
-    public void OnEndActivity(BaseUnitController parent, List<BaseUnitController> targets)
-    {
-        Debug.Log("Ability activity started.");
-        foreach (var unit in targets)
-        {
-            if (!unit.isDead)
-            {
-                DoOnEndActivity(unit);
-            }
-        }
-    }
-
-    public void OnStartCooldown(BaseUnitController parent, List<BaseUnitController> targets)
-    {
-        Debug.Log("Ability activity started.");
-        foreach (var unit in targets)
-        {
-            if (!unit.isDead)
-            {
-                DoOnStartCooldown(unit);
-            }
-        }
-    }
-
-    public void OnEndCooldown(BaseUnitController parent, List<BaseUnitController> targets)
-    {
-        Debug.Log("Ability activity started.");
-        foreach (var unit in targets)
-        {
-            if (!unit.isDead)
-            {
-                DoOnEndCooldown(unit);
-            }
-        }
-    }
-
+    
     protected abstract void DoOnActivate(BaseUnitController target);
-
-    protected abstract void DoOnStartActivity(BaseUnitController target);
-
-    protected abstract void DoOnEndActivity(BaseUnitController target);
-
-    protected abstract void DoOnStartCooldown(BaseUnitController target);
-
-    protected abstract void DoOnEndCooldown(BaseUnitController target);
 }
