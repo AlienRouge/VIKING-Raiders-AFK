@@ -195,10 +195,6 @@ public class BaseUnitController : MonoBehaviourPun
         _isCasting = false;
     }
 
-//------------------------------------------
-   
-
-
     public float GetDistanceToPosition(Vector3 position)
     {
         return _movementController.CalculatePathLength(position);
@@ -221,9 +217,6 @@ public class BaseUnitController : MonoBehaviourPun
         }
     }
 
-   
-
-    
     private void OnDeathHandler()
     {
         _currentTarget = null;
@@ -275,8 +268,6 @@ public class BaseUnitController : MonoBehaviourPun
             UseActiveAbility();
         }
     }
-//------------------------
-
     private void OnEnable()
     {
         EventController.BattleEnded += OnBattleEnded;
