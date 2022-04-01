@@ -178,6 +178,7 @@ public class BaseUnitController : MonoBehaviourPun
 
         return finalDmg > 0 ? finalDmg : 0;
     }
+
     private async Task UsePassiveAbility()
     {
         if (ActualStats.IsDead || _isBattleEnd || _currentTarget.ActualStats.IsDead) return;
@@ -204,14 +205,14 @@ public class BaseUnitController : MonoBehaviourPun
     {
         _statusEffectController.AddStatusEffect(effect);
     }
-    
+
     public void ChangeHealth(float amount)
     {
         ActualStats.CurrentHealth += amount;
         ActualStats.CurrentHealth = Mathf.Clamp(ActualStats.CurrentHealth, 0, ActualStats.UnitModel.BaseHealth);
         EventController.UnitHealthChanged.Invoke(this, ActualStats.CurrentHealth);
 
-        if (ActualStats.IsDead) 
+        if (ActualStats.IsDead)
         {
             OnDeathHandler();
         }
@@ -220,47 +221,55 @@ public class BaseUnitController : MonoBehaviourPun
     private void OnDeathHandler()
     {
         _currentTarget = null;
+        
         if (ActualStats.UnitModel.PassiveAbility)
         {
             EventController.PassiveAbilityStateChanged -= OnPassiveAbilityStateChange;
         }
+
         if (ActualStats.UnitModel.ActiveAbility)
         {
             EventController.UseUnitActiveAbility -= OnUseActiveAbility;
         }
-        
+
         _statusEffectController.OnUnitDead();
         BattleController.instance.OnUnitDied(this);
         EventController.UnitDied?.Invoke(this);
     }
+
     private void OnBattleEnded()
     {
         _isBattleEnd = true;
     }
+
     private void OnTargetDeath(BaseUnitController unit)
     {
         Debug.Log("DEAD: " + unit);
         if (unit == _currentTarget)
-        { 
+        {
             FindTarget();
         }
     }
+
     private void OnTargetInRangeSet()
     {
         var oppositeMoveState = CurrentMoveState == MoveState.Move ? MoveState.Stop : MoveState.Move;
         CurrentMoveState = oppositeMoveState;
     }
+
     private void OnCurrentMoveStateSet(MoveState value)
     {
         var moveFlag = value == MoveState.Stop;
         _movementController.IsStopped(moveFlag);
     }
+
     private void OnPassiveAbilityStateChange(BaseUnitController unit, AbilityController.AbilityState state)
     {
         if (!ReferenceEquals(unit, this)) return;
 
         _isPassiveAbilityReady = state == AbilityController.AbilityState.Ready;
     }
+
     private void OnUseActiveAbility(BaseUnitController unit)
     {
         if (ReferenceEquals(unit, this))
@@ -268,6 +277,7 @@ public class BaseUnitController : MonoBehaviourPun
             UseActiveAbility();
         }
     }
+
     private void OnEnable()
     {
         EventController.BattleEnded += OnBattleEnded;

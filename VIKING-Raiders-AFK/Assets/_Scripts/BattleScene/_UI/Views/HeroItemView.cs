@@ -21,6 +21,7 @@ public class HeroItemView : MonoBehaviour
     {
         _title.text = model.CharacterName;
         _icon.sprite = model.ViewSprite;
+        
         if (model.ActiveAbility)
         {
             _cooldownTime = model.ActiveAbility.CooldownTime;
