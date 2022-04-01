@@ -6,19 +6,6 @@ using UnityEngine;
 
 public class SpawnController : MonoBehaviourPun
 {
-    private static SpawnController _instance;
-
-    public static SpawnController Instance
-    {
-        get
-        {
-            if (_instance == null)
-                Debug.LogError(nameof(SpawnController) + "is NULL!");
-
-            return _instance;
-        }
-    }
-
     protected SpawnPointController _spawnPointController;
     public Team CurrentTeam { get; protected set; }
 
@@ -41,7 +28,6 @@ public class SpawnController : MonoBehaviourPun
     
     private void Awake()
     {
-        _instance = this;
         _playerTeam = new List<SpawnedUnit>();
     }
 

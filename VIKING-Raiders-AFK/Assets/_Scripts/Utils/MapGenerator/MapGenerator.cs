@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-    protected static MapGenerator _instance;
-    
+    public static int Seed = 123;
+
     [Header("Map settings")] [SerializeField]
     protected MapController _mapPrefab;
 
@@ -25,57 +25,48 @@ public class MapGenerator : MonoBehaviour
     protected int BattleAreaWidth => width - 2 * spawnAreaWidth;
     protected NoiseMapRenderer _noiseMapRenderer;
 
-    public static MapGenerator instance
-    {
-        get
-        {
-            if (_instance == null)
-                Debug.LogError(nameof(MapGenerator) + " is NULL!");
-
-            return _instance;
-        }
-    }
-
     private void Awake()
     {
-        _instance = this;
         _noiseMapRenderer = GetComponent<NoiseMapRenderer>();
     }
 
-    public virtual void TryInstantiateMap()
+    protected virtual void TryInstantiateMap()
     {
         _mapController = FindObjectOfType<MapController>();
         if (_mapController == null)
         {
             _mapController = Instantiate(_mapPrefab);
             _mapController.transform.localPosition = new Vector3(
-                -width/2f,
-                -height/2f,
+                -width / 2f,
+                -height / 2f,
                 1);
         }
-        
+
         _noiseMapRenderer.Init(_mapController.walkableTilemap, _mapController.notWalkableTilemap,
             _mapController.decorTilemap);
     }
 
     public virtual MapController GenerateMap()
     {
-        GenerateTilemap();
+        Debug.Log("Current seed: " + Seed);
+        GenerateTilemap(Seed);
         _mapController.BakeMap();
         SetupSpawnAreas();
 
         return _mapController;
     }
 
-    public void GenerateTilemap()
+    protected void GenerateTilemap(int seed)
     {
         TryInstantiateMap();
         _noiseMapRenderer.ClearTilemaps();
+
+        Random.InitState(seed);
         GenerateSpawnAreas();
         GenerateBattleArea();
     }
 
-    public void SetupSpawnAreas()
+    protected void SetupSpawnAreas()
     {
         var spawnAreaScale = new Vector3(spawnAreaWidth - spawnAreaOffset.x, height - spawnAreaOffset.y);
 
@@ -110,7 +101,7 @@ public class MapGenerator : MonoBehaviour
         return noiseMap;
     }
 
-    protected float[] GetNoiseMap()
+    protected float[] GenerateBattleAreaNoiseMap()
     {
         return NoiseMapGenerator.GenerateNoiseMap(BattleAreaWidth, height, scale, octaves, persistence, lacunarity,
             offset);
@@ -118,8 +109,8 @@ public class MapGenerator : MonoBehaviour
 
     protected virtual void GenerateBattleArea()
     {
-        float[] noiseMap = GetNoiseMap();
-        
+        float[] noiseMap = GenerateBattleAreaNoiseMap();
+
         _noiseMapRenderer.RenderMap(BattleAreaWidth, height, noiseMap, spawnAreaWidth);
     }
 }

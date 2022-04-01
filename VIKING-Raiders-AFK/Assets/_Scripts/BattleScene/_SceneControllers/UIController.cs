@@ -3,29 +3,24 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    private static UIController _instance;
-
-    public static UIController Instance
-    {
-        get
-        {
-            if (_instance == null)
-                Debug.LogError(nameof(UIController) + "is NULL!");
-
-            return _instance;
-        }
-    }
-    
+    // private static UIController _instance;
+    //
+    // public static UIController Instance
+    // {
+    //     get
+    //     {
+    //         if (_instance == null)
+    //             Debug.LogError(nameof(UIController) + "is NULL!");
+    //
+    //         return _instance;
+    //     }
+    // }
+    //
     [SerializeField] private Panel _panelController;
     [SerializeField] private AbilitiesPanelController abilitiesPanelController;
     
     private bool _isVisible;
-
-    private void Awake()
-    {
-        _instance = this;
-    }
-
+    
     private void OnEnable()
     {
         EventController.BattleStarted += SwitchSpawnUIVisible;

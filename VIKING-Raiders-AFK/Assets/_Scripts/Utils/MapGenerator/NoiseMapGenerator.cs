@@ -9,8 +9,7 @@ public static class NoiseMapGenerator
         float[] noiseMap = new float[width * height];
 
         // Порождающий элемент
-        // System.Random rand = new System.Random(seed);
-
+       
         // Сдвиг октав, чтобы при наложении друг на друга получить более интересную картинку
         Vector2[] octavesOffset = new Vector2[octaves];
         for (int i = 0; i < octaves; i++)

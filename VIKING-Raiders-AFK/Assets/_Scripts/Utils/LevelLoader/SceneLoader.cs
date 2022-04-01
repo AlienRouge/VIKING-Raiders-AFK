@@ -10,15 +10,15 @@ public class SceneLoader : MonoBehaviour
     private static readonly int StartTransition = Animator.StringToHash("StartTrans");
 
 
-    public void Load(int ind)
+    public void Load(string sceneName)
     {
-        StartCoroutine(LoadScene(ind));
+        StartCoroutine(LoadScene(sceneName));
     }
-    private IEnumerator LoadScene(int sceneIndex)
+    private IEnumerator LoadScene(string sceneName)
     {
         _animator.SetTrigger(StartTransition);
         
         yield return new WaitForSeconds(_transitionTime);
-        SceneManager.LoadScene(sceneIndex);
+        SceneManager.LoadScene(sceneName);
     }
 }

@@ -40,11 +40,11 @@ public class LayoutElement : MonoBehaviour
     {
         if (isSelected)
         {
-            SpawnController.Instance.RemoveUnit(_hero, ButtonID);
+            BattleSceneController.instance.SpawnController.RemoveUnit(_hero, ButtonID);
         }
         else
         {
-            if (!SpawnController.Instance.TrySpawnUnit(_hero, ButtonID))
+            if (!BattleSceneController.instance.SpawnController.TrySpawnUnit(_hero, ButtonID))
                 return;
         }
 

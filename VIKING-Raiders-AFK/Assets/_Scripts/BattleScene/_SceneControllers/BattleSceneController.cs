@@ -1,9 +1,20 @@
+using System;
 using UnityEngine;
 
 public class BattleSceneController : MonoBehaviour
 {
-    protected static BattleSceneController _instance;
+    private static BattleSceneController _instance;
+    
+    [SerializeField] protected User _player;
+    [SerializeField] protected User _enemy;
 
+    [field: SerializeField] public BattleController BattleController { get; private set; }
+    [field: SerializeField] public SpawnController SpawnController { get; private set; }
+    [field: SerializeField] public UIController UIController { get; private set; }
+
+    [SerializeField] private MapGenerator _mapGenerator;
+    protected MapController _mapController;
+    
     public static BattleSceneController instance
     {
         get
@@ -15,41 +26,34 @@ public class BattleSceneController : MonoBehaviour
         }
     }
 
-    [SerializeField] protected User _player;
-    [SerializeField] protected User _enemy;
-    protected SpawnController _spawnController;
-
-    protected MapController _mapController;
 
     private void Start()
     {
         _instance = this;
-
-        _mapController = MapGenerator.instance.GenerateMap(); // To upper controller
-        SetSpawnController();
+        
+        _mapController = _mapGenerator.GenerateMap(); // TODO MIDDLEWARE
         InitializeScene(_player, _enemy, _mapController);
     }
 
-    protected virtual void SetSpawnController()
+
+    private void InitializeScene(User player, User enemy, MapController map)
     {
-        _spawnController = SpawnController.Instance;
+        UIController.Init(player._heroList);
+        SpawnController.Init(map.spawnPointController);
+        SpawnController.SpawnEnemies(enemy._heroList);
     }
 
-    protected virtual void InitializeScene(User player, User enemy, MapController map)
+    public void RestartBattle()
     {
-        UIController.Instance.Init(player._heroList);
-        _spawnController.Init(map.spawnPointController);
-        _spawnController.SpawnEnemies(enemy._heroList);
-        
     }
-    
+
     // Start button or smth else
     public virtual void OnStartButtonHandler()
     {
-        if (_spawnController.PlayerTeamSize <= 0 || _spawnController.EnemyTeamSize <= 0) return;
-        
+        if (SpawnController.PlayerTeamSize <= 0 || SpawnController.EnemyTeamSize <= 0) return;
+
         EventController.BattleStarted?.Invoke();
-        UIController.Instance.Show_BP(SpawnController.Instance.GetPlayerUnits());
-        BattleController.instance.StartBattle(SpawnController.Instance.GetSpawnedUnits());
+        UIController.Show_BP(SpawnController.GetPlayerUnits());
+        BattleController.StartBattle(SpawnController.GetSpawnedUnits());
     }
 }

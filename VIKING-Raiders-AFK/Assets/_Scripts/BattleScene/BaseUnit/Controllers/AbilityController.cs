@@ -131,12 +131,12 @@ public class AbilityController : MonoBehaviour
 
             case BaseAbility.TargetType.MyTeam:
                 targets = new List<BaseUnitController>(
-                    BattleController.instance.GetFriendlies(parent.ActualStats.BattleTeam));
+                    BattleSceneController.instance.BattleController.GetFriendlies(parent.ActualStats.BattleTeam));
                 break;
 
             case BaseAbility.TargetType.EnemyTeam:
                 targets = new List<BaseUnitController>(
-                    BattleController.instance.GetEnemies(parent.ActualStats.BattleTeam));
+                    BattleSceneController.instance.BattleController.GetEnemies(parent.ActualStats.BattleTeam));
                 break;
 
             default:

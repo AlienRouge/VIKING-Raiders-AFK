@@ -10,7 +10,7 @@ public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
 
     private static BattleSceneControllerNet _instance;
 
-    public static BattleSceneControllerNet instance
+    public static BattleSceneControllerNet Instance
     {
         get
         {
@@ -24,12 +24,12 @@ public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
     private void Start()
     {
         _instance = this;
-        SetSpawnController();
+        // SetSpawnController();
     }
-    protected override void SetSpawnController()
-    {
-        _spawnController = SpawnControllerNet.Instance;
-    }
+    // protected override void SetSpawnController()
+    // {
+    //     _spawnController = SpawnControllerNet.Instance;
+    // }
 
     public void SetMapController(MapController mapController)
     {
@@ -38,12 +38,14 @@ public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
 
     public void ShowUi()
     {
-        UIController.Instance.Init(_player._heroList);
-        _spawnController.Init(_mapController.spawnPointController);
+        UIController.Init(_player._heroList);
+        SpawnController.Init(_mapController.spawnPointController);
+        // _spawnController.Init(_mapController.spawnPointController);
     }
 
     public void InitScene()
     {
+        var seed = 1;
         _mapController = mapGenerator.GenerateMap();
         ShowUi();
     }
@@ -51,11 +53,12 @@ public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
     public override void OnStartButtonHandler()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        if (_spawnController.PlayerTeamSize <= 0 || _spawnController.EnemyTeamSize <= 0) return;
+        // if (_spawnController.PlayerTeamSize <= 0 || _spawnController.EnemyTeamSize <= 0) return;
+        if (SpawnController.PlayerTeamSize <= 0 || SpawnController.EnemyTeamSize <= 0) return;
         
         EventController.BattleStarted?.Invoke();
-        UIController.Instance.Show_BP(SpawnControllerNet.Instance.GetPlayerUnits());
-        BattleController.instance.StartBattle(SpawnControllerNet.Instance.GetSpawnedUnits());
+        UIController.Show_BP(SpawnControllerNet.Instance.GetPlayerUnits());
+        BattleController.StartBattle(SpawnControllerNet.Instance.GetSpawnedUnits());
         SendStartBattle();
     }
 
@@ -80,8 +83,8 @@ public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
             case (byte) NetEvents.BeginFight:
             {
                 EventController.BattleStarted?.Invoke();
-                UIController.Instance.Show_BP(SpawnControllerNet.Instance.GetPlayerUnits());
-                BattleController.instance.StartBattle(SpawnControllerNet.Instance.GetSpawnedUnits());
+                UIController.Show_BP(SpawnControllerNet.Instance.GetPlayerUnits());
+                BattleController.StartBattle(SpawnControllerNet.Instance.GetSpawnedUnits());
                 //InstantiateReceivedModal((SyncData) photonEvent.CustomData);
                 break;
             }
