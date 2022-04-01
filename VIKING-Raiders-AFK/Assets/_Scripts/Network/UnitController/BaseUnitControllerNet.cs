@@ -23,7 +23,6 @@ namespace _Scripts.Network.UnitController
         public void OnPhotonInstantiate(PhotonMessageInfo info)
         {
             if (info.Sender.IsLocal) return;
-            
             var initData = (SyncData.SyncData) info.photonView.InstantiationData[0];
             var model = ModelsContainer.Instance.GetModelByName(initData.modalName);
             Init(model, initData.currentTeam, initData.heroLevel, false);

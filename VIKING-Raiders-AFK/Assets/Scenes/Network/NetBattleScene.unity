@@ -429,7 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _panelController: {fileID: 116996579}
-  _battlePanelController: {fileID: 446734018}
+  abilitiesPanelController: {fileID: 446734018}
 --- !u!1 &446734016
 GameObject:
   m_ObjectHideFlags: 0

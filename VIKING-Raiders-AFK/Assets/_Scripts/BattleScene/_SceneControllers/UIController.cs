@@ -44,11 +44,7 @@ public class UIController : MonoBehaviour
         _panelController.FillUnitPanel(playerHeroes);
         
     }
-    
-    /// <summary>
-    /// Пожарная тревога минут 10-20
-    /// </summary>
-    
+
     public void SwitchSpawnUIVisible()
     {
         _isVisible = !_isVisible;

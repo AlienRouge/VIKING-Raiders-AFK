@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4144717864825710500}
   - component: {fileID: 3926078247653279178}
   - component: {fileID: 2340248345673565718}
+  - component: {fileID: 1457986517064774503}
   m_Layer: 0
   m_Name: BaseUnit
   m_TagString: Player
@@ -51,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MyTeam>k__BackingField: 0
   _currentHealth: 0
+  _damageRatioMultiplier: 0
   _currentMoveState: 0
 --- !u!114 &8907572530824819415
 MonoBehaviour:
@@ -128,6 +130,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b5335e90dbb4c429cbd2fe22b6e5b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _actualStatusEffects: []
+--- !u!114 &1457986517064774503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177737642116645913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cfdf385fd3be0e48b302a00bfbd1376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthBar: {fileID: 725341917669597295}
+  _unitView: {fileID: 4879202677765935983}
 --- !u!1 &2414072498459706928
 GameObject:
   m_ObjectHideFlags: 0

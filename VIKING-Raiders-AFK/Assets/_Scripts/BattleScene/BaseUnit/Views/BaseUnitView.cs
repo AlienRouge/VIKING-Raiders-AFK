@@ -25,7 +25,6 @@ public class BaseUnitView : MonoBehaviour
     // TODO Сомнительно?
     private void OnChangeHealth(BaseUnitController unit ,float health)
     {
-        Debug.Log("VAR");
         if (ReferenceEquals(unit, _parent))
         {
             _healthBar.SetHealth(health);

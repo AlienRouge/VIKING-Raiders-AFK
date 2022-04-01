@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using _Scripts.Enums;
 using _Scripts.Network.SyncData;
 using _Scripts.Network.UnitController;
@@ -24,29 +23,31 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
             return _instance;
         }
     }
-    
-    private Team EnemyTeam => _currentTeam == Team.Team1 ? Team.Team2 : Team.Team1;
+
+    private Team EnemyTeam => CurrentTeam == Team.Team1 ? Team.Team2 : Team.Team1;
 
     private void Awake()
     {
         _instance = this;
         _playerTeam = new List<SpawnedUnit>();
     }
-    
+
     private void Start()
     {
         _models.Init();
         SpawnUnit = InstantiateUnitNet;
         if (PhotonNetwork.IsMasterClient)
         {
-            _currentTeam = Team.Team1;
+            CurrentTeam = Team.Team1;
         }
         else
         {
-            _currentTeam = Team.Team2;
+            CurrentTeam = Team.Team2;
         }
     }
 
+
+    //TODO Добавить синхронизацию начального перемещения юнита у клиента
     private void InstantiateUnitNet(Team team, User.Hero hero, SpawnPoint spawnPoint, int buttonID = -1)
     {
         SyncData syncData = new SyncData()
@@ -68,7 +69,7 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
         _spawnPointController.TakeSpawnPoint(spawnPoint);
 
         var newUnit = spawnedObject.GetComponent<BaseUnitControllerNet>();
-        newUnit.Init(hero._heroModel, team, hero._heroLevel, team == _currentTeam);
+        newUnit.Init(hero._heroModel, team, hero._heroLevel, team == CurrentTeam);
         newUnit.name = hero._heroModel.CharacterName;
 
         SendModelDataToNet(syncData);
@@ -85,7 +86,7 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
     {
         var riseEventOptions = new RaiseEventOptions()
         {
-            Receivers = ReceiverGroup.Others
+            Receivers = ReceiverGroup.MasterClient
         };
         var sendOptions = new SendOptions()
         {
