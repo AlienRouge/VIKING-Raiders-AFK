@@ -8,7 +8,7 @@ namespace _Scripts.Network.UI
         {
             if (isSelected)
             {
-                SpawnControllerNet.Instance.RemoveUnit(_hero, ButtonID);
+                SpawnControllerNet.Instance.TryRemoveUnit(_hero, ButtonID);
             }
             else
             {

@@ -62,12 +62,11 @@ public class SpawnController : MonoBehaviourPun
         return true;
     }
 
-    public bool RemoveUnit(User.Hero unitModel, int buttonID)
+    public bool TryRemoveUnit(User.Hero unitModel, int buttonID)
     {
         var unit = _playerTeam.Find(unit => unit.ButtonID == buttonID);
         if (unit.unitController == null)
         {
-            Debug.Log(buttonID);
             return false;
         }
 

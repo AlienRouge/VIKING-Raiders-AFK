@@ -20,15 +20,7 @@ public class LayoutElement : MonoBehaviour
         inactiveColor = image.color;
     }
 
-    private void OnEnable()
-    {
-        selectButton.onClick.AddListener(SelectElement);
-    }
-
-    private void OnDisable()
-    {
-        selectButton.onClick.RemoveListener(SelectElement);
-    }
+   
 
     public void Init(User.Hero hero)
     {
@@ -40,7 +32,8 @@ public class LayoutElement : MonoBehaviour
     {
         if (isSelected)
         {
-            BattleSceneController.instance.SpawnController.RemoveUnit(_hero, ButtonID);
+            if (!BattleSceneController.instance.SpawnController.TryRemoveUnit(_hero, ButtonID))
+                return;
         }
         else
         {

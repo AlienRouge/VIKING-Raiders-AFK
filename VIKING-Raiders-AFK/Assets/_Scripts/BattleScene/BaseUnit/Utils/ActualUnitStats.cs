@@ -9,9 +9,13 @@ public class ActualUnitStats
     [SerializeField] private Team _battleTeam;
     [SerializeField] private int _unitLevel;
     [SerializeField] private float _currentHealth;
-    [SerializeField] private float _dmgMultiplier;
     [SerializeField] private float _attackDeltaTime;
     [SerializeField] private float _attackRange;
+    
+    [SerializeField] private float _dmgMultiplier;
+    [SerializeField] private float _attackSpeedMultiplier;
+    [SerializeField] private float _moveSpeedMultiplier;
+    [SerializeField] private float _critRateMultiplier;
     
     public BaseUnitModel UnitModel => _unitModel;
     public Team BattleTeam => _battleTeam;
