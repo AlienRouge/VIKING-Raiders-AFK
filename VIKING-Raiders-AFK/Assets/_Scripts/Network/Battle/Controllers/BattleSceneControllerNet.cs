@@ -6,8 +6,6 @@ using Photon.Realtime;
 
 public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
 {
-    [SerializeField] private MapGeneratorNet mapGenerator;
-
     private static BattleSceneControllerNet _instance;
 
     public static BattleSceneControllerNet Instance
@@ -18,7 +16,7 @@ public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
                 Debug.LogError(nameof(BattleSceneControllerNet) + "is NULL!");
 
             return _instance;
-        }
+        } 
     }
     
     private void Start()
@@ -45,8 +43,7 @@ public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
 
     public void InitScene()
     {
-        var seed = 1;
-        _mapController = mapGenerator.GenerateMap();
+        _mapController = _mapGenerator.GenerateMap();
         ShowUi();
     }
     

@@ -49,6 +49,7 @@ namespace _Scripts.Network.Map
 
         public override MapController GenerateMap()
         {
+            
             GenerateTilemap(Seed);
             _mapController.BakeMap();
             SetupSpawnAreas();

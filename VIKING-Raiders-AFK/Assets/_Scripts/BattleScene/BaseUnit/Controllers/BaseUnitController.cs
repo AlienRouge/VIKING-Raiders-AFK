@@ -17,20 +17,20 @@ public class BaseUnitController : MonoBehaviourPun
     private bool _isTargetInRange;
     private bool _isBattleEnd;
 
-    private enum MoveState
-    {
-        Move,
-        Stop
-    }
-
     private BaseUnitView _baseUnitView;
     private MovementController _movementController;
     private DragDropController _dragDropController;
     private AbilityController _abilityController;
     private StatusEffectController _statusEffectController;
+    protected BattleController _battleController;
 
     [field: SerializeField] public ActualUnitStats ActualStats { get; private set; }
 
+    private enum MoveState
+    {
+        Move,
+        Stop
+    }
     private MoveState CurrentMoveState
     {
         get => _currentMoveState;
@@ -74,6 +74,7 @@ public class BaseUnitController : MonoBehaviourPun
         _dragDropController = GetComponent<DragDropController>();
         _abilityController = GetComponent<AbilityController>();
         _statusEffectController = GetComponent<StatusEffectController>();
+        _battleController = FindObjectOfType<BattleController>();
 
         _movementController.Init(ActualStats.UnitModel.MoveSpeed);
         _baseUnitView.Init(this);
@@ -108,7 +109,7 @@ public class BaseUnitController : MonoBehaviourPun
 
     private void FindTarget()
     {
-        _currentTarget = BattleSceneController.instance.BattleController.GetTarget(this);
+        _currentTarget = _battleController.GetTarget(this);
 
         if (_currentTarget)
         {
@@ -235,7 +236,7 @@ public class BaseUnitController : MonoBehaviourPun
         }
 
         _statusEffectController.OnUnitDead();
-        BattleSceneController.instance.BattleController.OnUnitDied(this);
+        _battleController.OnUnitDied(this);
         EventController.UnitDied?.Invoke(this);
     }
 

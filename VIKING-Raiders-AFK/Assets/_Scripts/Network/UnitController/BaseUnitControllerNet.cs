@@ -8,6 +8,12 @@ namespace _Scripts.Network.UnitController
     {
         private PhotonView _photonView;
 
+        /*protected override void InitializeControllers(bool isDraggable)
+        {
+            base.InitializeControllers(isDraggable);
+            _battleController = FindObjectOfType<BattleController>();
+        }*/
+
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             /*if (stream.IsWriting)

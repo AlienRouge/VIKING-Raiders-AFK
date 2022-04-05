@@ -1013,6 +1013,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 11400000, guid: 73d9bb9f0a2c19842a955cef5f85bb80, type: 2}
   _enemy: {fileID: 11400000, guid: 7ca183dbf7a833a4d8ccd85db1e4b3a3, type: 2}
+  <BattleController>k__BackingField: {fileID: 1459515373}
+  <SpawnController>k__BackingField: {fileID: 1161712207}
+  <UIController>k__BackingField: {fileID: 246118306}
+  _mapGenerator: {fileID: 1563126441}
   mapGenerator: {fileID: 1563126441}
 --- !u!1001 &777721795
 PrefabInstance:
