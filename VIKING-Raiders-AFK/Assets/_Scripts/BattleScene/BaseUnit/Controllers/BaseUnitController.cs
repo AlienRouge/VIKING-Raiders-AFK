@@ -103,7 +103,8 @@ public class BaseUnitController : MonoBehaviourPun
     
     public void StopMoving()
     {
-        _movementController.Init(0);
+        _movementController.IsStopped(true);
+        _movementController.Disable();
     }
 
     private void PreFightSetup()
