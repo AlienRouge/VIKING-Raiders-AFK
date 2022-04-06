@@ -9,6 +9,6 @@ public class InventoryItemController : MonoBehaviour
     {
         _hero = hero;
 
-        _view.SetupItemView(_hero);
+        _view.Setup(_hero);
     }
 }

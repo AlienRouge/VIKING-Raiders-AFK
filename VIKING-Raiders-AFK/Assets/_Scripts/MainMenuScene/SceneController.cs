@@ -1,6 +1,6 @@
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
@@ -18,11 +18,12 @@ public class SceneController : MonoBehaviour
 
     public void PlayGame()
     {
-        _sceneLoader.Load(1);
+        MapGenerator.Seed = (int)DateTime.Now.Ticks;
+        _sceneLoader.Load("BattleScene");
     }
     public void GoInventory()
     {
-        _sceneLoader.Load(5);
+        _sceneLoader.Load("InventoryScene");
     }
 
     public void ExitGame()

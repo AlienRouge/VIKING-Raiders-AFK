@@ -108,7 +108,7 @@ public class BaseUnitController : MonoBehaviourPun
 
     private void FindTarget()
     {
-        _currentTarget = BattleController.instance.GetTarget(this);
+        _currentTarget = BattleSceneController.instance.BattleController.GetTarget(this);
 
         if (_currentTarget)
         {
@@ -235,7 +235,7 @@ public class BaseUnitController : MonoBehaviourPun
         }
 
         _statusEffectController.OnUnitDead();
-        BattleController.instance.OnUnitDied(this);
+        BattleSceneController.instance.BattleController.OnUnitDied(this);
         EventController.UnitDied?.Invoke(this);
     }
 

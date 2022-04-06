@@ -1,34 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using _Scripts.Enums;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.PlayerLoop;
+
 
 public class BattleController : MonoBehaviour
 {
-    private static BattleController _instance;
-
-    public static BattleController instance
-    {
-        get
-        {
-            if (_instance == null)
-                Debug.LogError(nameof(BattleController) + "is NULL!");
-
-            return _instance;
-        }
-    }
-
     private readonly Dictionary<Team, List<BaseUnitController>> _unitsByTeams =
         new Dictionary<Team, List<BaseUnitController>>();
-
-    private void Start()
-    {
-        _instance = this;
-    }
-
+    
     private void Init()
     {
         _unitsByTeams.Add(Team.Team1, new List<BaseUnitController>());

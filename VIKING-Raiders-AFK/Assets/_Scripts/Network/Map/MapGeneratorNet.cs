@@ -12,7 +12,7 @@ namespace _Scripts.Network.Map
 
         private void Awake()
         {
-            _instance = this;
+            // _instance = this;
             _noiseMapRenderer = GetComponent<NoiseMapRenderer>();
         }
 
@@ -24,8 +24,8 @@ namespace _Scripts.Network.Map
                     var data = (float[]) photonEvent.CustomData;
 
                     SetMapData(data);
-                    BattleSceneControllerNet.instance.SetMapController(_mapController);
-                    BattleSceneControllerNet.instance.ShowUi();
+                    BattleSceneControllerNet.Instance.SetMapController(_mapController);
+                    BattleSceneControllerNet.Instance.ShowUi();
                     break;
                 default:
                     break;
@@ -49,7 +49,7 @@ namespace _Scripts.Network.Map
 
         public override MapController GenerateMap()
         {
-            GenerateTilemap();
+            GenerateTilemap(Seed);
             _mapController.BakeMap();
             SetupSpawnAreas();
 
@@ -65,7 +65,7 @@ namespace _Scripts.Network.Map
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                var noiseMap = GetNoiseMap();
+                var noiseMap = GenerateBattleAreaNoiseMap();
                 RenderMap(noiseMap);
 
                 var riseEventOptions = new RaiseEventOptions()
@@ -80,8 +80,8 @@ namespace _Scripts.Network.Map
                 PhotonNetwork.RaiseEvent((byte)NetEvents.StartBattle, noiseMap, riseEventOptions, sendOptions);
             }
         }
-        
-        public override void TryInstantiateMap()
+
+        protected override void TryInstantiateMap()
         {
             _mapController = FindObjectOfType<MapController>();
             if (_mapController == null)

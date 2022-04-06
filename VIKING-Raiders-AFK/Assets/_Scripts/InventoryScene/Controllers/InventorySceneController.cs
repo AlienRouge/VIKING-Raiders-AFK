@@ -16,7 +16,7 @@ public class InventorySceneController : MonoBehaviour
 
     public void BackToMainMenuScene()
     {
-        _sceneLoader.Load(0);
+        _sceneLoader.Load("MainMenuScene");
     }
 
     private void FillInventoryPanel()

@@ -31,10 +31,8 @@ public class SpawnArea : MonoBehaviour
 
    private void HighlightSpawnArea(Team team)
    {
-       Debug.Log(team);
        if (Team == team)
        {
-           Debug.Log("Mestniy "+Team);
            _spriteRenderer.color = _spriteRenderer.color == Color.clear ? _highlightColor : Color.clear;
        }
    }
