@@ -8,13 +8,13 @@ public class HeroDraftController : MonoBehaviour
     private List<HeroDraftItemController> _items;
     
     private bool _isVisible;
-    private bool _isHidden;
+    public bool IsHidden;
     
     public void Init(List<User.Hero> playerHeroes)
     {
         _items = new List<HeroDraftItemController>();
         _isVisible = true;
-        _isHidden = false;
+        IsHidden = false;
 
         foreach (var hero in playerHeroes)
         {
@@ -32,19 +32,19 @@ public class HeroDraftController : MonoBehaviour
 
     public void HidePanel()
     {
-        _isHidden = true;
+        IsHidden = true;
         _isVisible = false;
         gameObject.SetActive(_isVisible);
     }
     
     public void SwitchPanelHideStatus()
     {
-        _isHidden = !_isHidden;
-        gameObject.SetActive(!_isHidden);
+        IsHidden = !IsHidden;
+        gameObject.SetActive(!IsHidden);
     }
     public void SwitchPanelVisibility()
     {
-        if (_isHidden) return;
+        if (IsHidden) return;
         
         _isVisible = !_isVisible;
         gameObject.SetActive(_isVisible);

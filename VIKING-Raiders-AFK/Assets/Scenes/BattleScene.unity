@@ -363,7 +363,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 116303120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7885d9c4060f30f4d9f5cd7119368118, type: 3}
+  m_Script: {fileID: 11500000, guid: 8281af691eba44abb3f71ad04436a9d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 116303122}
@@ -1286,7 +1286,7 @@ GameObject:
   - component: {fileID: 888081505}
   - component: {fileID: 888081504}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MainCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2250,10 +2250,10 @@ GameObject:
   - component: {fileID: 1163924822}
   - component: {fileID: 1163924825}
   - component: {fileID: 1163924824}
-  - component: {fileID: 1163924823}
   - component: {fileID: 1163924826}
+  - component: {fileID: 1163924823}
   m_Layer: 5
-  m_Name: MenuButton
+  m_Name: ModalMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2287,12 +2287,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1163924821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1b78521b02a28a44af5d797347d07f4, type: 3}
+  m_Script: {fileID: 11500000, guid: d723bc61cf2a45c9a2d0d0ce360de647, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 1163924824}
-  _default: {fileID: 21300000, guid: ee998f1ff9519c94b84a97c3bf054f87, type: 3}
-  _pressed: {fileID: 21300000, guid: 287b228a607285c4796ba7a929e7d8b8, type: 3}
+  _default: {fileID: 21300000, guid: d4961bb6d60c47ab9784acf307c6148d, type: 3}
+  _pressed: {fileID: 21300000, guid: a0a23c90c8eb48d3906404772dd30d3a, type: 3}
 --- !u!114 &1163924824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2313,7 +2313,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ee998f1ff9519c94b84a97c3bf054f87, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d4961bb6d60c47ab9784acf307c6148d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2480,7 +2480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layoutGroup: {fileID: 2139787872}
   _layoutItemPrefab: {fileID: 9048500488884100660, guid: 333e69c767a2e2242af25871bfef2b6b, type: 3}
-  _isHidden: 0
+  IsHidden: 0
 --- !u!1 &1262772989
 GameObject:
   m_ObjectHideFlags: 0
@@ -2684,15 +2684,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Ready!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 45a8a07a21a2fa8419c152cf29ea0a2a, type: 2}
-  m_sharedMaterial: {fileID: 7886841799706889847, guid: 45a8a07a21a2fa8419c152cf29ea0a2a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cd3fefec65a645f8929b51baa9db04ca, type: 2}
+  m_sharedMaterial: {fileID: 2668808273686741326, guid: cd3fefec65a645f8929b51baa9db04ca, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293519849
-  m_fontColor: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
+    rgba: 4292345599
+  m_fontColor: {r: 1, g: 0.9961085, b: 0.8443396, a: 1}
   m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
@@ -3869,7 +3869,7 @@ GameObject:
   - component: {fileID: 1901529966}
   - component: {fileID: 1901529965}
   m_Layer: 5
-  m_Name: BGPanel
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4113,13 +4113,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1951649403}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ee4e5ca05660674f83ef9795b895712, type: 3}
+  m_Script: {fileID: 11500000, guid: 0bdda10395cb4c12a44eb3ac2c7634d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _heroDraftController: {fileID: 1229714022}
   _image: {fileID: 1951649406}
-  _default: {fileID: 21300000, guid: 7fcb270726ba01f4584d30921127453d, type: 3}
-  _pressed: {fileID: 21300000, guid: 09423ab5107707149bba5ad524445c27, type: 3}
+  _default: {fileID: 21300000, guid: 2fca960d9c964ed5ba535dc4dba2396b, type: 3}
+  _pressed: {fileID: 21300000, guid: d8bdc61a9a7e4573a8d56b6ab8bcd2f0, type: 3}
 --- !u!114 &1951649406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4140,7 +4140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7fcb270726ba01f4584d30921127453d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2fca960d9c964ed5ba535dc4dba2396b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

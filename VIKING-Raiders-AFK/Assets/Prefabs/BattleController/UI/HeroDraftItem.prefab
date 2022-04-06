@@ -1362,7 +1362,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7918763610303642808}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e4e5a82b9081d54db4202352d209286, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f2fd7859a8d47a0bcf2cfb01e638cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _background: {fileID: 2233265832105894469}
@@ -1371,7 +1371,7 @@ MonoBehaviour:
   _armour: {fileID: 5342144728292842097}
   _Level: {fileID: 3382195984491282426}
   _image: {fileID: 76791826288777560}
-  _selectedColor: {r: 0.7830189, g: 0, b: 0, a: 1}
+  _selectedColor: {r: 0.8235294, g: 0.22811761, b: 0.22811761, a: 1}
 --- !u!1 &8656357115671573434
 GameObject:
   m_ObjectHideFlags: 0
