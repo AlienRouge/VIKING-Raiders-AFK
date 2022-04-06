@@ -55,12 +55,9 @@ MonoBehaviour:
     _battleTeam: 0
     _unitLevel: 0
     _currentHealth: 0
+    _dmgMultiplier: 0
     _attackDeltaTime: 0
     _attackRange: 0
-    _dmgMultiplier: 0
-    _attackSpeedMultiplier: 0
-    _moveSpeedMultiplier: 0
-    _critRateMultiplier: 0
 --- !u!114 &8907572530824819415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +183,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -2.6, y: 0}
+  m_AnchoredPosition: {x: 0.099998474, y: 0}
   m_SizeDelta: {x: 13, y: 12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6810465562448335009

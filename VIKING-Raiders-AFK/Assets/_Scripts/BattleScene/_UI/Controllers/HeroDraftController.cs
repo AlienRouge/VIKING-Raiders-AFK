@@ -8,7 +8,7 @@ public class HeroDraftController : MonoBehaviour
     private List<HeroDraftItemController> _items;
     
     private bool _isVisible;
-    public bool _isHidden;
+    private bool _isHidden;
     
     public void Init(List<User.Hero> playerHeroes)
     {

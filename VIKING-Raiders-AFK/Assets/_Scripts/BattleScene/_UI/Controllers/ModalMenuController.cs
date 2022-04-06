@@ -1,20 +1,18 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ModalMenuController : MonoBehaviour
 {
     [SerializeField] private GameObject _quitConfirmationUI;
     [SerializeField] private SceneLoader _sceneLoader;
-    [SerializeField] private ModalMenuButton _modalMenuButton;
-
+    
     public void ShowMenu()
     {
-        _modalMenuButton.SetPressedSprite();
         gameObject.SetActive(true);
     }
 
     public void CloseMenu()
     {
-        _modalMenuButton.SetDefaultSprite();
         gameObject.SetActive(false);
     }
 

@@ -7,8 +7,7 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] private HeroDraftController _heroDraftController;
     [SerializeField] private AbilitiesPanelController abilitiesPanelController;
-    [SerializeField] private GameObject _hideDraftPanelBtn;
-    
+    [SerializeField] private Button _hideDraftPanelBtn;
     
     public void Init(List<User.Hero> playerHeroes)
     {
@@ -18,6 +17,11 @@ public class UIController : MonoBehaviour
     public void Show_BP(List<BaseUnitController> list)
     {
         abilitiesPanelController.Init(list);
+    }
+
+    public void OnPanelHideButtonHandler()
+    {
+        _heroDraftController.SwitchPanelHideStatus();
     }
     
     private void OnUnitDraggedHandler(Team team)
@@ -29,6 +33,7 @@ public class UIController : MonoBehaviour
     {
         _heroDraftController.HidePanel();
         _hideDraftPanelBtn.gameObject.SetActive(false);
+        
     }
 
     private void OnEnable()
