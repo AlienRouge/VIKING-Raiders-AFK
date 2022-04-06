@@ -21,9 +21,11 @@ namespace _Scripts.Network.Map
             switch (photonEvent.Code)
             {
                 case (byte)NetEvents.StartBattle:
-                    var data = (float[]) photonEvent.CustomData;
-
-                    SetMapData(data);
+                    var data = (int) photonEvent.CustomData;
+                    
+                    GenerateTilemap(data);
+                    _mapController.BakeMap();
+                    SetupSpawnAreas();
                     BattleSceneControllerNet.Instance.SetMapController(_mapController);
                     BattleSceneControllerNet.Instance.ShowUi();
                     break;
@@ -49,10 +51,13 @@ namespace _Scripts.Network.Map
 
         public override MapController GenerateMap()
         {
+            if (!PhotonNetwork.IsMasterClient) return _mapController;
             
             GenerateTilemap(Seed);
             _mapController.BakeMap();
             SetupSpawnAreas();
+            
+            SendSeedMapData(Seed);
 
             return _mapController;
         }
@@ -64,24 +69,24 @@ namespace _Scripts.Network.Map
 
         protected override void GenerateBattleArea()
         {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                var noiseMap = GenerateBattleAreaNoiseMap();
-                RenderMap(noiseMap);
-
-                var riseEventOptions = new RaiseEventOptions()
-                {
-                    Receivers = ReceiverGroup.Others
-                };
-                var sendOptions = new SendOptions()
-                {
-                    Reliability = true
-                };
-
-                PhotonNetwork.RaiseEvent((byte)NetEvents.StartBattle, noiseMap, riseEventOptions, sendOptions);
-            }
+            var noiseMap = GenerateBattleAreaNoiseMap();
+            RenderMap(noiseMap);
         }
 
+        private void SendSeedMapData(int randSeed)
+        {
+            var riseEventOptions = new RaiseEventOptions()
+            {
+                Receivers = ReceiverGroup.Others
+            };
+            var sendOptions = new SendOptions()
+            {
+                Reliability = true
+            };
+
+            PhotonNetwork.RaiseEvent((byte)NetEvents.StartBattle, randSeed, riseEventOptions, sendOptions);
+        }
+        
         protected override void TryInstantiateMap()
         {
             _mapController = FindObjectOfType<MapController>();

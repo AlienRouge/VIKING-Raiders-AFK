@@ -9,13 +9,13 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(BaseUnitView),typeof(MovementController))]
 public class BaseUnitController : MonoBehaviourPun
 {
-    private BaseUnitController _currentTarget;
+    protected BaseUnitController _currentTarget;
     private MoveState _currentMoveState;
     private bool _isPassiveAbilityReady;
     private bool _isActiveAbilityReady;
     private bool _isCasting;
     private bool _isTargetInRange;
-    private bool _isBattleEnd;
+    protected bool _isBattleEnd;
 
     private BaseUnitView _baseUnitView;
     private MovementController _movementController;
@@ -100,6 +100,11 @@ public class BaseUnitController : MonoBehaviourPun
         FindTarget();
         StartBattleCycle();
     }
+    
+    public void StopMoving()
+    {
+        _movementController.Init(0);
+    }
 
     private void PreFightSetup()
     {
@@ -153,7 +158,7 @@ public class BaseUnitController : MonoBehaviourPun
         CurrentMoveState = MoveState.Stop;
     }
 
-    private async Task Attack()
+    protected virtual async Task Attack()
     {
         if (ActualStats.IsDead || _isBattleEnd || _currentTarget.ActualStats.IsDead) return;
 
@@ -164,7 +169,7 @@ public class BaseUnitController : MonoBehaviourPun
         await Task.Delay(Mathf.RoundToInt(ActualStats.AttackDeltaTime * Consts.ONE_SECOND_VALUE));
     }
 
-    private int CalculateDamage()
+    protected int CalculateDamage()
     {
         var dmgRatio = ActualStats.GetDamageValue() / _currentTarget.ActualStats.GetArmourValue();
         var lvlRatio = (_currentTarget.ActualStats.UnitLevel - ActualStats.UnitLevel) * 0.05f; // Value per level
@@ -208,7 +213,7 @@ public class BaseUnitController : MonoBehaviourPun
     {
         _statusEffectController.AddStatusEffect(effect);
     }
-
+    
     public void ChangeHealth(float amount)
     {
         ActualStats.CurrentHealth += amount;

@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using System.Threading.Tasks;
+using Photon.Pun;
 using UnityEngine;
 
 namespace _Scripts.Network.UnitController
@@ -16,14 +17,15 @@ namespace _Scripts.Network.UnitController
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            /*if (stream.IsWriting)
+            if (stream.IsWriting)
             {
-                stream.SendNext();
+                stream.SendNext(ActualStats.CurrentHealth);
             }
             else
             {
-                stream.ReceiveNext();
-            }*/
+                ActualStats.CurrentHealth = (float) stream.ReceiveNext();
+                EventController.UnitHealthChanged.Invoke(this, ActualStats.CurrentHealth);
+            }
         }
 
         public void OnPhotonInstantiate(PhotonMessageInfo info)
@@ -33,6 +35,17 @@ namespace _Scripts.Network.UnitController
             var model = ModelsContainer.Instance.GetModelByName(initData.modalName);
             Init(model, initData.currentTeam, initData.heroLevel, false);
             SpawnControllerNet.Instance.AddEnemy(this);
+        }
+
+        protected override async Task Attack()
+        {
+            if (ActualStats.IsDead || _isBattleEnd || _currentTarget.ActualStats.IsDead) return;
+
+            var damage = CalculateDamage();
+            Debug.Log(
+                $"{ActualStats.UnitModel.CharacterName} --> {_currentTarget.ActualStats.UnitModel.CharacterName} [{damage}]dmg");
+            _currentTarget.ChangeHealth(-damage);
+            await Task.Delay(Mathf.RoundToInt(ActualStats.AttackDeltaTime * Consts.ONE_SECOND_VALUE));
         }
     }
 }

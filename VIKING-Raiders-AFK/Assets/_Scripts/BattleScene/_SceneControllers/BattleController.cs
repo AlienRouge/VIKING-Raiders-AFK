@@ -6,16 +6,16 @@ using UnityEngine;
 
 public class BattleController : MonoBehaviour
 {
-    private readonly Dictionary<Team, List<BaseUnitController>> _unitsByTeams =
+    protected readonly Dictionary<Team, List<BaseUnitController>> _unitsByTeams =
         new Dictionary<Team, List<BaseUnitController>>();
     
-    private void Init()
+    protected void Init()
     {
         _unitsByTeams.Add(Team.Team1, new List<BaseUnitController>());
         _unitsByTeams.Add(Team.Team2, new List<BaseUnitController>());
     }
 
-    public void StartBattle(List<BaseUnitController> units)
+    public virtual void StartBattle(List<BaseUnitController> units)
     {
         Init();
 

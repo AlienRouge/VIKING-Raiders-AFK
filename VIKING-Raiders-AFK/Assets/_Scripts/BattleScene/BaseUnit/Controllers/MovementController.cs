@@ -69,7 +69,7 @@ public class MovementController : MonoBehaviour
         _navMeshAgent.enabled = true;
     }
 
-    void Update()
+    private void Update()
     {
         if (target == null)
             return;

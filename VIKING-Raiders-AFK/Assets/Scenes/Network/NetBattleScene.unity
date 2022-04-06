@@ -558,7 +558,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.328125
+  orthographic size: 5.328947
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1017,7 +1017,6 @@ MonoBehaviour:
   <SpawnController>k__BackingField: {fileID: 1161712207}
   <UIController>k__BackingField: {fileID: 246118306}
   _mapGenerator: {fileID: 1563126441}
-  mapGenerator: {fileID: 1563126441}
 --- !u!1001 &777721795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1860,7 +1859,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1459515372}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd7c758df934cea4db8f890d540400e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a5d8fb938794b408e104507c922d2be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1459515374
