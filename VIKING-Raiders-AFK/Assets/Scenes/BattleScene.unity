@@ -1137,7 +1137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _quitConfirmationUI: {fileID: 60982524}
   _sceneLoader: {fileID: 708460295}
-  _modalMenuButton: {fileID: 0}
+  _modalMenuButton: {fileID: 1163924823}
 --- !u!1 &828881692
 GameObject:
   m_ObjectHideFlags: 0
