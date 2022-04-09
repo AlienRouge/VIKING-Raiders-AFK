@@ -1,8 +1,8 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Effect", menuName = "StatusEffects/ChangeHealthPeriod")]
-public class ChangeHealthPeriod : BaseStatusEffect
+[CreateAssetMenu(fileName = "New Effect", menuName = "StatusEffects/ChangeHealthTick")]
+public class ChangeHealthTick : BaseStatusEffect
 {
     [field: SerializeField] public float TickAmount { get; private set; }
     

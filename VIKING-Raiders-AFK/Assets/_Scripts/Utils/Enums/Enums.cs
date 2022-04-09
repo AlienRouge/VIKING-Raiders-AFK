@@ -18,9 +18,8 @@
 
     public enum UnitType
     {
-        Dark,  //Holy>Dark>Nature
-        Holy,
-        Nature,
+        Melee,
+        Range
     }
     
     public enum Team

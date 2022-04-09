@@ -6,8 +6,8 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(StatusEffectController), typeof(AbilityController), typeof(DragDropController))]
-[RequireComponent(typeof(BaseUnitView),typeof(MovementController))]
-public class BaseUnitController : MonoBehaviourPun
+[RequireComponent(typeof(BaseUnitView), typeof(MovementController))]
+public abstract class BaseUnitController : MonoBehaviourPun
 {
     protected BaseUnitController _currentTarget;
     private MoveState _currentMoveState;
@@ -15,7 +15,13 @@ public class BaseUnitController : MonoBehaviourPun
     private bool _isActiveAbilityReady;
     private bool _isCasting;
     private bool _isTargetInRange;
-    protected bool _isBattleEnd;
+    private bool _isBattleEnd;
+
+    private enum MoveState
+    {
+        Move,
+        Stop
+    }
 
     private BaseUnitView _baseUnitView;
     private MovementController _movementController;
@@ -26,11 +32,6 @@ public class BaseUnitController : MonoBehaviourPun
 
     [field: SerializeField] public ActualUnitStats ActualStats { get; private set; }
 
-    private enum MoveState
-    {
-        Move,
-        Stop
-    }
     private MoveState CurrentMoveState
     {
         get => _currentMoveState;
@@ -61,7 +62,7 @@ public class BaseUnitController : MonoBehaviourPun
         InitializeData(model, team, unitLevel);
         InitializeControllers(isDraggable);
     }
-
+    
     private void InitializeData(BaseUnitModel model, Team team, int unitLevel)
     {
         ActualStats = new ActualUnitStats(model, team, unitLevel);
@@ -150,7 +151,7 @@ public class BaseUnitController : MonoBehaviourPun
                     continue;
                 }
 
-                CurrentMoveState = MoveState.Move;
+                // CurrentMoveState = MoveState.Move;
             }
 
             await Task.Yield();
@@ -163,14 +164,19 @@ public class BaseUnitController : MonoBehaviourPun
     {
         if (ActualStats.IsDead || _isBattleEnd || _currentTarget.ActualStats.IsDead) return;
 
+
         var damage = CalculateDamage();
         Debug.Log(
             $"{ActualStats.UnitModel.CharacterName} --> {_currentTarget.ActualStats.UnitModel.CharacterName} [{damage}]dmg");
-        _currentTarget.ChangeHealth(-damage);
+        DoOnAttack(damage);
+        // _currentTarget.ChangeHealth(-damage);
+
         await Task.Delay(Mathf.RoundToInt(ActualStats.AttackDeltaTime * Consts.ONE_SECOND_VALUE));
     }
 
-    protected int CalculateDamage()
+    protected abstract void DoOnAttack(int damage);
+
+    private int CalculateDamage()
     {
         var dmgRatio = ActualStats.GetDamageValue() / _currentTarget.ActualStats.GetArmourValue();
         var lvlRatio = (_currentTarget.ActualStats.UnitLevel - ActualStats.UnitLevel) * 0.05f; // Value per level
@@ -203,6 +209,7 @@ public class BaseUnitController : MonoBehaviourPun
         CurrentMoveState = MoveState.Stop;
         await _abilityController.ActivateActiveAbility(_currentTarget);
         _isCasting = false;
+        CurrentMoveState = MoveState.Move;
     }
 
     public float GetDistanceToPosition(Vector3 position)
@@ -227,10 +234,16 @@ public class BaseUnitController : MonoBehaviourPun
         }
     }
 
+    public void ChangeMoveSpeed(float mtp) 
+    {
+        ActualStats.MoveSpeedMultiplier = mtp;
+        _movementController.SetMoveSpeed(ActualStats.UnitModel.MoveSpeed * mtp);
+    }
+
     private void OnDeathHandler()
     {
         _currentTarget = null;
-        
+
         if (ActualStats.UnitModel.PassiveAbility)
         {
             EventController.PassiveAbilityStateChanged -= OnPassiveAbilityStateChange;

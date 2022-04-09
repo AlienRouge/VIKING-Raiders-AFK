@@ -22,13 +22,5 @@ MonoBehaviour:
     _heroModel: {fileID: 11400000, guid: cc307999848cda0448b45b8750041989, type: 2}
   - _heroLevel: 1
     _heroModel: {fileID: 11400000, guid: f0f8b24a625247542b50c7f777c9acb9, type: 2}
-  - _heroLevel: 5
-    _heroModel: {fileID: 11400000, guid: f0f8b24a625247542b50c7f777c9acb9, type: 2}
-  - _heroLevel: 5
-    _heroModel: {fileID: 11400000, guid: a754ef786c05155429226647ec435cff, type: 2}
-  - _heroLevel: 5
-    _heroModel: {fileID: 11400000, guid: a754ef786c05155429226647ec435cff, type: 2}
-  - _heroLevel: 5
-    _heroModel: {fileID: 11400000, guid: a754ef786c05155429226647ec435cff, type: 2}
-  - _heroLevel: 5
-    _heroModel: {fileID: 11400000, guid: 090829b7e26e8ca40a6621e33c39ffc0, type: 2}
+  - _heroLevel: 1
+    _heroModel: {fileID: 11400000, guid: 6986efa28a7e2634ab9907b6bcd81127, type: 2}

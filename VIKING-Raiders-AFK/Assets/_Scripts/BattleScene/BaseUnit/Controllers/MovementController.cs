@@ -56,6 +56,11 @@ public class MovementController : MonoBehaviour
         if (_navMeshAgent.isActiveAndEnabled)
             _navMeshAgent.isStopped = flag;
     }
+
+    public void SetMoveSpeed(float speed)
+    {
+        _navMeshAgent.speed = speed;
+    }
     
     public void Disable()
     {

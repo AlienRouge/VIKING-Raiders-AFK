@@ -9,12 +9,6 @@ namespace _Scripts.Network.UnitController
     {
         private PhotonView _photonView;
 
-        /*protected override void InitializeControllers(bool isDraggable)
-        {
-            base.InitializeControllers(isDraggable);
-            _battleController = FindObjectOfType<BattleController>();
-        }*/
-
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)
@@ -46,6 +40,11 @@ namespace _Scripts.Network.UnitController
                 $"{ActualStats.UnitModel.CharacterName} --> {_currentTarget.ActualStats.UnitModel.CharacterName} [{damage}]dmg");
             _currentTarget.ChangeHealth(-damage);
             await Task.Delay(Mathf.RoundToInt(ActualStats.AttackDeltaTime * Consts.ONE_SECOND_VALUE));
+        }
+
+        protected override void DoOnAttack(int damage)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

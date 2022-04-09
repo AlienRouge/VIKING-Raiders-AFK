@@ -14,10 +14,9 @@
 	    11) Конечный экран (рестарт, выход и тд)
 	    12) Middleware?
 	    
-	    Ui
-	    13
 	    Рендж
-	    
+	    https://www.youtube.com/watch?v=hOdF0zn_IPA
+	    https://www.youtube.com/watch?v=Nke5JKPiQTw
     
     Orange:
         1) Правильная загрузка UI
