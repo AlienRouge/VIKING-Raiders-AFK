@@ -33,6 +33,12 @@ public class ActualUnitStats
         get => _dmgMultiplier;
         set { _dmgMultiplier = value; }
     }
+    
+    public float MoveSpeedMultiplier
+    {
+        get => _moveSpeedMultiplier;
+        set { _moveSpeedMultiplier = value; }
+    }
 
     public float AttackDeltaTime
     {
@@ -63,6 +69,6 @@ public class ActualUnitStats
 
     public float GetDamageValue()
     {
-        return UnitModel.GetDamagePerUnitLevel(UnitLevel);
+        return UnitModel.GetUnitDamage(UnitLevel);
     }
 }

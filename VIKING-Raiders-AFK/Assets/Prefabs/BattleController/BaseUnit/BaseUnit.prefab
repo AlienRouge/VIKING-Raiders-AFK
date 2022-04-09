@@ -9,13 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3521282259216626754}
-  - component: {fileID: 8373044224295067024}
+  - component: {fileID: 1457986517064774503}
   - component: {fileID: 8907572530824819415}
   - component: {fileID: 1933567416852925738}
   - component: {fileID: 4144717864825710500}
   - component: {fileID: 3926078247653279178}
   - component: {fileID: 2340248345673565718}
-  - component: {fileID: 1457986517064774503}
   m_Layer: 0
   m_Name: BaseUnit
   m_TagString: Player
@@ -38,7 +37,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8373044224295067024
+--- !u!114 &1457986517064774503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,20 +46,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 177737642116645913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68db188299e148343a23cf8e1e02ba9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cfdf385fd3be0e48b302a00bfbd1376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ActualStats>k__BackingField:
-    _unitModel: {fileID: 0}
-    _battleTeam: 0
-    _unitLevel: 0
-    _currentHealth: 0
-    _attackDeltaTime: 0
-    _attackRange: 0
-    _dmgMultiplier: 0
-    _attackSpeedMultiplier: 0
-    _moveSpeedMultiplier: 0
-    _critRateMultiplier: 0
+  _healthBar: {fileID: 725341917669597295}
+  _unitView: {fileID: 4879202677765935983}
 --- !u!114 &8907572530824819415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,20 +128,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _actualStatusEffects: []
---- !u!114 &1457986517064774503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 177737642116645913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cfdf385fd3be0e48b302a00bfbd1376, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healthBar: {fileID: 725341917669597295}
-  _unitView: {fileID: 4879202677765935983}
 --- !u!1 &2414072498459706928
 GameObject:
   m_ObjectHideFlags: 0

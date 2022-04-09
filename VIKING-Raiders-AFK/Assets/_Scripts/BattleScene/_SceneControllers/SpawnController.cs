@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Enums;
@@ -7,7 +8,7 @@ using UnityEngine;
 public class SpawnController : MonoBehaviourPun
 {
     protected SpawnPointController _spawnPointController;
-    public Team CurrentTeam { get; protected set; }
+    protected Team CurrentTeam { get; set; }
 
     protected struct SpawnedUnit
     {
@@ -16,16 +17,18 @@ public class SpawnController : MonoBehaviourPun
         public SpawnPoint SpawnPoint;
     }
 
-    [SerializeField] protected BaseUnitController _baseUnitPrefab;
+    [SerializeField] protected BaseUnitController _baseMeleeUnitPrefab;
+    [SerializeField] protected BaseUnitController _baseRangeUnitPrefab;
 
     [SerializeField] protected List<SpawnedUnit> _playerTeam;
     [SerializeField] protected List<BaseUnitController> _enemyTeam;
 
     protected delegate void SpawnAction(Team team, User.Hero unitModel, SpawnPoint spawnPoint, int buttonID = -1);
+
     protected SpawnAction SpawnUnit;
     public int PlayerTeamSize => _playerTeam.Count;
     public int EnemyTeamSize => _enemyTeam.Count;
-    
+
     private void Awake()
     {
         _playerTeam = new List<SpawnedUnit>();
@@ -92,7 +95,7 @@ public class SpawnController : MonoBehaviourPun
     {
         return _playerTeam.Select(unit => unit.unitController).Concat(_enemyTeam).ToList();
     }
-    
+
     public List<BaseUnitController> GetPlayerUnits()
     {
         return _playerTeam.Select(unit => unit.unitController).ToList();
@@ -101,10 +104,22 @@ public class SpawnController : MonoBehaviourPun
 
     private void InstantiateUnit(Team team, User.Hero hero, SpawnPoint spawnPoint, int buttonID = -1)
     {
-        BaseUnitController newUnit = Instantiate(_baseUnitPrefab, spawnPoint.GetPosition(), Quaternion.identity);
-        _spawnPointController.TakeSpawnPoint(spawnPoint);
+        BaseUnitController newUnit;
 
-        newUnit.Init(hero._heroModel, team,  hero._heroLevel, team==Team.Team1);
+        switch (hero._heroModel)
+        {
+            case BaseMeleeUnitModel _:
+                newUnit = Instantiate(_baseMeleeUnitPrefab, spawnPoint.GetPosition(), Quaternion.identity);
+                break;
+            case BaseRangeUnitModel _:
+                newUnit = Instantiate(_baseRangeUnitPrefab, spawnPoint.GetPosition(), Quaternion.identity);
+                break;
+            default:
+                throw new ArgumentException("WrongUnitType");
+        }
+
+        _spawnPointController.TakeSpawnPoint(spawnPoint);
+        newUnit.Init(hero._heroModel, team, hero._heroLevel, team == Team.Team1);
         newUnit.name = hero._heroModel.CharacterName;
         newUnit.transform.SetParent(_spawnPointController.transform);
 
@@ -112,8 +127,8 @@ public class SpawnController : MonoBehaviourPun
         {
             _playerTeam.Add(new SpawnedUnit
             {
-                ButtonID = buttonID, 
-                unitController = newUnit, 
+                ButtonID = buttonID,
+                unitController = newUnit,
                 SpawnPoint = spawnPoint
             });
         }

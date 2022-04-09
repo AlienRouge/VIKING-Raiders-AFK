@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Effect", menuName = "StatusEffects/ChangeAttackRateTemp")]
-public class ChangeAttackRateTemp : BaseStatusEffect
+[CreateAssetMenu(fileName = "New Effect", menuName = "StatusEffects/ChangeAttackRatePeriod")]
+public class ChangeAttackRatePeriod : BaseStatusEffect
 {
     [SerializeField] private float _multiplier;
     private float _oldMultiplier;
