@@ -59,11 +59,9 @@ public abstract class BaseUnitController : MonoBehaviourPun
     public void Init(BaseUnitModel model, Team team, int unitLevel, bool isDraggable)
     {
         InitializeData(model, team, unitLevel);
-        InitializeAttackType(); // TODO
         InitializeControllers(isDraggable);
     }
-
-    protected abstract void InitializeAttackType();
+    
     private void InitializeData(BaseUnitModel model, Team team, int unitLevel)
     {
         ActualStats = new ActualUnitStats(model, team, unitLevel);
@@ -228,9 +226,10 @@ public abstract class BaseUnitController : MonoBehaviourPun
         }
     }
 
-    public void ChangeMoveSpeed(float mlp) // TODO
+    public void ChangeMoveSpeed(float mtp) 
     {
-        _movementController.SetMoveSpeed(ActualStats.UnitModel.MoveSpeed * mlp);
+        ActualStats.MoveSpeedMultiplier = mtp;
+        _movementController.SetMoveSpeed(ActualStats.UnitModel.MoveSpeed * mtp);
     }
 
     private void OnDeathHandler()

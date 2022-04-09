@@ -29,11 +29,6 @@ namespace _Scripts.Network.UnitController
             SpawnControllerNet.Instance.AddEnemy(this);
         }
 
-        protected override void InitializeAttackType()
-        {
-            throw new System.NotImplementedException();
-        }
-
         protected override void DoOnAttack(int damage)
         {
             throw new System.NotImplementedException();
