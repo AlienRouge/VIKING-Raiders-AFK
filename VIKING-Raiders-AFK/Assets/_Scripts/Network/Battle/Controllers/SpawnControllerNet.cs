@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using _Scripts.Enums;
 using _Scripts.Network.SyncData;
@@ -10,7 +11,6 @@ using UnityEngine;
 public class SpawnControllerNet : SpawnController, IOnEventCallback
 {
     [SerializeField] private ModelsContainer _models;
-    [SerializeField] private BaseUnitController _netModel;
     private static SpawnControllerNet _instance;
 
     public static SpawnControllerNet Instance
@@ -46,8 +46,6 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
         }
     }
 
-
-    //TODO Добавить синхронизацию начального перемещения юнита у клиента
     private void InstantiateUnitNet(Team team, User.Hero hero, SpawnPoint spawnPoint, int buttonID = -1)
     {
         SyncData syncData = new SyncData()
@@ -63,16 +61,30 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
             (object) syncData
         };
 
-        var spawnedObject = PhotonNetwork.Instantiate(_netModel.name,
-            spawnPoint.GetPosition(), Quaternion.identity, 0, initData);
+        GameObject spawnedObject;
+
+        switch (hero._heroModel)
+        {
+            case BaseMeleeUnitModel _:
+                spawnedObject = PhotonNetwork.Instantiate(_baseMeleeUnitPrefab.name, spawnPoint.GetPosition(),
+                    Quaternion.identity, 0, initData);
+                break;
+            case BaseRangeUnitModel _:
+                spawnedObject = PhotonNetwork.Instantiate(_baseRangeUnitPrefab.name, spawnPoint.GetPosition(),
+                    Quaternion.identity, 0, initData);
+                break;
+            default:
+                throw new ArgumentException("WrongUnitType");
+        }
+
         spawnedObject.transform.SetParent(_spawnPointController.transform);
         _spawnPointController.TakeSpawnPoint(spawnPoint);
 
-        var newUnit = spawnedObject.GetComponent<BaseUnitControllerNet>();
+        var newUnit = spawnedObject.GetComponent<BaseUnitController>();
         newUnit.Init(hero._heroModel, team, hero._heroLevel, team == CurrentTeam);
         newUnit.name = hero._heroModel.CharacterName;
 
-        SendModelDataToNet(syncData);
+        //SendModelDataToNet(syncData);
 
         _playerTeam.Add(new SpawnedUnit
         {
@@ -112,7 +124,7 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
         _enemyTeam.Add(newUnit);*/
     }
 
-    public void AddEnemy(BaseUnitController enemy)
+    public void AddEnemy(BaseUnitControllerNet enemy)
     {
         _enemyTeam.Add(enemy);
     }

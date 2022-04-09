@@ -4,22 +4,22 @@ using UnityEngine.UI;
 
 public class HeroDraftItemController : MonoBehaviour
 {
-    [SerializeField] private HeroDraftItemView _view;
-    private User.Hero _itemHero;
+    [SerializeField] protected HeroDraftItemView _view;
+    protected User.Hero _itemHero;
 
     protected int buttonID => GetInstanceID();
 
-    private bool _isSelected;
+    protected bool _isSelected;
 
     private Button _button;
-    private SpawnController _spawnController;
+    protected SpawnController _spawnController;
 
     private void Awake()
     {
         _button = GetComponent<Button>();
     }
 
-    public void Init(User.Hero hero)
+    public virtual void Init(User.Hero hero)
     {
         _itemHero = hero;
 
@@ -31,7 +31,7 @@ public class HeroDraftItemController : MonoBehaviour
     {
         if (_isSelected)
         {
-            if (!BattleSceneController.instance.SpawnController.TryRemoveUnit(_itemHero, buttonID))
+            if (!_spawnController.TryRemoveUnit(_itemHero, buttonID))
                 return;
         }
         else

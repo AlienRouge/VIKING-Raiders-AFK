@@ -15,7 +15,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
     private bool _isActiveAbilityReady;
     private bool _isCasting;
     private bool _isTargetInRange;
-    private bool _isBattleEnd;
+    protected bool _isBattleEnd;
 
     private enum MoveState
     {
@@ -30,7 +30,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
     private StatusEffectController _statusEffectController;
     protected BattleController _battleController;
 
-    [field: SerializeField] public ActualUnitStats ActualStats { get; private set; }
+    [field: SerializeField] public ActualUnitStats ActualStats { get; protected set; }
 
     private MoveState CurrentMoveState
     {
@@ -117,6 +117,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
     private void FindTarget()
     {
         _currentTarget = _battleController.GetTarget(this);
+        Debug.Log(_currentTarget);
 
         if (_currentTarget)
         {
@@ -176,7 +177,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     protected abstract void DoOnAttack(int damage);
 
-    private int CalculateDamage()
+    protected int CalculateDamage()
     {
         var dmgRatio = ActualStats.GetDamageValue() / _currentTarget.ActualStats.GetArmourValue();
         var lvlRatio = (_currentTarget.ActualStats.UnitLevel - ActualStats.UnitLevel) * 0.05f; // Value per level
@@ -266,6 +267,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     private void OnTargetDeath(BaseUnitController unit)
     {
+        Debug.Log(unit.ActualStats.BattleTeam);
         Debug.Log("DEAD: " + unit);
         if (unit == _currentTarget)
         {

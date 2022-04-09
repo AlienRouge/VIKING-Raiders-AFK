@@ -15,13 +15,10 @@ public class BattleControllerNet : BattleController
         foreach (var unit in units)
         {
             unit.StartBattle();
-            Debug.Log(unit.ActualStats.BattleTeam);
-            Debug.Log(BattleSceneControllerNet.Instance.SpawnController.CurrentTeam);
             if (unit.ActualStats.BattleTeam != BattleSceneControllerNet.Instance.SpawnController.CurrentTeam)
             {
                 unit.StopMoving();
                 unit.ActualStats.DmgMultiplier = 0;
-                Debug.Log(123123);
             }
         }
 

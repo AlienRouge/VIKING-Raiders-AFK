@@ -12,7 +12,7 @@ public class ActualUnitStats
     [SerializeField] private float _attackDeltaTime;
     [SerializeField] private float _attackRange;
     
-    [SerializeField] private float _dmgMultiplier;
+    [SerializeField] private float _dmgMultiplier = 1;
     [SerializeField] private float _attackSpeedMultiplier;
     [SerializeField] private float _moveSpeedMultiplier;
     [SerializeField] private float _critRateMultiplier;

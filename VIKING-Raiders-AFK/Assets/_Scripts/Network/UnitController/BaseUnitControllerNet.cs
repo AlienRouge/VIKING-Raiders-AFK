@@ -5,7 +5,7 @@ using UnityEngine;
 namespace _Scripts.Network.UnitController
 {
     [RequireComponent(typeof(PhotonView))]
-    public class BaseUnitControllerNet : BaseUnitController, IPunObservable, IPunInstantiateMagicCallback
+    public abstract class BaseUnitControllerNet : BaseUnitController, IPunObservable, IPunInstantiateMagicCallback
     {
         private PhotonView _photonView;
 
@@ -31,6 +31,7 @@ namespace _Scripts.Network.UnitController
             SpawnControllerNet.Instance.AddEnemy(this);
         }
 
+        /*
         protected override async Task Attack()
         {
             if (ActualStats.IsDead || _isBattleEnd || _currentTarget.ActualStats.IsDead) return;
@@ -41,10 +42,6 @@ namespace _Scripts.Network.UnitController
             _currentTarget.ChangeHealth(-damage);
             await Task.Delay(Mathf.RoundToInt(ActualStats.AttackDeltaTime * Consts.ONE_SECOND_VALUE));
         }
-
-        protected override void DoOnAttack(int damage)
-        {
-            throw new System.NotImplementedException();
-        }
+        */
     }
 }

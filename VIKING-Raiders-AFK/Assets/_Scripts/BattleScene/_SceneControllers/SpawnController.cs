@@ -8,7 +8,7 @@ using UnityEngine;
 public class SpawnController : MonoBehaviourPun
 {
     protected SpawnPointController _spawnPointController;
-    protected Team CurrentTeam { get; set; }
+    public Team CurrentTeam {  get; protected set; }
 
     protected struct SpawnedUnit
     {
