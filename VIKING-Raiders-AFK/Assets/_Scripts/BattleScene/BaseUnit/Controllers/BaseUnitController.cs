@@ -117,7 +117,6 @@ public abstract class BaseUnitController : MonoBehaviourPun
     private void FindTarget()
     {
         _currentTarget = _battleController.GetTarget(this);
-        Debug.Log(_currentTarget);
 
         if (_currentTarget)
         {
@@ -265,7 +264,6 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     private void OnTargetDeath(BaseUnitController unit)
     {
-        Debug.Log(unit.ActualStats.BattleTeam);
         Debug.Log("DEAD: " + unit);
         if (unit == _currentTarget)
         {

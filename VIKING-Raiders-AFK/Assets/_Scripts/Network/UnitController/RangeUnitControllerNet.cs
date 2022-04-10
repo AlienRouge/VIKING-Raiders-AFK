@@ -9,7 +9,7 @@ public class RangeUnitControllerNet : BaseUnitControllerNet
     {
         var newProjectile = Instantiate(_projectilePrefab, transform.position, Quaternion.identity);
         newProjectile.transform.SetParent(transform.root);
-        newProjectile.Init(_currentTarget, ActualStats.UnitModel.GetProjModel(), ActualStats.GetDamageValue());
+        newProjectile.Init(_currentTarget, ActualStats.Model.GetProjModel(), damage);
         newProjectile.Launch();
-    } 
+    }
 }

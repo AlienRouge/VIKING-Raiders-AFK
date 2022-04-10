@@ -20,7 +20,7 @@ MonoBehaviour:
   <BaseHealth>k__BackingField: 100
   <BaseDamage>k__BackingField: 80
   <BaseArmour>k__BackingField: 20
-  <AttackDeltaTime>k__BackingField: 4
+  <AttackDeltaTime>k__BackingField: 1
   <AttackRange>k__BackingField: 20
   <CritChance>k__BackingField: 0
   <MoveSpeed>k__BackingField: 5

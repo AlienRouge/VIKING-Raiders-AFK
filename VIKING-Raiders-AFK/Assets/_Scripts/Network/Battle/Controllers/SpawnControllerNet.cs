@@ -105,7 +105,7 @@ public class SpawnControllerNet : SpawnController
         _playerTeam.Remove(unit);
 
         BaseUnitController unitController = unit.unitController;
-        Debug.Log("Deleted: " + unitController.ActualStats.UnitModel.CharacterName);
+        Debug.Log("Deleted: " + unitController.ActualStats.Model.CharacterName);
         PhotonNetwork.Destroy(unitController.gameObject);
         return true;
     }
