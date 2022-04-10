@@ -6,10 +6,10 @@ public class ProjectileController : MonoBehaviour
     private const float PROJECTILE_IMPACT_RADIUS = 0.5f;
     [SerializeField] private ProjectileView _view;
     
-    private BaseUnitController _target;
+    protected BaseUnitController _target;
     private ProjectileModel _model;
     
-    private float _damage;
+    protected float _damage;
     
     private float _distance => Vector3.Distance(transform.position, _target.transform.position);
     
@@ -52,7 +52,7 @@ public class ProjectileController : MonoBehaviour
         return Quaternion.Euler(0, 0, Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg);
     }
 
-    private void DoOnImpact()
+    protected virtual void DoOnImpact()
     {
         _target.ChangeHealth(-_damage);
 

@@ -8,7 +8,7 @@ using UnityEngine;
 public class SpawnController : MonoBehaviourPun
 {
     protected SpawnPointController _spawnPointController;
-    protected Team CurrentTeam { get; set; }
+    public Team CurrentTeam {  get; protected set; }
 
     protected struct SpawnedUnit
     {
@@ -65,7 +65,7 @@ public class SpawnController : MonoBehaviourPun
         return true;
     }
 
-    public bool TryRemoveUnit(User.Hero unitModel, int buttonID)
+    public virtual bool TryRemoveUnit(User.Hero unitModel, int buttonID)
     {
         var unit = _playerTeam.Find(unit => unit.ButtonID == buttonID);
         if (unit.unitController == null)

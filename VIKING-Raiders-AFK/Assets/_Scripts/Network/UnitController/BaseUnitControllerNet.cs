@@ -1,10 +1,15 @@
-﻿using Photon.Pun;
+﻿using System;
+using System.Threading.Tasks;
+using _Scripts.Network.SyncData;
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace _Scripts.Network.UnitController
 {
     [RequireComponent(typeof(PhotonView))]
-    public class BaseUnitControllerNet : BaseUnitController, IPunObservable, IPunInstantiateMagicCallback
+    public abstract class BaseUnitControllerNet : BaseUnitController, IPunObservable, IPunInstantiateMagicCallback, IOnEventCallback
     {
         private PhotonView _photonView;
 
@@ -12,11 +17,13 @@ namespace _Scripts.Network.UnitController
         {
             /*if (stream.IsWriting)
             {
-                stream.SendNext();
+                stream.SendNext(ActualStats.CurrentHealth);
             }
-            else
+
+            if (stream.IsReading)
             {
-                stream.ReceiveNext();
+                ActualStats.CurrentHealth = (float) stream.ReceiveNext();
+                EventController.UnitHealthChanged.Invoke(this, ActualStats.CurrentHealth);
             }*/
         }
 
@@ -28,10 +35,34 @@ namespace _Scripts.Network.UnitController
             Init(model, initData.currentTeam, initData.heroLevel, false);
             SpawnControllerNet.Instance.AddEnemy(this);
         }
-
-        protected override void DoOnAttack(int damage)
+        
+        public void OnEvent(EventData photonEvent)
         {
-            throw new System.NotImplementedException();
+            switch (photonEvent.Code)
+            {
+                case (byte)NetEvents.UnitHit:
+                    var data = (SyncDamageData) photonEvent.CustomData;
+
+                    if (photonView.ViewID == data.ViewId)
+                    {
+                        ChangeHealth(data.Damage);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            PhotonNetwork.AddCallbackTarget(this);
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            PhotonNetwork.AddCallbackTarget(this);
         }
     }
 }

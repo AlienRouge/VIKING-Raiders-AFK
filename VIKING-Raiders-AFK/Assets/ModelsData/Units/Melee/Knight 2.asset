@@ -18,7 +18,6 @@ MonoBehaviour:
   <ViewSpriteScale>k__BackingField: {x: 70, y: 70, z: 70}
   <MaxUnitLevel>k__BackingField: 20
   <BaseHealth>k__BackingField: 200
-  <BaseDamage>k__BackingField: 25
   <BaseArmour>k__BackingField: 50
   <AttackDeltaTime>k__BackingField: 1
   <AttackRange>k__BackingField: 1.5
@@ -27,5 +26,6 @@ MonoBehaviour:
   <PassiveAbility>k__BackingField: {fileID: 0}
   <ActiveAbility>k__BackingField: {fileID: 0}
   _targetWeights:
-    HpWeight: 0
-    DistanceWeight: 0
+    hpWeight: 1
+    distanceWeight: 1
+  <BaseMeleeDamage>k__BackingField: 60

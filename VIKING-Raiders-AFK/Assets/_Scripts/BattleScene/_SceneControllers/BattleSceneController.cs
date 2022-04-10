@@ -12,7 +12,7 @@ public class BattleSceneController : MonoBehaviour
     [field: SerializeField] public SpawnController SpawnController { get; private set; }
     [field: SerializeField] public UIController UIController { get; private set; }
 
-    [SerializeField] private MapGenerator _mapGenerator;
+    [SerializeField] protected MapGenerator _mapGenerator;
     protected MapController _mapController;
     
     public static BattleSceneController instance

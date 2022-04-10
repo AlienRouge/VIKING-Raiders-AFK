@@ -27,5 +27,6 @@ MonoBehaviour:
   <PassiveAbility>k__BackingField: {fileID: 0}
   <ActiveAbility>k__BackingField: {fileID: 11400000, guid: 934de18d78be423459fb3a12245af454, type: 2}
   _targetWeights:
-    HpWeight: 0
-    DistanceWeight: 0
+    hpWeight: 10
+    distanceWeight: 2
+  <BaseMeleeDamage>k__BackingField: 60

@@ -15,7 +15,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
     private bool _isActiveAbilityReady;
     private bool _isCasting;
     private bool _isTargetInRange;
-    private bool _isBattleEnd;
+    protected bool _isBattleEnd;
 
     private enum MoveState
     {
@@ -28,8 +28,9 @@ public abstract class BaseUnitController : MonoBehaviourPun
     private DragDropController _dragDropController;
     private AbilityController _abilityController;
     private StatusEffectController _statusEffectController;
+    protected BattleController _battleController;
 
-    [field: SerializeField] public ActualUnitStats ActualStats { get; private set; }
+    [field: SerializeField] public ActualUnitStats ActualStats { get; protected set; }
 
     private MoveState CurrentMoveState
     {
@@ -74,6 +75,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         _dragDropController = GetComponent<DragDropController>();
         _abilityController = GetComponent<AbilityController>();
         _statusEffectController = GetComponent<StatusEffectController>();
+        _battleController = FindObjectOfType<BattleController>();
 
         _movementController.Init(ActualStats.Model.MoveSpeed);
         _baseUnitView.Init(this);
@@ -99,6 +101,12 @@ public abstract class BaseUnitController : MonoBehaviourPun
         FindTarget();
         StartBattleCycle();
     }
+    
+    public void StopMoving()
+    {
+        _movementController.IsStopped(true);
+        _movementController.Disable();
+    }
 
     private void PreFightSetup()
     {
@@ -108,7 +116,8 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     private void FindTarget()
     {
-        _currentTarget = BattleSceneController.instance.BattleController.GetTarget(this);
+        _currentTarget = _battleController.GetTarget(this);
+        Debug.Log(_currentTarget);
 
         if (_currentTarget)
         {
@@ -122,7 +131,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     private async void StartBattleCycle()
     {
-        while (!ActualStats.IsDead && !_isBattleEnd)
+        while (!ActualStats.IsDead && !_isBattleEnd && _currentTarget != null)
         {
             if (!_isCasting)
             {
@@ -152,7 +161,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         CurrentMoveState = MoveState.Stop;
     }
 
-    private async Task Attack()
+    protected virtual async Task Attack()
     {
         if (ActualStats.IsDead || _isBattleEnd || _currentTarget.ActualStats.IsDead) return;
 
@@ -166,7 +175,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     protected abstract void DoOnAttack(int damage);
 
-    private int CalculateDamage()
+    protected int CalculateDamage()
     {
         // var dmgRatio = ActualStats.GetDamageValue() / _currentTarget.ActualStats.GetArmourValue();
         var armourRatio = 100.0f / (100.0f + _currentTarget.ActualStats.Armour);
@@ -212,7 +221,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
     {
         _statusEffectController.AddStatusEffect(effect);
     }
-
+    
     public void ChangeHealth(float amount)
     {
         ActualStats.Health += amount;
@@ -230,7 +239,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         _movementController.SetMoveSpeed(speed);
     }
 
-    private void OnDeathHandler()
+    protected void OnDeathHandler()
     {
         _currentTarget = null;
 
@@ -245,7 +254,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         }
 
         _statusEffectController.OnUnitDead();
-        BattleSceneController.instance.BattleController.OnUnitDied(this);
+        _battleController.OnUnitDied(this);
         EventController.UnitDied?.Invoke(this);
     }
 
@@ -256,6 +265,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     private void OnTargetDeath(BaseUnitController unit)
     {
+        Debug.Log(unit.ActualStats.BattleTeam);
         Debug.Log("DEAD: " + unit);
         if (unit == _currentTarget)
         {
@@ -290,13 +300,13 @@ public abstract class BaseUnitController : MonoBehaviourPun
         }
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         EventController.BattleEnded += OnBattleEnded;
         EventController.UnitDied += OnTargetDeath;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         EventController.BattleEnded -= OnBattleEnded;
         EventController.UnitDied -= OnTargetDeath;
