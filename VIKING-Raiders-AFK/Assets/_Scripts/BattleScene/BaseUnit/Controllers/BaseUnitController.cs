@@ -220,6 +220,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         ActualStats.CurrentHealth = Mathf.Clamp(ActualStats.CurrentHealth, 0, ActualStats.UnitModel.BaseHealth);
         EventController.UnitHealthChanged.Invoke(this, ActualStats.CurrentHealth);
 
+        Debug.Log(amount);
         if (ActualStats.IsDead)
         {
             OnDeathHandler();

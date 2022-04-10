@@ -68,7 +68,6 @@ public class HeroItemController : MonoBehaviour
 
         _button.enabled = false;
         _view.UnitDied();
-
     }
     
     private void OnEnable()

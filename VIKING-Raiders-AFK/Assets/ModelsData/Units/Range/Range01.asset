@@ -28,5 +28,5 @@ MonoBehaviour:
   _targetWeights:
     hpWeight: 1
     distanceWeight: 1
-  <BaseProjectileDamage>k__BackingField: 250
+  <BaseProjectileDamage>k__BackingField: 20
   <ProjectileModel>k__BackingField: {fileID: 11400000, guid: eee78b607d070a146a9a57735a973be0, type: 2}
