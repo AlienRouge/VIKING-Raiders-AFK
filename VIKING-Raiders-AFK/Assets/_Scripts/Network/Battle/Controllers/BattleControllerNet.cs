@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class BattleControllerNet : BattleController
@@ -15,11 +16,6 @@ public class BattleControllerNet : BattleController
         foreach (var unit in units)
         {
             unit.StartBattle();
-            if (unit.ActualStats.BattleTeam != BattleSceneControllerNet.Instance.SpawnController.CurrentTeam)
-            {
-                unit.StopMoving();
-                unit.ActualStats.DmgMultiplier = 0;
-            }
         }
 
     }

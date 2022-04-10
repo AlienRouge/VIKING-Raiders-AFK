@@ -131,7 +131,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     private async void StartBattleCycle()
     {
-        while (!ActualStats.IsDead && !_isBattleEnd)
+        while (!ActualStats.IsDead && !_isBattleEnd && _currentTarget != null)
         {
             if (!_isCasting)
             {
@@ -241,7 +241,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         _movementController.SetMoveSpeed(ActualStats.UnitModel.MoveSpeed * mtp);
     }
 
-    private void OnDeathHandler()
+    protected void OnDeathHandler()
     {
         _currentTarget = null;
 
@@ -302,13 +302,13 @@ public abstract class BaseUnitController : MonoBehaviourPun
         }
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         EventController.BattleEnded += OnBattleEnded;
         EventController.UnitDied += OnTargetDeath;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         EventController.BattleEnded -= OnBattleEnded;
         EventController.UnitDied -= OnTargetDeath;

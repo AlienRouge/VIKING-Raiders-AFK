@@ -1890,7 +1890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseMeleeUnitPrefab: {fileID: 1063507140085805244, guid: 1016e8920392b1844ac2450bfe41718c, type: 3}
-  _baseRangeUnitPrefab: {fileID: 1694037887694802662, guid: 87cfbe22b40213e43bce8c932cc90bb7, type: 3}
+  _baseRangeUnitPrefab: {fileID: 1371853022420650811, guid: 87cfbe22b40213e43bce8c932cc90bb7, type: 3}
   _enemyTeam: []
   _models: {fileID: 11400000, guid: a32faf5aa41d6a344886b4ea7db93520, type: 2}
 --- !u!1 &1279503503

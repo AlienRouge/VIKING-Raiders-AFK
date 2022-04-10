@@ -28,4 +28,4 @@ MonoBehaviour:
   _targetWeights:
     hpWeight: 0
     distanceWeight: 0
-  <BaseMeleeDamage>k__BackingField: 233
+  <BaseMeleeDamage>k__BackingField: 60

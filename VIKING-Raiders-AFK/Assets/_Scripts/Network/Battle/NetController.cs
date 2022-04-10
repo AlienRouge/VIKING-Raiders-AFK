@@ -13,6 +13,7 @@ public class NetController : MonoBehaviourPunCallbacks
     private void Start()
     {
         PhotonPeer.RegisterType(typeof(SyncData), 240, SyncData.Serialize, SyncData.Deserialize);
+        PhotonPeer.RegisterType(typeof(SyncDamageData), 241, SyncDamageData.Serialize, SyncDamageData.Deserialize);
     }
 
     public override void OnLeftRoom()

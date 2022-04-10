@@ -8,7 +8,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-public class SpawnControllerNet : SpawnController, IOnEventCallback
+public class SpawnControllerNet : SpawnController
 {
     [SerializeField] private ModelsContainer _models;
     private static SpawnControllerNet _instance;
@@ -48,11 +48,10 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
 
     private void InstantiateUnitNet(Team team, User.Hero hero, SpawnPoint spawnPoint, int buttonID = -1)
     {
-        SyncData syncData = new SyncData()
+        var syncData = new SyncData()
         {
             heroLevel = hero._heroLevel,
             modalName = hero._heroModel.name,
-            spawnPos = spawnPoint.GetPosition(),
             currentTeam = team
         };
 
@@ -80,7 +79,7 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
         spawnedObject.transform.SetParent(_spawnPointController.transform);
         _spawnPointController.TakeSpawnPoint(spawnPoint);
 
-        var newUnit = spawnedObject.GetComponent<BaseUnitController>();
+        var newUnit = spawnedObject.GetComponent<BaseUnitControllerNet>();
         newUnit.Init(hero._heroModel, team, hero._heroLevel, team == CurrentTeam);
         newUnit.name = hero._heroModel.CharacterName;
 
@@ -94,6 +93,24 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
         });
     }
 
+    public override bool TryRemoveUnit(User.Hero unitModel, int buttonID)
+    {
+        var unit = _playerTeam.Find(unit => unit.ButtonID == buttonID);
+        if (unit.unitController == null)
+        {
+            return false;
+        }
+
+        _spawnPointController.FreeSpawnPoint(unit.SpawnPoint);
+        _playerTeam.Remove(unit);
+
+        BaseUnitController unitController = unit.unitController;
+        Debug.Log("Deleted: " + unitController.ActualStats.UnitModel.CharacterName);
+        PhotonNetwork.Destroy(unitController.gameObject);
+        return true;
+    }
+    
+    /*
     private void SendModelDataToNet(SyncData data)
     {
         var riseEventOptions = new RaiseEventOptions()
@@ -107,10 +124,11 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
 
         PhotonNetwork.RaiseEvent((byte) NetEvents.SpawnUnit, data, riseEventOptions, sendOptions);
     }
+    */
 
-    private void InstantiateReceivedModal(SyncData data)
+    /*private void InstantiateReceivedModal(SyncData data)
     {
-        /*FindObjectsOfType<BaseUnitController>().ToList().Find(item=> item.)*/
+        /*FindObjectsOfType<BaseUnitController>().ToList().Find(item=> item.)#1#
         /*var currentModel = _models.GetModelByName(data.modalName);
         
         var spawnedObject = PhotonNetwork.Instantiate(_netModel.name,
@@ -121,15 +139,15 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
         newUnit.Init(currentModel, EnemyTeam, data.heroLevel, false);
         newUnit.name = currentModel.CharacterName;
 
-        _enemyTeam.Add(newUnit);*/
-    }
+        _enemyTeam.Add(newUnit);#1#
+    }*/
 
     public void AddEnemy(BaseUnitControllerNet enemy)
     {
         _enemyTeam.Add(enemy);
     }
 
-    public void OnEvent(EventData photonEvent)
+    /*public void OnEvent(EventData photonEvent)
     {
         switch (photonEvent.Code)
         {
@@ -141,9 +159,9 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
             default:
                 return;
         }
-    }
+    }*/
 
-    private void OnEnable()
+    /*private void OnEnable()
     {
         PhotonNetwork.AddCallbackTarget(this);
     }
@@ -151,5 +169,5 @@ public class SpawnControllerNet : SpawnController, IOnEventCallback
     private void OnDisable()
     {
         PhotonNetwork.RemoveCallbackTarget(this);
-    }
+    }*/
 }

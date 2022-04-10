@@ -1,25 +1,30 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using _Scripts.Network.SyncData;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace _Scripts.Network.UnitController
 {
     [RequireComponent(typeof(PhotonView))]
-    public abstract class BaseUnitControllerNet : BaseUnitController, IPunObservable, IPunInstantiateMagicCallback
+    public abstract class BaseUnitControllerNet : BaseUnitController, IPunObservable, IPunInstantiateMagicCallback, IOnEventCallback
     {
         private PhotonView _photonView;
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (stream.IsWriting)
+            /*if (stream.IsWriting)
             {
                 stream.SendNext(ActualStats.CurrentHealth);
             }
-            else
+
+            if (stream.IsReading)
             {
                 ActualStats.CurrentHealth = (float) stream.ReceiveNext();
                 EventController.UnitHealthChanged.Invoke(this, ActualStats.CurrentHealth);
-            }
+            }*/
         }
 
         public void OnPhotonInstantiate(PhotonMessageInfo info)
@@ -30,18 +35,34 @@ namespace _Scripts.Network.UnitController
             Init(model, initData.currentTeam, initData.heroLevel, false);
             SpawnControllerNet.Instance.AddEnemy(this);
         }
-
-        /*
-        protected override async Task Attack()
+        
+        public void OnEvent(EventData photonEvent)
         {
-            if (ActualStats.IsDead || _isBattleEnd || _currentTarget.ActualStats.IsDead) return;
+            switch (photonEvent.Code)
+            {
+                case (byte)NetEvents.UnitHit:
+                    var data = (SyncDamageData) photonEvent.CustomData;
 
-            var damage = CalculateDamage();
-            Debug.Log(
-                $"{ActualStats.UnitModel.CharacterName} --> {_currentTarget.ActualStats.UnitModel.CharacterName} [{damage}]dmg");
-            _currentTarget.ChangeHealth(-damage);
-            await Task.Delay(Mathf.RoundToInt(ActualStats.AttackDeltaTime * Consts.ONE_SECOND_VALUE));
+                    if (photonView.ViewID == data.ViewId)
+                    {
+                        ChangeHealth(data.Damage);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
-        */
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            PhotonNetwork.AddCallbackTarget(this);
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            PhotonNetwork.AddCallbackTarget(this);
+        }
     }
 }
