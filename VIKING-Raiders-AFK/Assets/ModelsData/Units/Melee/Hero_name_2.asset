@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a945832059c4a534c9f81a988264dd08, type: 3}
+  m_Name: Hero_name_2
+  m_EditorClassIdentifier: 
+  <CharacterName>k__BackingField: Ded
+  <Description>k__BackingField: Some ded
+  <ViewSprite>k__BackingField: {fileID: -2080752093868410312, guid: 3fce839290f116d40a0b3ed066fa6086, type: 3}
+  <ViewSpriteScale>k__BackingField: {x: 0, y: 0, z: 0}
+  <UnitType>k__BackingField: 0
+  <MaxUnitLevel>k__BackingField: 100
+  <BaseHealth>k__BackingField: 20
+  <BaseDamage>k__BackingField: 5
+  <BaseArmour>k__BackingField: 20
+  <AttackSpeed>k__BackingField: 1
+  <CriticalRate>k__BackingField: 0
+  <AttackRange>k__BackingField: 0
+  <MoveSpeed>k__BackingField: 10
+  <PassiveAbility>k__BackingField: {fileID: 0}
+  <ActiveAbility>k__BackingField: {fileID: 0}
+  _targetWeights:
+    hpWeight: 0
+    distanceWeight: 0
+  additionalArmor: 0
