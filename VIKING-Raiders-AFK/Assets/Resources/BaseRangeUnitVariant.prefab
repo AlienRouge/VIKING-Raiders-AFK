@@ -303,6 +303,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 1371853022420650811}
   - {fileID: -3013419437992186865}
+  - {fileID: 4055681274731712830}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -329,7 +330,7 @@ MonoBehaviour:
     _attackSpeedMultiplier: 0
     _moveSpeedMultiplier: 0
     _critRateMultiplier: 0
-  _projectilePrefab: {fileID: 0}
+  _projectilePrefab: {fileID: -841475311256753714, guid: 2118a5f0f26fc4049a748de4b48b4c2c, type: 3}
 --- !u!114 &-3013419437992186865
 MonoBehaviour:
   m_ObjectHideFlags: 0

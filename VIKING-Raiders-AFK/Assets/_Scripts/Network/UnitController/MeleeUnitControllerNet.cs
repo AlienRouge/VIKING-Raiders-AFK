@@ -11,8 +11,6 @@ public class MeleeUnitControllerNet : BaseUnitControllerNet
     {
         if (!PhotonNetwork.IsMasterClient) return;
         
-        Debug.Log(-damage);
-        Debug.Log(_currentTarget);
         var data = new SyncDamageData
         {
             ViewId = _currentTarget.GetComponent<PhotonView>().ViewID,
