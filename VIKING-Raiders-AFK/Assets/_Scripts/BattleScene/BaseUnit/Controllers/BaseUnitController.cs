@@ -200,7 +200,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         await _abilityController.ActivatePassiveAbility(_currentTarget);
     }
 
-    private async void UseActiveAbility()
+    protected virtual async void UseActiveAbility()
     {
         if (!ActualStats.Model.ActiveAbility) return;
 
