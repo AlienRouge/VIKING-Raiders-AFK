@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using _Scripts.Network.SyncData;
+﻿using _Scripts.Network.SyncData;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -11,7 +9,7 @@ namespace _Scripts.Network.UnitController
     [RequireComponent(typeof(PhotonView))]
     public abstract class BaseUnitControllerNet : BaseUnitController, IPunObservable, IPunInstantiateMagicCallback, IOnEventCallback
     {
-        private PhotonView _photonView;
+        [SerializeField] private PhotonView _photonView;
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {

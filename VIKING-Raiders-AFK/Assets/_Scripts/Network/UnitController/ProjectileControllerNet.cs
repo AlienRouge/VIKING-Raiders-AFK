@@ -10,6 +10,7 @@ namespace _Scripts.Network.UnitController
     {
         protected override void DoOnImpact()
         {
+            if(!PhotonNetwork.IsMasterClient) return;
             var data = new SyncDamageData
             {
                 ViewId = _target.GetComponent<PhotonView>().ViewID,

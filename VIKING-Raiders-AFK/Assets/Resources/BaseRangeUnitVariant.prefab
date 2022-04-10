@@ -320,16 +320,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ActualStats>k__BackingField:
-    _unitModel: {fileID: 0}
+    _model: {fileID: 0}
     _battleTeam: 0
     _unitLevel: 0
-    _currentHealth: 0
+    _health: 0
+    _damage: 0
+    _armour: 0
     _attackDeltaTime: 0
     _attackRange: 0
-    _dmgMultiplier: 0
-    _attackSpeedMultiplier: 0
-    _moveSpeedMultiplier: 0
-    _critRateMultiplier: 0
+    _moveSpeed: 0
+    _critChance: 0
+  _photonView: {fileID: 8034967924360222655}
   _projectilePrefab: {fileID: -841475311256753714, guid: 2118a5f0f26fc4049a748de4b48b4c2c, type: 3}
 --- !u!114 &-3013419437992186865
 MonoBehaviour:
