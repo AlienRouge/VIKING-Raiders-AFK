@@ -54,14 +54,14 @@ public class BattleController : MonoBehaviour
     {
         BaseUnitController supposedEnemy = null;
         var enemies = GetEnemies(unit.ActualStats.BattleTeam);
-        var weights = unit.ActualStats.UnitModel.TargetWeights;
+        var weights = unit.ActualStats.Model.TargetWeights;
         float enemyValue = Mathf.Infinity;
 
         foreach (var enemy in enemies)
         {
             float distance = unit.GetDistanceToPosition(enemy.transform.position);
-            float hp = enemy.ActualStats.CurrentHealth;
-            float mean = GetTargetWeightedMean(hp, distance, weights.hpWeight, weights.distanceWeight);
+            float hp = enemy.ActualStats.Health;
+            float mean = GetTargetWeightedMean(hp, distance, weights.HpWeight, weights.DistanceWeight);
 
             if (mean <= enemyValue)
             {

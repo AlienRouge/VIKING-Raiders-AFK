@@ -19,7 +19,7 @@ public class HeroDraftItemView : MonoBehaviour
         var model = hero._heroModel;
         _name.text = model.CharacterName;
         _image.sprite = model.ViewSprite;
-        _armour.text = model.GetArmourPerUnitLevel(hero._heroLevel).ToString();
+        _armour.text = model.GetUnitArmour(hero._heroLevel).ToString();
         _attack.text = model.GetUnitDamage(hero._heroLevel).ToString();
         _Level.text = hero._heroLevel.ToString();
 

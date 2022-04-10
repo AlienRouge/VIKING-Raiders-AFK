@@ -18,15 +18,15 @@ MonoBehaviour:
   <ViewSpriteScale>k__BackingField: {x: 80, y: 80, z: 80}
   <MaxUnitLevel>k__BackingField: 20
   <BaseHealth>k__BackingField: 100
+  <BaseDamage>k__BackingField: 80
   <BaseArmour>k__BackingField: 20
-  <AttackSpeed>k__BackingField: 0.2
-  <CriticalRate>k__BackingField: 0
-  <AttackRange>k__BackingField: 7
+  <AttackDeltaTime>k__BackingField: 4
+  <AttackRange>k__BackingField: 20
+  <CritChance>k__BackingField: 0
   <MoveSpeed>k__BackingField: 5
   <PassiveAbility>k__BackingField: {fileID: 0}
-  <ActiveAbility>k__BackingField: {fileID: 0}
+  <ActiveAbility>k__BackingField: {fileID: 11400000, guid: cc538ad0adcb9d44a97c9e814654d4ce, type: 2}
   _targetWeights:
-    hpWeight: 1
-    distanceWeight: 1
-  <BaseProjectileDamage>k__BackingField: 20
+    HpWeight: 1
+    DistanceWeight: 1
   <ProjectileModel>k__BackingField: {fileID: 11400000, guid: eee78b607d070a146a9a57735a973be0, type: 2}

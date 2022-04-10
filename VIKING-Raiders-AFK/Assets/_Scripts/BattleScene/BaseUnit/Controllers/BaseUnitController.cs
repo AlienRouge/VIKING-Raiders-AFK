@@ -61,10 +61,10 @@ public abstract class BaseUnitController : MonoBehaviourPun
         InitializeData(model, team, unitLevel);
         InitializeControllers(isDraggable);
     }
-    
+
     private void InitializeData(BaseUnitModel model, Team team, int unitLevel)
     {
-        ActualStats = new ActualUnitStats(model, team, unitLevel);
+        ActualStats = new ActualUnitStats(model, team, unitLevel, this);
     }
 
     private void InitializeControllers(bool isDraggable)
@@ -75,21 +75,21 @@ public abstract class BaseUnitController : MonoBehaviourPun
         _abilityController = GetComponent<AbilityController>();
         _statusEffectController = GetComponent<StatusEffectController>();
 
-        _movementController.Init(ActualStats.UnitModel.MoveSpeed);
+        _movementController.Init(ActualStats.Model.MoveSpeed);
         _baseUnitView.Init(this);
         _dragDropController.Init(ActualStats.BattleTeam, isDraggable);
         _statusEffectController.Init();
 
-        if (ActualStats.UnitModel.PassiveAbility)
+        if (ActualStats.Model.PassiveAbility)
         {
             EventController.PassiveAbilityStateChanged += OnPassiveAbilityStateChange;
-            _abilityController.InitPassiveAbility(ActualStats.UnitModel.PassiveAbility);
+            _abilityController.InitPassiveAbility(ActualStats.Model.PassiveAbility);
         }
 
-        if (ActualStats.UnitModel.ActiveAbility)
+        if (ActualStats.Model.ActiveAbility)
         {
             EventController.UseUnitActiveAbility += OnUseActiveAbility;
-            _abilityController.InitActiveAbility(ActualStats.UnitModel.ActiveAbility);
+            _abilityController.InitActiveAbility(ActualStats.Model.ActiveAbility);
         }
     }
 
@@ -116,8 +116,8 @@ public abstract class BaseUnitController : MonoBehaviourPun
         }
 
         Debug.Log(_currentTarget
-            ? $"{ActualStats.UnitModel.CharacterName}: New target({_currentTarget.ActualStats.UnitModel.CharacterName})."
-            : $"{ActualStats.UnitModel.CharacterName}: No targets.");
+            ? $"{ActualStats.Model.CharacterName}: New target({_currentTarget.ActualStats.Model.CharacterName})."
+            : $"{ActualStats.Model.CharacterName}: No targets.");
     }
 
     private async void StartBattleCycle()
@@ -143,7 +143,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
                     continue;
                 }
 
-                // CurrentMoveState = MoveState.Move;
+                CurrentMoveState = MoveState.Move;
             }
 
             await Task.Yield();
@@ -156,12 +156,10 @@ public abstract class BaseUnitController : MonoBehaviourPun
     {
         if (ActualStats.IsDead || _isBattleEnd || _currentTarget.ActualStats.IsDead) return;
 
-
         var damage = CalculateDamage();
         Debug.Log(
-            $"{ActualStats.UnitModel.CharacterName} --> {_currentTarget.ActualStats.UnitModel.CharacterName} [{damage}]dmg");
+            $"{ActualStats.Model.CharacterName} --> {_currentTarget.ActualStats.Model.CharacterName} [{damage}]dmg");
         DoOnAttack(damage);
-        // _currentTarget.ChangeHealth(-damage);
 
         await Task.Delay(Mathf.RoundToInt(ActualStats.AttackDeltaTime * Consts.ONE_SECOND_VALUE));
     }
@@ -170,20 +168,21 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     private int CalculateDamage()
     {
-        var dmgRatio = ActualStats.GetDamageValue() / _currentTarget.ActualStats.GetArmourValue();
-        var lvlRatio = (_currentTarget.ActualStats.UnitLevel - ActualStats.UnitLevel) * 0.05f; // Value per level
-        var critRatio = Random.Range(0f, 1f) < ActualStats.UnitModel.CriticalRate; // TODO Рейт в актуальные?
-        var attackRatio = dmgRatio - lvlRatio + Convert.ToInt32(critRatio);
-        var finalDmg =
-            (int)Mathf.Floor(ActualStats.DmgMultiplier * ActualStats.GetDamageValue() * attackRatio *
-                             Random.Range(0.85f, 1f));
+        // var dmgRatio = ActualStats.GetDamageValue() / _currentTarget.ActualStats.GetArmourValue();
+        var armourRatio = 100.0f / (100.0f + _currentTarget.ActualStats.Armour);
+        var perLevelRatio = (_currentTarget.ActualStats.UnitLevel - ActualStats.UnitLevel) * 0.05f; // Value per level
+        var critRatio = Random.Range(0f, 1f) < ActualStats.Model.CritChance; // TODO Рейт в актуальные?
+        var damageRatio = armourRatio - perLevelRatio + Convert.ToInt32(critRatio);
+        var damage =
+            (int)Mathf.Floor(ActualStats.Damage * damageRatio *
+                             Random.Range(0.85f, 1.15f));
 
         if (critRatio)
         {
-            Debug.Log($"{ActualStats.UnitModel.CharacterName}: CRITICAL DAMAGE");
+            Debug.Log($"{ActualStats.Model.CharacterName}: CRITICAL DAMAGE");
         }
 
-        return finalDmg > 0 ? finalDmg : 0;
+        return damage > 0 ? damage : 0;
     }
 
     private async Task UsePassiveAbility()
@@ -195,13 +194,13 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     private async void UseActiveAbility()
     {
-        if (!ActualStats.UnitModel.ActiveAbility) return;
+        if (!ActualStats.Model.ActiveAbility) return;
 
         _isCasting = true;
         CurrentMoveState = MoveState.Stop;
         await _abilityController.ActivateActiveAbility(_currentTarget);
         _isCasting = false;
-        CurrentMoveState = MoveState.Move;
+        // CurrentMoveState = MoveState.Move;
     }
 
     public float GetDistanceToPosition(Vector3 position)
@@ -216,33 +215,31 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     public void ChangeHealth(float amount)
     {
-        ActualStats.CurrentHealth += amount;
-        ActualStats.CurrentHealth = Mathf.Clamp(ActualStats.CurrentHealth, 0, ActualStats.UnitModel.BaseHealth);
-        EventController.UnitHealthChanged.Invoke(this, ActualStats.CurrentHealth);
-
-        Debug.Log(amount);
+        ActualStats.Health += amount;
+        ActualStats.Health = Mathf.Clamp(ActualStats.Health, 0, ActualStats.Model.BaseHealth);
+        EventController.UnitHealthChanged.Invoke(this, ActualStats.Health);
+        
         if (ActualStats.IsDead)
         {
             OnDeathHandler();
         }
     }
 
-    public void ChangeMoveSpeed(float mtp) 
+    public void ChangeMoveSpeed(float speed)
     {
-        ActualStats.MoveSpeedMultiplier = mtp;
-        _movementController.SetMoveSpeed(ActualStats.UnitModel.MoveSpeed * mtp);
+        _movementController.SetMoveSpeed(speed);
     }
 
     private void OnDeathHandler()
     {
         _currentTarget = null;
 
-        if (ActualStats.UnitModel.PassiveAbility)
+        if (ActualStats.Model.PassiveAbility)
         {
             EventController.PassiveAbilityStateChanged -= OnPassiveAbilityStateChange;
         }
 
-        if (ActualStats.UnitModel.ActiveAbility)
+        if (ActualStats.Model.ActiveAbility)
         {
             EventController.UseUnitActiveAbility -= OnUseActiveAbility;
         }
@@ -311,16 +308,16 @@ public abstract class BaseUnitController : MonoBehaviourPun
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, ActualStats.AttackRange);
 
-        if (ActualStats.UnitModel.PassiveAbility)
+        if (ActualStats.Model.PassiveAbility)
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, ActualStats.UnitModel.PassiveAbility.CastRange);
+            Gizmos.DrawWireSphere(transform.position, ActualStats.Model.PassiveAbility.CastRange);
         }
 
-        if (ActualStats.UnitModel.ActiveAbility)
+        if (ActualStats.Model.ActiveAbility)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, ActualStats.UnitModel.ActiveAbility.CastRange);
+            Gizmos.DrawWireSphere(transform.position, ActualStats.Model.ActiveAbility.CastRange);
         }
     }
 }

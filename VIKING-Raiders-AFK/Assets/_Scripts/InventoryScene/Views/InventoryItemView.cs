@@ -17,7 +17,7 @@ internal class InventoryItemView : MonoBehaviour
         _name.text = model.CharacterName;
         _image.sprite = model.ViewSprite;
         _health.text = model.BaseHealth.ToString();
-        _armour.text = model.GetArmourPerUnitLevel(hero._heroLevel).ToString();
+        _armour.text = model.GetUnitArmour(hero._heroLevel).ToString();
         _attack.text = model.GetUnitDamage(hero._heroLevel).ToString();
         _Level.text = hero._heroLevel.ToString();
     }

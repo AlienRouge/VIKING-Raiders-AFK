@@ -37,7 +37,7 @@ public class BaseUnitView : MonoBehaviour
         _viewImage = _unitView.GetComponent<Image>();
         _viewRectTransform = _unitView.GetComponent<RectTransform>();
 
-        SetUnitSprite(parent.ActualStats.UnitModel.ViewSprite, parent.ActualStats.UnitModel.ViewSpriteScale);
-        _healthBar.SetMaxHealth(parent.ActualStats.UnitModel.BaseHealth);
+        SetUnitSprite(parent.ActualStats.Model.ViewSprite, parent.ActualStats.Model.ViewSpriteScale);
+        _healthBar.SetMaxHealth(parent.ActualStats.Model.BaseHealth);
     }
 }

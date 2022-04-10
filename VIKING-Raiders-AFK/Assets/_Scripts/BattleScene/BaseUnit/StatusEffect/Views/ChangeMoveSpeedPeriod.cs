@@ -6,7 +6,7 @@ public class ChangeMoveSpeedPeriod : BaseStatusEffect
     [SerializeField] private float multiplier;
     protected override void DoOnApplyEffect(BaseUnitController target)
     {
-        target.ChangeMoveSpeed(multiplier);
+        target.ActualStats.MoveSpeed *= multiplier;
     }
 
     protected override void DoOnTickEffect(BaseUnitController target)
@@ -16,6 +16,6 @@ public class ChangeMoveSpeedPeriod : BaseStatusEffect
 
     protected override void DoOnRemoveEffect(BaseUnitController target)
     {
-        target.ChangeMoveSpeed(1f);
+        target.ActualStats.RestoreMoveSpeedValue();
     }
 }
