@@ -8,8 +8,8 @@ public class RangeUnitControllerNet : BaseUnitControllerNet
     protected override void DoOnAttack(int damage)
     {
         var newProjectile = Instantiate(_projectilePrefab, transform.position, Quaternion.identity);
-        newProjectile.transform.SetParent(transform.root);
-        newProjectile.Init(_currentTarget, ActualStats.UnitModel.GetProjModel(), ActualStats.GetDamageValue());
+        /*newProjectile.transform.SetParent(transform.root);*/
+        newProjectile.Init(_currentTarget, ActualStats.Model.GetProjModel(), damage);
         newProjectile.Launch();
-    } 
+    }
 }

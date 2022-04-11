@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using _Scripts.Network.SyncData;
+﻿using _Scripts.Network.SyncData;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -11,7 +9,7 @@ namespace _Scripts.Network.UnitController
     [RequireComponent(typeof(PhotonView))]
     public abstract class BaseUnitControllerNet : BaseUnitController, IPunObservable, IPunInstantiateMagicCallback, IOnEventCallback
     {
-        private PhotonView _photonView;
+        [SerializeField] private PhotonView _photonView;
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
@@ -43,14 +41,45 @@ namespace _Scripts.Network.UnitController
                 case (byte)NetEvents.UnitHit:
                     var data = (SyncDamageData) photonEvent.CustomData;
 
-                    if (photonView.ViewID == data.ViewId)
+                    if (_photonView.ViewID == data.ViewId)
                     {
                         ChangeHealth(data.Damage);
+                    }
+                    break;
+                case (byte)NetEvents.UnitUseAbility:
+                    var dataAbility = (SyncUseAbility) photonEvent.CustomData;
+
+                    if (_photonView.ViewID == dataAbility.ViewId)
+                    {
+                        base.UseActiveAbility();
                     }
                     break;
                 default:
                     break;
             }
+        }
+        
+        protected override async void UseActiveAbility()
+        {
+            SendHitData(new SyncUseAbility
+            {
+                ViewId = GetComponent<PhotonView>().ViewID
+            });
+            base.UseActiveAbility();
+        }
+        
+        private void SendHitData(SyncUseAbility data)
+        {
+            var riseEventOptions = new RaiseEventOptions()
+            {
+                Receivers = ReceiverGroup.Others
+            };
+            var sendOptions = new SendOptions()
+            {
+                Reliability = true
+            };
+
+            PhotonNetwork.RaiseEvent((byte) NetEvents.UnitUseAbility, data, riseEventOptions, sendOptions);
         }
 
         protected override void OnEnable()

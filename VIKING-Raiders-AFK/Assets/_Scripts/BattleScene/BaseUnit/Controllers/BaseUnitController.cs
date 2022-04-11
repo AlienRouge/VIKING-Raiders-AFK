@@ -117,7 +117,6 @@ public abstract class BaseUnitController : MonoBehaviourPun
     private void FindTarget()
     {
         _currentTarget = _battleController.GetTarget(this);
-        Debug.Log(_currentTarget);
 
         if (_currentTarget)
         {
@@ -201,7 +200,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         await _abilityController.ActivatePassiveAbility(_currentTarget);
     }
 
-    private async void UseActiveAbility()
+    protected virtual async void UseActiveAbility()
     {
         if (!ActualStats.Model.ActiveAbility) return;
 
@@ -265,7 +264,6 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     private void OnTargetDeath(BaseUnitController unit)
     {
-        Debug.Log(unit.ActualStats.BattleTeam);
         Debug.Log("DEAD: " + unit);
         if (unit == _currentTarget)
         {

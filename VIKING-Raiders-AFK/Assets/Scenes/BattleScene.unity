@@ -2224,7 +2224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseMeleeUnitPrefab: {fileID: -2854442515233572219, guid: f9186b7d7fb625949ae63820efae5e22, type: 3}
-  _baseRangeUnitPrefab: {fileID: -1095808063670828264, guid: 8176515440c24ed47b164da09e25f618, type: 3}
+  _baseRangeUnitPrefab: {fileID: 138301198293111515, guid: 8176515440c24ed47b164da09e25f618, type: 3}
   _enemyTeam: []
 --- !u!4 &1161712206
 Transform:
