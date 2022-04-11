@@ -80,6 +80,7 @@ public class HeroItemController : MonoBehaviour
     private void OnDisable()
     {
         EventController.ActiveAbilityStateChanged -= OnAbilityStateChange;
+        EventController.UnitDied -= OnUnitDied;
         EventController.BattleEnded -= OnBattleEnded;
     }
 }

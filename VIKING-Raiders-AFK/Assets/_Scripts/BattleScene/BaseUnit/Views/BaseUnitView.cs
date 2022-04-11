@@ -1,19 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-// TODO REWORK
 public class BaseUnitView : MonoBehaviour
 {
-    private BaseUnitController _parent;
     [SerializeField] private HealthBar _healthBar;
     [SerializeField] private GameObject _unitView;
 
     private Image _viewImage;
     private RectTransform _viewRectTransform;
+    private BaseUnitController _parent;
 
-    private void OnEnable()
+    public void Init(BaseUnitController parent)
     {
-        EventController.UnitHealthChanged += OnChangeHealth;
+        _parent = parent;
+        _viewImage = _unitView.GetComponent<Image>();
+        _viewRectTransform = _unitView.GetComponent<RectTransform>();
+
+        SetUnitSprite(parent.ActualStats.Model.ViewSprite, parent.ActualStats.Model.ViewSpriteScale);
+        _healthBar.SetMaxHealth(parent.ActualStats.Model.BaseHealth);
     }
 
     private void SetUnitSprite(Sprite sprite, Vector3 scale)
@@ -30,14 +34,14 @@ public class BaseUnitView : MonoBehaviour
             _healthBar.SetHealth(health);
         }
     }
-
-    public void Init(BaseUnitController parent)
+    
+    private void OnEnable()
     {
-        _parent = parent;
-        _viewImage = _unitView.GetComponent<Image>();
-        _viewRectTransform = _unitView.GetComponent<RectTransform>();
+        EventController.UnitHealthChanged += OnChangeHealth;
+    }
 
-        SetUnitSprite(parent.ActualStats.Model.ViewSprite, parent.ActualStats.Model.ViewSpriteScale);
-        _healthBar.SetMaxHealth(parent.ActualStats.Model.BaseHealth);
+    private void OnDisable()
+    {
+        EventController.UnitHealthChanged -= OnChangeHealth;
     }
 }

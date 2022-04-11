@@ -101,7 +101,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         FindTarget();
         StartBattleCycle();
     }
-    
+
     public void StopMoving()
     {
         _movementController.IsStopped(true);
@@ -160,7 +160,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         CurrentMoveState = MoveState.Stop;
     }
 
-    protected virtual async Task Attack()
+    protected async Task Attack()
     {
         if (ActualStats.IsDead || _isBattleEnd || _currentTarget.ActualStats.IsDead) return;
 
@@ -179,13 +179,15 @@ public abstract class BaseUnitController : MonoBehaviourPun
         // var dmgRatio = ActualStats.GetDamageValue() / _currentTarget.ActualStats.GetArmourValue();
         var armourRatio = 100.0f / (100.0f + _currentTarget.ActualStats.Armour);
         var perLevelRatio = (_currentTarget.ActualStats.UnitLevel - ActualStats.UnitLevel) * 0.05f; // Value per level
-        var critRatio = Random.Range(0f, 1f) < ActualStats.Model.CritChance; // TODO Рейт в актуальные?
-        var damageRatio = armourRatio - perLevelRatio + Convert.ToInt32(critRatio);
+        var critRatio = Random.Range(0f, 1f) <= ActualStats.Model.CritChance
+            ? Random.Range(ActualStats.Model.MinCritrate, ActualStats.Model.MaxCritrate)
+            : 1f;
+        
+        var damageRatio = armourRatio - perLevelRatio;
         var damage =
-            (int)Mathf.Floor(ActualStats.Damage * damageRatio *
-                             Random.Range(0.85f, 1.15f));
+            (int)Mathf.Floor(ActualStats.Damage * damageRatio * critRatio * Random.Range(0.85f, 1.15f));
 
-        if (critRatio)
+        if (critRatio > 1.0f)
         {
             Debug.Log($"{ActualStats.Model.CharacterName}: CRITICAL DAMAGE");
         }
@@ -208,7 +210,6 @@ public abstract class BaseUnitController : MonoBehaviourPun
         CurrentMoveState = MoveState.Stop;
         await _abilityController.ActivateActiveAbility(_currentTarget);
         _isCasting = false;
-        // CurrentMoveState = MoveState.Move;
     }
 
     public float GetDistanceToPosition(Vector3 position)
@@ -220,13 +221,13 @@ public abstract class BaseUnitController : MonoBehaviourPun
     {
         _statusEffectController.AddStatusEffect(effect);
     }
-    
+
     public void ChangeHealth(float amount)
     {
         ActualStats.Health += amount;
         ActualStats.Health = Mathf.Clamp(ActualStats.Health, 0, ActualStats.Model.BaseHealth);
         EventController.UnitHealthChanged.Invoke(this, ActualStats.Health);
-        
+
         if (ActualStats.IsDead)
         {
             OnDeathHandler();
