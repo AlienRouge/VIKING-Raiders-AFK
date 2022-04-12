@@ -42,24 +42,7 @@ public class AbilityController : MonoBehaviour
     {
         parent = gameObject.GetComponent<BaseUnitController>();
     }
-
-
-    public void Init(BaseAbility passiveAbility, BaseAbility activeAbility)
-    {
-        if (passiveAbility)
-        {
-            _passiveAbility = passiveAbility;
-            SetAbilityState(passiveAbility, AbilityState.Ready);
-        }
-
-        if (activeAbility)
-        {
-            _activeAbility = activeAbility;
-            SetAbilityState(_activeAbility, AbilityState.Ready);
-        }
-    }
     
-    // TODO Объединить 
     public void InitPassiveAbility(BaseAbility passiveAbility)
     {
         _passiveAbility = passiveAbility;

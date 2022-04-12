@@ -6,16 +6,16 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(StatusEffectController), typeof(AbilityController), typeof(DragDropController))]
-[RequireComponent(typeof(BaseUnitView),typeof(MovementController))]
-public class BaseUnitController : MonoBehaviourPun
+[RequireComponent(typeof(BaseUnitView), typeof(MovementController))]
+public abstract class BaseUnitController : MonoBehaviourPun
 {
-    private BaseUnitController _currentTarget;
+    [SerializeField] protected BaseUnitController _currentTarget;
     private MoveState _currentMoveState;
     private bool _isPassiveAbilityReady;
     private bool _isActiveAbilityReady;
     private bool _isCasting;
     private bool _isTargetInRange;
-    private bool _isBattleEnd;
+    protected bool _isBattleEnd;
 
     private enum MoveState
     {
@@ -28,8 +28,9 @@ public class BaseUnitController : MonoBehaviourPun
     private DragDropController _dragDropController;
     private AbilityController _abilityController;
     private StatusEffectController _statusEffectController;
+    protected BattleController _battleController;
 
-    [field: SerializeField] public ActualUnitStats ActualStats { get; private set; }
+    [field: SerializeField] public ActualUnitStats ActualStats { get; protected set; }
 
     private MoveState CurrentMoveState
     {
@@ -64,7 +65,7 @@ public class BaseUnitController : MonoBehaviourPun
 
     private void InitializeData(BaseUnitModel model, Team team, int unitLevel)
     {
-        ActualStats = new ActualUnitStats(model, team, unitLevel);
+        ActualStats = new ActualUnitStats(model, team, unitLevel, this);
     }
 
     private void InitializeControllers(bool isDraggable)
@@ -74,22 +75,23 @@ public class BaseUnitController : MonoBehaviourPun
         _dragDropController = GetComponent<DragDropController>();
         _abilityController = GetComponent<AbilityController>();
         _statusEffectController = GetComponent<StatusEffectController>();
+        _battleController = FindObjectOfType<BattleController>();
 
-        _movementController.Init(ActualStats.UnitModel.MoveSpeed);
+        _movementController.Init(ActualStats.Model.MoveSpeed);
         _baseUnitView.Init(this);
         _dragDropController.Init(ActualStats.BattleTeam, isDraggable);
         _statusEffectController.Init();
 
-        if (ActualStats.UnitModel.PassiveAbility)
+        if (ActualStats.Model.PassiveAbility)
         {
             EventController.PassiveAbilityStateChanged += OnPassiveAbilityStateChange;
-            _abilityController.InitPassiveAbility(ActualStats.UnitModel.PassiveAbility);
+            _abilityController.InitPassiveAbility(ActualStats.Model.PassiveAbility);
         }
 
-        if (ActualStats.UnitModel.ActiveAbility)
+        if (ActualStats.Model.ActiveAbility)
         {
             EventController.UseUnitActiveAbility += OnUseActiveAbility;
-            _abilityController.InitActiveAbility(ActualStats.UnitModel.ActiveAbility);
+            _abilityController.InitActiveAbility(ActualStats.Model.ActiveAbility);
         }
     }
 
@@ -100,6 +102,12 @@ public class BaseUnitController : MonoBehaviourPun
         StartBattleCycle();
     }
 
+    public void StopMoving()
+    {
+        _movementController.IsStopped(true);
+        _movementController.Disable();
+    }
+
     private void PreFightSetup()
     {
         _movementController.Enable();
@@ -108,7 +116,7 @@ public class BaseUnitController : MonoBehaviourPun
 
     private void FindTarget()
     {
-        _currentTarget = BattleSceneController.instance.BattleController.GetTarget(this);
+        _currentTarget = _battleController.GetTarget(this);
 
         if (_currentTarget)
         {
@@ -116,13 +124,13 @@ public class BaseUnitController : MonoBehaviourPun
         }
 
         Debug.Log(_currentTarget
-            ? $"{ActualStats.UnitModel.CharacterName}: New target({_currentTarget.ActualStats.UnitModel.CharacterName})."
-            : $"{ActualStats.UnitModel.CharacterName}: No targets.");
+            ? $"{ActualStats.Model.CharacterName}: New target({_currentTarget.ActualStats.Model.CharacterName})."
+            : $"{ActualStats.Model.CharacterName}: No targets.");
     }
 
     private async void StartBattleCycle()
     {
-        while (!ActualStats.IsDead && !_isBattleEnd)
+        while (!ActualStats.IsDead && !_isBattleEnd && _currentTarget != null)
         {
             if (!_isCasting)
             {
@@ -152,33 +160,39 @@ public class BaseUnitController : MonoBehaviourPun
         CurrentMoveState = MoveState.Stop;
     }
 
-    private async Task Attack()
+    protected async Task Attack()
     {
         if (ActualStats.IsDead || _isBattleEnd || _currentTarget.ActualStats.IsDead) return;
 
         var damage = CalculateDamage();
         Debug.Log(
-            $"{ActualStats.UnitModel.CharacterName} --> {_currentTarget.ActualStats.UnitModel.CharacterName} [{damage}]dmg");
-        _currentTarget.ChangeHealth(-damage);
+            $"{ActualStats.Model.CharacterName} --> {_currentTarget.ActualStats.Model.CharacterName} [{damage}]dmg");
+        DoOnAttack(damage);
+
         await Task.Delay(Mathf.RoundToInt(ActualStats.AttackDeltaTime * Consts.ONE_SECOND_VALUE));
     }
 
-    private int CalculateDamage()
-    {
-        var dmgRatio = ActualStats.GetDamageValue() / _currentTarget.ActualStats.GetArmourValue();
-        var lvlRatio = (_currentTarget.ActualStats.UnitLevel - ActualStats.UnitLevel) * 0.05f; // Value per level
-        var critRatio = Random.Range(0f, 1f) < ActualStats.UnitModel.CriticalRate; // TODO Рейт в актуальные?
-        var attackRatio = dmgRatio - lvlRatio + Convert.ToInt32(critRatio);
-        var finalDmg =
-            (int)Mathf.Floor(ActualStats.DmgMultiplier * ActualStats.GetDamageValue() * attackRatio *
-                             Random.Range(0.85f, 1f));
+    protected abstract void DoOnAttack(int damage);
 
-        if (critRatio)
+    protected int CalculateDamage()
+    {
+        // var dmgRatio = ActualStats.GetDamageValue() / _currentTarget.ActualStats.GetArmourValue();
+        var armourRatio = 100.0f / (100.0f + _currentTarget.ActualStats.Armour);
+        var perLevelRatio = (_currentTarget.ActualStats.UnitLevel - ActualStats.UnitLevel) * 0.05f; // Value per level
+        var critRatio = Random.Range(0f, 1f) <= ActualStats.Model.CritChance
+            ? Random.Range(ActualStats.Model.MinCritrate, ActualStats.Model.MaxCritrate)
+            : 1f;
+        
+        var damageRatio = armourRatio - perLevelRatio;
+        var damage =
+            (int)Mathf.Floor(ActualStats.Damage * damageRatio * critRatio * Random.Range(0.85f, 1.15f));
+
+        if (critRatio > 1.0f)
         {
-            Debug.Log($"{ActualStats.UnitModel.CharacterName}: CRITICAL DAMAGE");
+            Debug.Log($"{ActualStats.Model.CharacterName}: CRITICAL DAMAGE");
         }
 
-        return finalDmg > 0 ? finalDmg : 0;
+        return damage > 0 ? damage : 0;
     }
 
     private async Task UsePassiveAbility()
@@ -188,9 +202,9 @@ public class BaseUnitController : MonoBehaviourPun
         await _abilityController.ActivatePassiveAbility(_currentTarget);
     }
 
-    private async void UseActiveAbility()
+    protected virtual async void UseActiveAbility()
     {
-        if (!ActualStats.UnitModel.ActiveAbility) return;
+        if (!ActualStats.Model.ActiveAbility) return;
 
         _isCasting = true;
         CurrentMoveState = MoveState.Stop;
@@ -210,9 +224,9 @@ public class BaseUnitController : MonoBehaviourPun
 
     public void ChangeHealth(float amount)
     {
-        ActualStats.CurrentHealth += amount;
-        ActualStats.CurrentHealth = Mathf.Clamp(ActualStats.CurrentHealth, 0, ActualStats.UnitModel.BaseHealth);
-        EventController.UnitHealthChanged.Invoke(this, ActualStats.CurrentHealth);
+        ActualStats.Health += amount;
+        ActualStats.Health = Mathf.Clamp(ActualStats.Health, 0, ActualStats.Model.BaseHealth);
+        EventController.UnitHealthChanged.Invoke(this, ActualStats.Health);
 
         if (ActualStats.IsDead)
         {
@@ -220,22 +234,27 @@ public class BaseUnitController : MonoBehaviourPun
         }
     }
 
-    private void OnDeathHandler()
+    public void ChangeMoveSpeed(float speed)
+    {
+        _movementController.SetMoveSpeed(speed);
+    }
+
+    protected void OnDeathHandler()
     {
         _currentTarget = null;
-        
-        if (ActualStats.UnitModel.PassiveAbility)
+
+        if (ActualStats.Model.PassiveAbility)
         {
             EventController.PassiveAbilityStateChanged -= OnPassiveAbilityStateChange;
         }
 
-        if (ActualStats.UnitModel.ActiveAbility)
+        if (ActualStats.Model.ActiveAbility)
         {
             EventController.UseUnitActiveAbility -= OnUseActiveAbility;
         }
 
         _statusEffectController.OnUnitDead();
-        BattleSceneController.instance.BattleController.OnUnitDied(this);
+        _battleController.OnUnitDied(this);
         EventController.UnitDied?.Invoke(this);
     }
 
@@ -280,13 +299,13 @@ public class BaseUnitController : MonoBehaviourPun
         }
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         EventController.BattleEnded += OnBattleEnded;
         EventController.UnitDied += OnTargetDeath;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         EventController.BattleEnded -= OnBattleEnded;
         EventController.UnitDied -= OnTargetDeath;
@@ -298,16 +317,16 @@ public class BaseUnitController : MonoBehaviourPun
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, ActualStats.AttackRange);
 
-        if (ActualStats.UnitModel.PassiveAbility)
+        if (ActualStats.Model.PassiveAbility)
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, ActualStats.UnitModel.PassiveAbility.CastRange);
+            Gizmos.DrawWireSphere(transform.position, ActualStats.Model.PassiveAbility.CastRange);
         }
 
-        if (ActualStats.UnitModel.ActiveAbility)
+        if (ActualStats.Model.ActiveAbility)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, ActualStats.UnitModel.ActiveAbility.CastRange);
+            Gizmos.DrawWireSphere(transform.position, ActualStats.Model.ActiveAbility.CastRange);
         }
     }
 }

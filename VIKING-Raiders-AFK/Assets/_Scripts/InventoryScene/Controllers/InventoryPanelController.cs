@@ -7,7 +7,7 @@ public class InventoryPanelController : MonoBehaviour
     [SerializeField] private InventoryItemController _layoutItemPrefab;
     private List<InventoryItemController> _items;
 
-    public void Init(List<User.Hero> userHeroes)
+    public void Init(List<Hero> userHeroes)
     {
         _items = new List<InventoryItemController>();
         
@@ -17,7 +17,7 @@ public class InventoryPanelController : MonoBehaviour
         }
     }
 
-    private void FillPanel(User.Hero hero)
+    private void FillPanel(Hero hero)
     {
         var newItem = Instantiate(_layoutItemPrefab, _layoutGroup.transform, false);
         newItem.Init(hero);

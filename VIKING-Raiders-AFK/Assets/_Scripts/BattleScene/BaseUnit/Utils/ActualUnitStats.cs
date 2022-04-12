@@ -5,29 +5,55 @@ using UnityEngine;
 [Serializable]
 public class ActualUnitStats
 {
-    [SerializeField] private BaseUnitModel _unitModel;
+    [SerializeField] private BaseUnitModel _model;
     [SerializeField] private Team _battleTeam;
     [SerializeField] private int _unitLevel;
-    [SerializeField] private float _currentHealth;
-    [SerializeField] private float _dmgMultiplier;
-    [SerializeField] private float _attackDeltaTime;
-    [SerializeField] private float _attackRange;
-    
-    public BaseUnitModel UnitModel => _unitModel;
+
+    [SerializeField] private float _health; //+
+    [SerializeField] private float _damage; //+
+    [SerializeField] private float _armour; //
+    [SerializeField] private float _attackDeltaTime; //
+    [SerializeField] private float _attackRange; //
+    [SerializeField] private float _moveSpeed; //
+    [SerializeField] private float _critChance; //
+
+    private BaseUnitController _parent;
+    public BaseUnitModel Model => _model;
     public Team BattleTeam => _battleTeam;
     public int UnitLevel => _unitLevel;
-    public bool IsDead => _currentHealth <= 0;
+    public bool IsDead => _health <= 0;
 
-    public float CurrentHealth
+    public ActualUnitStats(BaseUnitModel model, Team unitTeam, int unitLevel, BaseUnitController parent)
     {
-        get => _currentHealth;
-        set { _currentHealth = value; }
+        _model = model;
+        _parent = parent;
+        _battleTeam = unitTeam;
+        _unitLevel = unitLevel;
+        _health = model.BaseHealth;
+        _damage = _model.GetUnitDamage(_unitLevel);
+        _armour = _model.GetUnitArmour(_unitLevel);
+        _attackDeltaTime = _model.AttackDeltaTime;
+        _attackRange = _model.AttackRange;
+        _moveSpeed = _model.MoveSpeed;
+        _critChance = _model.CritChance;
     }
 
-    public float DmgMultiplier
+    public float Health
     {
-        get => _dmgMultiplier;
-        set { _dmgMultiplier = value; }
+        get => _health;
+        set { _health = value; }
+    }
+
+    public float Damage
+    {
+        get => _damage;
+        set { _damage = value; }
+    }
+
+    public float Armour
+    {
+        get => _armour;
+        set { _armour = value; }
     }
 
     public float AttackDeltaTime
@@ -41,24 +67,28 @@ public class ActualUnitStats
         get => _attackRange;
         set { _attackRange = value; }
     }
-    public ActualUnitStats(BaseUnitModel unitModel, Team unitTeam, int unitLevel)
+    public float MoveSpeed
     {
-        _unitModel = unitModel;
-        _battleTeam = unitTeam;
-        _unitLevel = unitLevel;
-        _currentHealth = unitModel.BaseHealth;
-        _dmgMultiplier = 1.0f; // TODO
-        _attackDeltaTime = 1.0f / unitModel.AttackSpeed;
-        _attackRange = unitModel.AttackRange;
+        get => _moveSpeed;
+        set
+        {
+            _moveSpeed = value;
+            _parent.ChangeMoveSpeed(_moveSpeed);
+        }
     }
 
-    public float GetArmourValue()
+    public float CritChance
     {
-        return UnitModel.GetArmourPerUnitLevel(UnitLevel);
+        get => _critChance;
+        set { _critChance = value; }
     }
-
-    public float GetDamageValue()
+    
+    public void RestoreDamageValue()
     {
-        return UnitModel.GetDamagePerUnitLevel(UnitLevel);
+        Damage = _model.GetUnitDamage(_unitLevel);
+    }
+    public void RestoreMoveSpeedValue()
+    {
+        MoveSpeed = _model.MoveSpeed;
     }
 }

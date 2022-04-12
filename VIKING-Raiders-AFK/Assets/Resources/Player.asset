@@ -15,18 +15,11 @@ MonoBehaviour:
   _userName: TestAccount01
   _accountLevel: 12
   _accountExp: 0
-  _heroList:
-  - _heroLevel: 20
-    _heroModel: {fileID: 11400000, guid: 0d7dfafb73e867041b15afea7ad9b1f2, type: 2}
-  - _heroLevel: 15
-    _heroModel: {fileID: 11400000, guid: 534ca3bc30838ba479da1d425405b4b5, type: 2}
-  - _heroLevel: 15
-    _heroModel: {fileID: 11400000, guid: a613daaf1974c634fae35f7e8e6b3ece, type: 2}
-  - _heroLevel: 15
-    _heroModel: {fileID: 11400000, guid: 206e646410d5d66468373bfa639dc5ac, type: 2}
-  - _heroLevel: 15
-    _heroModel: {fileID: 11400000, guid: 206e646410d5d66468373bfa639dc5ac, type: 2}
-  - _heroLevel: 15
-    _heroModel: {fileID: 11400000, guid: 206e646410d5d66468373bfa639dc5ac, type: 2}
-  - _heroLevel: 15
-    _heroModel: {fileID: 11400000, guid: 206e646410d5d66468373bfa639dc5ac, type: 2}
+  heroList:
+  - _heroLevel: 1
+    _heroModel: {fileID: 11400000, guid: a754ef786c05155429226647ec435cff, type: 2}
+  - _heroLevel: 1
+    _heroModel: {fileID: 11400000, guid: 6986efa28a7e2634ab9907b6bcd81127, type: 2}
+  - _heroLevel: 1
+    _heroModel: {fileID: 11400000, guid: cc307999848cda0448b45b8750041989, type: 2}
+  currentGameLevel: {fileID: 11400000, guid: 70e057fa104956e43b0ead962a62139f, type: 2}

@@ -21,6 +21,6 @@ public class InventorySceneController : MonoBehaviour
 
     private void FillInventoryPanel()
     {
-        _panelController.Init(_userData._heroList);
+        _panelController.Init(_userData.heroList);
     }
 }

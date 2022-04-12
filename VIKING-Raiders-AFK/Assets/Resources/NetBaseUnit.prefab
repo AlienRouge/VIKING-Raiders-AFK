@@ -123,10 +123,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3626b45a0fd0494983c18409a613a378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MyTeam>k__BackingField: 0
-  _currentHealth: 0
-  _damageRatioMultiplier: 0
-  _currentMoveState: 0
+  <ActualStats>k__BackingField:
+    _unitModel: {fileID: 0}
+    _battleTeam: 0
+    _unitLevel: 0
+    _currentHealth: 0
+    _dmgMultiplier: 0
+    _attackDeltaTime: 0
+    _attackRange: 0
 --- !u!114 &1287304618688849061
 MonoBehaviour:
   m_ObjectHideFlags: 0

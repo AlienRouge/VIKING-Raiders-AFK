@@ -14,6 +14,11 @@ public class SceneLoader : MonoBehaviour
     {
         StartCoroutine(LoadScene(sceneName));
     }
+
+    public void ReloadScene()
+    {
+        StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
+    }
     private IEnumerator LoadScene(string sceneName)
     {
         _animator.SetTrigger(StartTransition);

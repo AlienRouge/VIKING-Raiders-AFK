@@ -15,7 +15,7 @@ public class HeroItemController : MonoBehaviour
         _button = GetComponent<Button>();
         
         _unit = unit;
-        _unitModel = _unit.ActualStats.UnitModel;
+        _unitModel = _unit.ActualStats.Model;
         
         _view.SetupItemView(_unitModel);
         
@@ -68,7 +68,6 @@ public class HeroItemController : MonoBehaviour
 
         _button.enabled = false;
         _view.UnitDied();
-
     }
     
     private void OnEnable()
@@ -81,6 +80,7 @@ public class HeroItemController : MonoBehaviour
     private void OnDisable()
     {
         EventController.ActiveAbilityStateChanged -= OnAbilityStateChange;
+        EventController.UnitDied -= OnUnitDied;
         EventController.BattleEnded -= OnBattleEnded;
     }
 }

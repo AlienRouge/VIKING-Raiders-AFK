@@ -6,16 +6,18 @@ using UnityEngine;
 
 public class BattleController : MonoBehaviour
 {
-    private readonly Dictionary<Team, List<BaseUnitController>> _unitsByTeams =
+    protected readonly Dictionary<Team, List<BaseUnitController>> _unitsByTeams =
         new Dictionary<Team, List<BaseUnitController>>();
+
+    public Team? WinnerTeam { get; private set; }
     
-    private void Init()
+    protected void Init()
     {
         _unitsByTeams.Add(Team.Team1, new List<BaseUnitController>());
         _unitsByTeams.Add(Team.Team2, new List<BaseUnitController>());
     }
 
-    public void StartBattle(List<BaseUnitController> units)
+    public virtual void StartBattle(List<BaseUnitController> units)
     {
         Init();
 
@@ -46,22 +48,36 @@ public class BattleController : MonoBehaviour
         unit.gameObject.SetActive(false);
         if (_unitsByTeams[Team.Team1].Count == 0 || _unitsByTeams[Team.Team2].Count == 0)
         {
-            EventController.BattleEnded?.Invoke();
+            OnBattleEnded();
         }
+    }
+
+    private void OnBattleEnded()
+    {
+        if (_unitsByTeams[Team.Team1].Count == 0 )
+        {
+            WinnerTeam = Team.Team2;
+        }
+        else if (_unitsByTeams[Team.Team2].Count == 0)
+        {
+            WinnerTeam = Team.Team1;
+        }
+       
+        EventController.BattleEnded.Invoke();
     }
 
     public BaseUnitController GetTarget(BaseUnitController unit)
     {
         BaseUnitController supposedEnemy = null;
         var enemies = GetEnemies(unit.ActualStats.BattleTeam);
-        var weights = unit.ActualStats.UnitModel.TargetWeights;
+        var weights = unit.ActualStats.Model.TargetWeights;
         float enemyValue = Mathf.Infinity;
 
         foreach (var enemy in enemies)
         {
             float distance = unit.GetDistanceToPosition(enemy.transform.position);
-            float hp = enemy.ActualStats.CurrentHealth;
-            float mean = GetTargetWeightedMean(hp, distance, weights.hpWeight, weights.distanceWeight);
+            float hp = enemy.ActualStats.Health;
+            float mean = GetTargetWeightedMean(hp, distance, weights.HpWeight, weights.DistanceWeight);
 
             if (mean <= enemyValue)
             {
