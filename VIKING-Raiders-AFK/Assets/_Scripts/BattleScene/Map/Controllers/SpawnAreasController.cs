@@ -4,7 +4,7 @@ using System.Linq;
 using _Scripts.Enums;
 using UnityEngine;
 
-public class SpawnAreaController : MonoBehaviour
+public class SpawnAreasController : MonoBehaviour
 {
    private List<SpawnArea> _spawnAreas;
 
@@ -18,13 +18,5 @@ public class SpawnAreaController : MonoBehaviour
       var areaTransform = _spawnAreas[0].Team == team ? _spawnAreas[0].transform : _spawnAreas[1].transform;
       areaTransform.localScale = scale;
       areaTransform.localPosition = position;
-      
-      // foreach (var area in _spawnAreas.Where(area => area.Team == team))
-      // {
-      //    var areaTransform = area.transform;
-      //    areaTransform.localScale = scale;
-      //    areaTransform.position = position;
-      //    break;
-      // }
    }
 }

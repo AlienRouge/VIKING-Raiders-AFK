@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class HeroDraftItemController : MonoBehaviour
 {
     [SerializeField] protected HeroDraftItemView _view;
-    protected User.Hero _itemHero;
+    protected Hero _itemHero;
 
     protected int buttonID => GetInstanceID();
 
@@ -19,7 +19,7 @@ public class HeroDraftItemController : MonoBehaviour
         _button = GetComponent<Button>();
     }
 
-    public virtual void Init(User.Hero hero)
+    public virtual void Init(Hero hero)
     {
         _itemHero = hero;
 

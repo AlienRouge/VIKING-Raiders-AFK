@@ -36,10 +36,10 @@ public class MapGenerator : MonoBehaviour
         if (_mapController == null)
         {
             _mapController = Instantiate(_mapPrefab);
-            _mapController.transform.localPosition = new Vector3(
-                -width / 2f,
-                -height / 2f,
-                1);
+            // _mapController.transform.localPosition = new Vector3(
+            //     -width / 2f,
+            //     -height / 2f,
+            //     1);
         }
 
         _noiseMapRenderer.Init(_mapController.walkableTilemap, _mapController.notWalkableTilemap,
@@ -70,10 +70,10 @@ public class MapGenerator : MonoBehaviour
     {
         var spawnAreaScale = new Vector3(spawnAreaWidth - spawnAreaOffset.x, height - spawnAreaOffset.y);
 
-        _mapController.spawnAreaController.SetupSpawnArea(Team.Team1, spawnAreaScale,
+        _mapController.SpawnAreasController.SetupSpawnArea(Team.Team1, spawnAreaScale,
             new Vector3(spawnAreaWidth / 2f, height / 2f));
 
-        _mapController.spawnAreaController.SetupSpawnArea(Team.Team2, spawnAreaScale,
+        _mapController.SpawnAreasController.SetupSpawnArea(Team.Team2, spawnAreaScale,
             new Vector3(width - spawnAreaWidth / 2f, height / 2f));
     }
 

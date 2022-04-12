@@ -8,6 +8,8 @@ public class BattleController : MonoBehaviour
 {
     protected readonly Dictionary<Team, List<BaseUnitController>> _unitsByTeams =
         new Dictionary<Team, List<BaseUnitController>>();
+
+    public Team? WinnerTeam { get; private set; }
     
     protected void Init()
     {
@@ -46,8 +48,22 @@ public class BattleController : MonoBehaviour
         unit.gameObject.SetActive(false);
         if (_unitsByTeams[Team.Team1].Count == 0 || _unitsByTeams[Team.Team2].Count == 0)
         {
-            EventController.BattleEnded?.Invoke();
+            OnBattleEnded();
         }
+    }
+
+    private void OnBattleEnded()
+    {
+        if (_unitsByTeams[Team.Team1].Count == 0 )
+        {
+            WinnerTeam = Team.Team2;
+        }
+        else if (_unitsByTeams[Team.Team2].Count == 0)
+        {
+            WinnerTeam = Team.Team1;
+        }
+       
+        EventController.BattleEnded.Invoke();
     }
 
     public BaseUnitController GetTarget(BaseUnitController unit)

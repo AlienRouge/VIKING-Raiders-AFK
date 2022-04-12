@@ -4,7 +4,7 @@ using System.Linq;
 using _Scripts.Enums;
 using UnityEngine;
 
-public class SpawnPointController : MonoBehaviour
+public class SpawnPointsController : MonoBehaviour
 {
     [SerializeField] private List<SpawnPoint> _spawnPoints;
 

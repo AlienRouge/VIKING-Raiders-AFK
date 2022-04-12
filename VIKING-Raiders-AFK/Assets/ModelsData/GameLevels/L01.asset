@@ -9,17 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28eb918870bf9254dae9fcce5c888e8f, type: 3}
-  m_Name: Enemy
+  m_Script: {fileID: 11500000, guid: 7745c937ee93a0d4aa89d63caa761151, type: 3}
+  m_Name: L01
   m_EditorClassIdentifier: 
-  _userName: Enemy
-  _accountLevel: 0
-  _accountExp: 0
-  heroList:
-  - _heroLevel: 0
+  <LevelName>k__BackingField: Test level 01
+  <LevelPrefab>k__BackingField: {fileID: 4944453209205742462, guid: 829a06ab1dc204546809f7a596980f05, type: 3}
+  Generated: 0
+  <EnemyHeroes>k__BackingField:
+  - _heroLevel: 1
     _heroModel: {fileID: 11400000, guid: a9de744f32b5f9d4390af39adf242c8c, type: 2}
-  - _heroLevel: 0
-    _heroModel: {fileID: 11400000, guid: 4f73421382efbde41ab17df40870a6a7, type: 2}
-  - _heroLevel: 0
+  - _heroLevel: 1
+    _heroModel: {fileID: 11400000, guid: a754ef786c05155429226647ec435cff, type: 2}
+  - _heroLevel: 1
     _heroModel: {fileID: 11400000, guid: 090829b7e26e8ca40a6621e33c39ffc0, type: 2}
-  currentGameLevel: {fileID: 0}

@@ -1,6 +1,6 @@
 ﻿public class HeroDraftItemControllerNet : HeroDraftItemController
 {
-    public override void Init(User.Hero hero)
+    public override void Init(Hero hero)
     {
         _itemHero = hero;
 

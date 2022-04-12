@@ -36,8 +36,8 @@ public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
 
     public void ShowUi()
     {
-        UIController.Init(_player._heroList);
-        SpawnController.Init(_mapController.spawnPointController);
+        UIController.Init(_playerData.heroList);
+        SpawnController.Init(_mapController.SpawnPointsController);
         // _spawnController.Init(_mapController.spawnPointController);
     }
 

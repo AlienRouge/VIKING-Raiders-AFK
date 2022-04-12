@@ -14,7 +14,7 @@ public class HeroDraftItemView : MonoBehaviour
     [SerializeField] private Color _selectedColor;
     private Color _commonColor;
     
-    public void Setup(User.Hero hero)
+    public void Setup(Hero hero)
     {
         var model = hero._heroModel;
         _name.text = model.CharacterName;

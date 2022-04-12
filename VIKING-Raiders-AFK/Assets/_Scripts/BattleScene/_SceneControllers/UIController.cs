@@ -10,7 +10,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject _hideDraftPanelBtn;
     
     
-    public void Init(List<User.Hero> playerHeroes)
+    public void Init(List<Hero> playerHeroes)
     {
         _heroDraftController.Init(playerHeroes);
     }

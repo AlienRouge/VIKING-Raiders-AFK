@@ -1,12 +1,12 @@
 using System;
+using _Scripts.Enums;
 using UnityEngine;
 
 public class BattleSceneController : MonoBehaviour
 {
     private static BattleSceneController _instance;
-    
-    [SerializeField] protected User _player;
-    [SerializeField] protected User _enemy;
+
+    protected User _playerData;
 
     [field: SerializeField] public BattleController BattleController { get; private set; }
     [field: SerializeField] public SpawnController SpawnController { get; private set; }
@@ -14,7 +14,9 @@ public class BattleSceneController : MonoBehaviour
 
     [SerializeField] protected MapGenerator _mapGenerator;
     protected MapController _mapController;
-    
+
+    [SerializeField] private GameLevelModel _gameLevel;
+
     public static BattleSceneController instance
     {
         get
@@ -26,25 +28,33 @@ public class BattleSceneController : MonoBehaviour
         }
     }
 
-
     private void Start()
     {
         _instance = this;
+
+        _playerData = Resources.Load<User>("Player");
         
-        _mapController = _mapGenerator.GenerateMap(); // TODO MIDDLEWARE
-        InitializeScene(_player, _enemy, _mapController);
+        _mapController = _playerData.currentGameLevel.Generated
+            ? _mapGenerator.GenerateMap()
+            : InstantiateMap(_gameLevel);
+        
+        InitializeScene(_playerData);
+    }
+
+    private MapController InstantiateMap(GameLevelModel levelModel)
+    {
+        MapController newMap = Instantiate(levelModel.LevelPrefab);
+        newMap.BakeMap();
+
+        return newMap;
     }
 
 
-    private void InitializeScene(User player, User enemy, MapController map)
+    private void InitializeScene(User playerData)
     {
-        UIController.Init(player._heroList);
-        SpawnController.Init(map.spawnPointController);
-        SpawnController.SpawnEnemies(enemy._heroList);
-    }
-
-    public void RestartBattle()
-    {
+        UIController.Init(playerData.heroList);
+        SpawnController.Init(_mapController.SpawnPointsController);
+        SpawnController.SpawnEnemies(_playerData.currentGameLevel.EnemyHeroes);
     }
 
     // Start button or smth else
@@ -55,5 +65,29 @@ public class BattleSceneController : MonoBehaviour
         EventController.BattleStarted?.Invoke();
         UIController.Show_BP(SpawnController.GetPlayerUnits());
         BattleController.StartBattle(SpawnController.GetSpawnedUnits());
+    }
+
+    private void OnBattleEnded()
+    {
+        var winnerTeam = BattleController.WinnerTeam;
+
+        if (winnerTeam != null)
+        {
+            Debug.Log("WINNER: " + winnerTeam);
+        }
+        else
+        {
+            Debug.Log("DRAW");
+        }
+    }
+
+    private void OnEnable()
+    {
+        EventController.BattleEnded += OnBattleEnded;
+    }
+
+    private void OnDisable()
+    {
+        EventController.BattleEnded -= OnBattleEnded;
     }
 }

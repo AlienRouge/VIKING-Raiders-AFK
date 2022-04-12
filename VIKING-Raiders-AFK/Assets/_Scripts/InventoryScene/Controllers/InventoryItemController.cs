@@ -3,9 +3,9 @@ using UnityEngine;
 public class InventoryItemController : MonoBehaviour
 {
     [SerializeField] private InventoryItemView _view;
-    private User.Hero _hero;
+    private Hero _hero;
 
-    public void Init(User.Hero hero)
+    public void Init(Hero hero)
     {
         _hero = hero;
 

@@ -9,7 +9,7 @@ using UnityEngine;
 //     [SerializeField] private GameObject _layoutGroup;
 //     [SerializeField] private List<LayoutElementNet> _elements;
 //     
-//     public override void FillUnitPanel(List<User.Hero> heroes)
+//     public override void FillUnitPanel(List<Hero> heroes)
 //     {
 //         foreach (var hero in heroes)
 //         {

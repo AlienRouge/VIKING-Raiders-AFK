@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(BaseUnitView), typeof(MovementController))]
 public abstract class BaseUnitController : MonoBehaviourPun
 {
-    protected BaseUnitController _currentTarget;
+    [SerializeField] protected BaseUnitController _currentTarget;
     private MoveState _currentMoveState;
     private bool _isPassiveAbilityReady;
     private bool _isActiveAbilityReady;

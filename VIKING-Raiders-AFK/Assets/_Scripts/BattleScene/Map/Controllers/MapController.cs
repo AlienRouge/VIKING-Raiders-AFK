@@ -5,19 +5,27 @@ using UnityEngine.Tilemaps;
 
 public class MapController : MonoBehaviour
 {
+    private SpawnAreasController _spawnAreasController;
+    private SpawnPointsController _spawnPointsController;
+    
     [SerializeField] public NavMeshSurface2d _navMeshSurface2d;
-
-    public SpawnAreaController spawnAreaController;
-    public SpawnPointController spawnPointController;
     [SerializeField] public Tilemap walkableTilemap;
     [SerializeField] public Tilemap notWalkableTilemap;
     [SerializeField] public Tilemap decorTilemap;
 
+    public SpawnAreasController SpawnAreasController => _spawnAreasController;
+    public SpawnPointsController SpawnPointsController => _spawnPointsController;
+
     private void Awake()
     {
-        spawnAreaController = GetComponent<SpawnAreaController>();
-        spawnPointController = GetComponent<SpawnPointController>();
+        _spawnAreasController = GetComponent<SpawnAreasController>();
+        _spawnPointsController = GetComponent<SpawnPointsController>();
+        transform.localPosition = new Vector3(
+            -16 / 2f,
+            -10 / 2f,
+            1);
     }
+
     public void BakeMap()
     {
         _navMeshSurface2d.BuildNavMeshAsync();

@@ -10,7 +10,7 @@ public class HeroDraftController : MonoBehaviour
     private bool _isVisible;
     public bool IsHidden;
     
-    public void Init(List<User.Hero> playerHeroes)
+    public void Init(List<Hero> playerHeroes)
     {
         _items = new List<HeroDraftItemController>();
         _isVisible = true;
@@ -22,7 +22,7 @@ public class HeroDraftController : MonoBehaviour
         }
     }
     
-    private void AddItem(User.Hero hero)
+    private void AddItem(Hero hero)
     {
         var newItem = Instantiate(_layoutItemPrefab, _layoutGroup.transform, false);
         newItem.Init(hero);

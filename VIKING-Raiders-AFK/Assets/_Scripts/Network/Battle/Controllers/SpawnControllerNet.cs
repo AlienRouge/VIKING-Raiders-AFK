@@ -46,7 +46,7 @@ public class SpawnControllerNet : SpawnController
         }
     }
 
-    private void InstantiateUnitNet(Team team, User.Hero hero, SpawnPoint spawnPoint, int buttonID = -1)
+    private void InstantiateUnitNet(Team team, Hero hero, SpawnPoint spawnPoint, int buttonID = -1)
     {
         var syncData = new SyncData()
         {
@@ -76,8 +76,8 @@ public class SpawnControllerNet : SpawnController
                 throw new ArgumentException("WrongUnitType");
         }
 
-        spawnedObject.transform.SetParent(_spawnPointController.transform);
-        _spawnPointController.TakeSpawnPoint(spawnPoint);
+        spawnedObject.transform.SetParent(spawnPointsController.transform);
+        spawnPointsController.TakeSpawnPoint(spawnPoint);
 
         var newUnit = spawnedObject.GetComponent<BaseUnitControllerNet>();
         newUnit.Init(hero._heroModel, team, hero._heroLevel, team == CurrentTeam);
@@ -93,7 +93,7 @@ public class SpawnControllerNet : SpawnController
         });
     }
 
-    public override bool TryRemoveUnit(User.Hero unitModel, int buttonID)
+    public override bool TryRemoveUnit(Hero unitModel, int buttonID)
     {
         var unit = _playerTeam.Find(unit => unit.ButtonID == buttonID);
         if (unit.unitController == null)
@@ -101,7 +101,7 @@ public class SpawnControllerNet : SpawnController
             return false;
         }
 
-        _spawnPointController.FreeSpawnPoint(unit.SpawnPoint);
+        spawnPointsController.FreeSpawnPoint(unit.SpawnPoint);
         _playerTeam.Remove(unit);
 
         BaseUnitController unitController = unit.unitController;

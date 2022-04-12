@@ -11,7 +11,7 @@ internal class InventoryItemView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _Level;
     [SerializeField] private Image _image;
 
-    public void Setup(User.Hero hero)
+    public void Setup(Hero hero)
     {
         var model = hero._heroModel;
         _name.text = model.CharacterName;
