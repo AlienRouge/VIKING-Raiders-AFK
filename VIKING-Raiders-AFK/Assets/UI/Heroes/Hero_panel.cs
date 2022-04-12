@@ -8,7 +8,7 @@ public class Hero_panel : MonoBehaviour
     [SerializeField] private Hero_controller _layoutItemPrefab;
     private List<Hero_controller> _items;
 
-    public void Init(List<User.Hero> userHeroes)
+    public void Init(List<Hero> userHeroes)
     {
         _items = new List<Hero_controller>();
         
@@ -18,7 +18,7 @@ public class Hero_panel : MonoBehaviour
         }
     }
 
-    private void FillPanel(User.Hero hero)
+    private void FillPanel(Hero hero)
     {
         var newItem = Instantiate(_layoutItemPrefab, _layoutGroup.transform, false);
         newItem.Init(hero);

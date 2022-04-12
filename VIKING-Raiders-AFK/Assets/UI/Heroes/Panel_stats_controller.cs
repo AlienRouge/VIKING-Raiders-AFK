@@ -19,8 +19,8 @@ public class Panel_stats_controller : MonoBehaviour
     {
         EventController.HeroStatsFilling -= SetHeroStats;
     }
-    
-    public void SetHeroStats(User.Hero hero)
+
+    private void SetHeroStats(Hero hero)
     {
         heroHealth.text = hero._heroModel.BaseHealth.ToString();
         heroDamage.text = hero._heroModel.BaseDamage.ToString();

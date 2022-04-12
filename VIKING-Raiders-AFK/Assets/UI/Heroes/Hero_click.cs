@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Hero_click : MonoBehaviour
 {
-    private User.Hero hero;
+    private Hero hero;
     
     public void HeroButtonClick()
     {
@@ -14,8 +14,8 @@ public class Hero_click : MonoBehaviour
         Text armor_hero = transform.Find("Armor_info").GetComponent<Text>();
         Text lvl_hero = transform.Find("Lvl_info").GetComponent<Text>();
         health_hero.text = model.BaseHealth.ToString();
-        attack_hero.text = model.GetArmourPerUnitLevel(hero._heroLevel).ToString();
-        armor_hero.text = model.GetDamagePerUnitLevel(hero._heroLevel).ToString();
+        attack_hero.text = model.GetUnitArmour(hero._heroLevel).ToString();
+        armor_hero.text = model.GetUnitDamage(hero._heroLevel).ToString();
         lvl_hero.text = hero._heroLevel.ToString();
     }
 }

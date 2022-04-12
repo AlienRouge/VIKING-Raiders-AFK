@@ -37,7 +37,7 @@ public class hero_scene : MonoBehaviour
 
     private void FillInventoryPanel()
     {
-        _panelController.Init(_userData._heroList);
+        _panelController.Init(_userData.heroList);
     }
     
     public void ShowStatsPanel()
