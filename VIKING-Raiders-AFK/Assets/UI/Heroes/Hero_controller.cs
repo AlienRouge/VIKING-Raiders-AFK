@@ -1,3 +1,4 @@
+using UI.Scripts;
 using UnityEngine;
 
 
@@ -14,7 +15,13 @@ public class Hero_controller : MonoBehaviour
     
     public void OnButtonClick()
     {
+        hero_scene.instance.ShowStatsPanel();
         EventController.HeroStatsFilling?.Invoke(_hero);
         Debug.Log("Clicked");
+    }
+
+    public void OnCancelClick()
+    {
+        hero_scene.instance.HideStatsPanel();
     }
 }

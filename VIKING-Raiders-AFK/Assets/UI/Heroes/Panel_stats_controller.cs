@@ -9,7 +9,7 @@ public class Panel_stats_controller : MonoBehaviour
     [SerializeField] private Text heroDamage;
     [SerializeField] private Text heroArmor;
     [SerializeField] private Text heroLevel;
-    
+   
     private void OnEnable()
     {
         EventController.HeroStatsFilling += SetHeroStats;
@@ -20,7 +20,7 @@ public class Panel_stats_controller : MonoBehaviour
         EventController.HeroStatsFilling -= SetHeroStats;
     }
     
-    private void SetHeroStats(User.Hero hero)
+    public void SetHeroStats(User.Hero hero)
     {
         heroHealth.text = hero._heroModel.BaseHealth.ToString();
         heroDamage.text = hero._heroModel.BaseDamage.ToString();
