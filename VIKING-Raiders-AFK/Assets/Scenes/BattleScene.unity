@@ -1012,7 +1012,7 @@ MonoBehaviour:
   <SpawnController>k__BackingField: {fileID: 1161712205}
   <UIController>k__BackingField: {fileID: 246118306}
   _mapGenerator: {fileID: 1563126441}
-  _gameLevel: {fileID: 11400000, guid: aaeba4d1d8ab33e40b14ca7d0a8a44c4, type: 2}
+  battleLevel: {fileID: 11400000, guid: 70e057fa104956e43b0ead962a62139f, type: 2}
 --- !u!4 &708460294
 Transform:
   m_ObjectHideFlags: 0

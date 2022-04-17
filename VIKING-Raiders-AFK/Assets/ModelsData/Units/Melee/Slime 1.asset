@@ -20,13 +20,14 @@ MonoBehaviour:
   <BaseHealth>k__BackingField: 800
   <BaseDamage>k__BackingField: 0
   <BaseArmour>k__BackingField: 10
+  <MoveSpeed>k__BackingField: 0
   <AttackDeltaTime>k__BackingField: 2
   <AttackRange>k__BackingField: 2
   <CritChance>k__BackingField: 0
-  <MoveSpeed>k__BackingField: 1
+  <MinCritrate>k__BackingField: 0
+  <MaxCritrate>k__BackingField: 0
   <PassiveAbility>k__BackingField: {fileID: 0}
   <ActiveAbility>k__BackingField: {fileID: 0}
   _targetWeights:
-    hpWeight: 1
-    distanceWeight: 1
-  <BaseMeleeDamage>k__BackingField: 60
+    HpWeight: 1
+    DistanceWeight: 1

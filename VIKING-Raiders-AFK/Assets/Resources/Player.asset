@@ -26,4 +26,4 @@ MonoBehaviour:
     _heroModel: {fileID: 11400000, guid: 0d7dfafb73e867041b15afea7ad9b1f2, type: 2}
   - _heroLevel: 1
     _heroModel: {fileID: 11400000, guid: 534ca3bc30838ba479da1d425405b4b5, type: 2}
-  currentGameLevel: {fileID: 11400000, guid: 70e057fa104956e43b0ead962a62139f, type: 2}
+  currentBattleLevel: {fileID: 0}

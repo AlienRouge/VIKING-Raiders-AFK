@@ -46,9 +46,6 @@ public class HeroItemController : MonoBehaviour
             case AbilityController.AbilityState.Ready:
                 _view.OnAbilityReady();
                 break;
-            case AbilityController.AbilityState.Active:
-                _view.OnAbilityActive();
-                break;
             case AbilityController.AbilityState.Cooldown:
                 _view.OnAbilityCooldown();
                 break;
