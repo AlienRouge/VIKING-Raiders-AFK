@@ -21,7 +21,7 @@ public class ModalMenuController : MonoBehaviour
 
     public void Quit()
     {
-        _sceneLoader.Load("MainMenuScene");
+        _sceneLoader.Load("DemoMenu");//DemoMenu//MainMenuScene
     }
 
     public void Restart()

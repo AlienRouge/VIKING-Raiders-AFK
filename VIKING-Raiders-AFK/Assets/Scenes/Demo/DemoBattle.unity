@@ -1960,7 +1960,7 @@ MonoBehaviour:
   <SpawnController>k__BackingField: {fileID: 1444404998}
   <UIController>k__BackingField: {fileID: 111241751}
   _mapGenerator: {fileID: 804152600}
-  _gameLevel: {fileID: 11400000, guid: aaeba4d1d8ab33e40b14ca7d0a8a44c4, type: 2}
+  battleLevel: {fileID: 0}
 --- !u!4 &866070246
 Transform:
   m_ObjectHideFlags: 0
@@ -4149,7 +4149,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: DemoMenu
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1717051006
