@@ -6,6 +6,7 @@ using Photon.Realtime;
 
 public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
 {
+    [SerializeField] private NetController _netController;
     private static BattleSceneControllerNet _instance;
 
     public static BattleSceneControllerNet Instance
@@ -26,10 +27,6 @@ public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
         _playerData = Resources.Load<User>("Player");
         // SetSpawnController();
     }
-    // protected override void SetSpawnController()
-    // {
-    //     _spawnController = SpawnControllerNet.Instance;
-    // }
 
     public void SetMapController(MapController mapController)
     {
@@ -52,7 +49,8 @@ public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
     
     public override void OnStartButtonHandler()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
+        if (!_netController.ReadyClick()) return;
+            //if (!PhotonNetwork.IsMasterClient) return;
         // if (_spawnController.PlayerTeamSize <= 0 || _spawnController.EnemyTeamSize <= 0) return;
         if (SpawnController.PlayerTeamSize <= 0 || SpawnController.EnemyTeamSize <= 0) return;
         

@@ -7,7 +7,8 @@ using UnityEngine;
 namespace _Scripts.Network.UnitController
 {
     [RequireComponent(typeof(PhotonView))]
-    public abstract class BaseUnitControllerNet : BaseUnitController, IPunObservable, IPunInstantiateMagicCallback, IOnEventCallback
+    public abstract class BaseUnitControllerNet : BaseUnitController, IPunObservable, IPunInstantiateMagicCallback,
+        IOnEventCallback
     {
         [SerializeField] private PhotonView _photonView;
 
@@ -33,42 +34,60 @@ namespace _Scripts.Network.UnitController
             Init(model, initData.currentTeam, initData.heroLevel, false);
             SpawnControllerNet.Instance.AddEnemy(this);
         }
-        
+
         public void OnEvent(EventData photonEvent)
         {
             switch (photonEvent.Code)
             {
-                case (byte)NetEvents.UnitHit:
+                case (byte) NetEvents.UnitHit:
                     var data = (SyncDamageData) photonEvent.CustomData;
 
                     if (_photonView.ViewID == data.ViewId)
                     {
                         ChangeHealth(data.Damage);
                     }
+
                     break;
-                case (byte)NetEvents.UnitUseAbility:
-                    var dataAbility = (SyncUseAbility) photonEvent.CustomData;
+                case (byte) NetEvents.UnitUseAbility:
+                    var dataAbility = (SyncNetAction) photonEvent.CustomData;
 
                     if (_photonView.ViewID == dataAbility.ViewId)
                     {
                         base.UseActiveAbility();
                     }
                     break;
+                case (byte) NetEvents.UnitDied:
+                    var dataDeath = (SyncNetAction) photonEvent.CustomData;
+
+                    if (_photonView.ViewID == dataDeath.ViewId)
+                    {
+                        base.OnDeathHandler();
+                    }
+                    break;
                 default:
                     break;
             }
         }
-        
-        protected override void UseActiveAbility()
+
+        protected override void OnDeathHandler()
         {
-            SendHitData(new SyncUseAbility
+            SendSyncEvent(new SyncNetAction
             {
                 ViewId = GetComponent<PhotonView>().ViewID
-            });
+            }, NetEvents.UnitDied);
+            base.OnDeathHandler();
+        }
+
+        protected override void UseActiveAbility()
+        {
+            SendSyncEvent(new SyncNetAction
+            {
+                ViewId = GetComponent<PhotonView>().ViewID
+            }, NetEvents.UnitUseAbility);
             base.UseActiveAbility();
         }
-        
-        private void SendHitData(SyncUseAbility data)
+
+        private void SendSyncEvent(SyncNetAction data, NetEvents netEvent)
         {
             var riseEventOptions = new RaiseEventOptions()
             {
@@ -79,7 +98,7 @@ namespace _Scripts.Network.UnitController
                 Reliability = true
             };
 
-            PhotonNetwork.RaiseEvent((byte) NetEvents.UnitUseAbility, data, riseEventOptions, sendOptions);
+            PhotonNetwork.RaiseEvent((byte) netEvent, data, riseEventOptions, sendOptions);
         }
 
         protected override void OnEnable()

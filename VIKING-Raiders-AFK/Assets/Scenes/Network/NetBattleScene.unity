@@ -998,12 +998,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 476e37689f2a4b078b2e1d1bc9e938f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 11400000, guid: 73d9bb9f0a2c19842a955cef5f85bb80, type: 2}
-  _enemy: {fileID: 11400000, guid: 7ca183dbf7a833a4d8ccd85db1e4b3a3, type: 2}
   <BattleController>k__BackingField: {fileID: 1459515373}
   <SpawnController>k__BackingField: {fileID: 1161712207}
   <UIController>k__BackingField: {fileID: 246118306}
   _mapGenerator: {fileID: 1563126441}
+  _gameLevel: {fileID: 0}
+  _netController: {fileID: 1088288434}
 --- !u!1001 &777721795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1395,7 +1395,7 @@ MonoBehaviour:
   _image: {fileID: 925390781}
   _default: {fileID: 21300000, guid: 31493ea8cbe776643ac5bbab6bf0b608, type: 3}
   _pressed: {fileID: 21300000, guid: 8c832268c57898f45811ec3bc07e3cf3, type: 3}
-  _battleSceneController: {fileID: 0}
+  _battleSceneController: {fileID: 708460295}
 --- !u!114 &925390781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1484,7 +1484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bdda10395cb4c12a44eb3ac2c7634d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _heroDraftController: {fileID: 0}
+  _heroDraftController: {fileID: 206100838}
   _image: {fileID: 1019917336}
   _default: {fileID: 21300000, guid: 2fca960d9c964ed5ba535dc4dba2396b, type: 3}
   _pressed: {fileID: 21300000, guid: d8bdc61a9a7e4573a8d56b6ab8bcd2f0, type: 3}
@@ -1990,7 +1990,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1407752232
 RectTransform:
   m_ObjectHideFlags: 0

@@ -31,8 +31,14 @@ namespace _Scripts.Network.SyncData
         public float Damage;
     }
 
-    public struct SyncUseAbility
+    public struct SyncNetAction
     {
         public int ViewId;
+    }
+
+    public struct SyncReadyClick
+    {
+        public bool isReady;
+        public int player;
     }
 }

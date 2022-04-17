@@ -239,7 +239,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         _movementController.SetMoveSpeed(speed);
     }
 
-    protected void OnDeathHandler()
+    protected virtual void OnDeathHandler()
     {
         _currentTarget = null;
 
@@ -260,7 +260,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     private void OnBattleEnded()
     {
-        _isBattleEnd = true;
+        //_isBattleEnd = true;
     }
 
     private void OnTargetDeath(BaseUnitController unit)
