@@ -22,6 +22,8 @@ public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
     private void Start()
     {
         _instance = this;
+        
+        _playerData = Resources.Load<User>("Player");
         // SetSpawnController();
     }
     // protected override void SetSpawnController()
@@ -43,6 +45,7 @@ public class BattleSceneControllerNet : BattleSceneController, IOnEventCallback
 
     public void InitScene()
     {
+        MapGenerator.Seed = Random.Range(100000, 200000);
         _mapController = _mapGenerator.GenerateMap();
         ShowUi();
     }

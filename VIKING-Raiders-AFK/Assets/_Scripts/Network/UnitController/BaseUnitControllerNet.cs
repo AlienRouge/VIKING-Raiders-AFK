@@ -59,7 +59,7 @@ namespace _Scripts.Network.UnitController
             }
         }
         
-        protected override async void UseActiveAbility()
+        protected override void UseActiveAbility()
         {
             SendHitData(new SyncUseAbility
             {

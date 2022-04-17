@@ -34,14 +34,14 @@ public class Test : MonoBehaviour
         }
     }
 
-    public async void StartAsync()
+    public void StartAsync()
     {
         firstCorutine =  Corutine();
         StartCoroutine(firstCorutine);
         Debug.Log("Done!");
     }
     
-    public async void StopAsync()
+    public void StopAsync()
     {
         StopCoroutine(firstCorutine);
         Debug.Log("Done!");

@@ -33,7 +33,7 @@ public class BattleSceneController : MonoBehaviour
         _instance = this;
 
         _playerData = Resources.Load<User>("Player");
-        
+
         _mapController = _playerData.currentGameLevel.Generated
             ? _mapGenerator.GenerateMap()
             : InstantiateMap(_gameLevel);

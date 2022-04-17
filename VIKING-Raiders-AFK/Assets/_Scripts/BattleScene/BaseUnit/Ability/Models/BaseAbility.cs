@@ -38,7 +38,7 @@ public abstract class BaseAbility : ScriptableObject
             if (!unit.ActualStats.IsDead)
             {
                 DoOnActivate(unit);
-                if (StatusEffect && Random.Range(0, 1) - StatusEffectProcRate >= 0)
+                if (StatusEffect &&  StatusEffectProcRate - Random.Range(0, 1) >= 0)
                 {
                     unit.AddStatusEffect(StatusEffect);
                 }
