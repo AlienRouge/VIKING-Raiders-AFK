@@ -31,6 +31,11 @@ public class LobbyController : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomRoom();
     }
 
+    public void Leave()
+    {
+        PhotonNetwork.Disconnect();
+    }
+
     public override void OnJoinedRoom()
     {
         Debug.Log("connected to room");

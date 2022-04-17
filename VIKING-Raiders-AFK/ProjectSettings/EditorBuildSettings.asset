@@ -41,4 +41,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/BattleScene.unity
     guid: 9e66a3f29c8084149942dfe9fa03564f
+  - enabled: 1
+    path: Assets/Scenes/Demo/DemoMultiplayer.unity
+    guid: 7a201fec532d36e40ad6447720b1edb4
+  - enabled: 1
+    path: Assets/Scenes/Demo/DemoMenu.unity
+    guid: 2f3897aed5a08db42946a1bbd1c7087b
+  - enabled: 1
+    path: Assets/Scenes/Demo/DemoBattle.unity
+    guid: 44a4b71616e55664ab5468eec28858b2
+  - enabled: 1
+    path: Assets/Scenes/Demo/DemoMap.unity
+    guid: ef398c49e3818004d8d4502af9fc1ca9
   m_configObjects: {}
