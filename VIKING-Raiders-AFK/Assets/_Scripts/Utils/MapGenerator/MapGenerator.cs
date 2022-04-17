@@ -36,10 +36,6 @@ public class MapGenerator : MonoBehaviour
         if (_mapController == null)
         {
             _mapController = Instantiate(_mapPrefab);
-            // _mapController.transform.localPosition = new Vector3(
-            //     -width / 2f,
-            //     -height / 2f,
-            //     1);
         }
 
         _noiseMapRenderer.Init(_mapController.walkableTilemap, _mapController.notWalkableTilemap,

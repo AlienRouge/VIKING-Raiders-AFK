@@ -10,7 +10,6 @@ public class HeroItemView : MonoBehaviour
     [SerializeField] private Image _background;
 
     [SerializeField] private Color _cooldownReady;
-    [SerializeField] private Color _cooldownActive;
     [SerializeField] private Gradient _cooldownGradient;
     [SerializeField] private Color _deadColor;
 
@@ -34,12 +33,6 @@ public class HeroItemView : MonoBehaviour
     {
         _cooldownImage.fillAmount = 1f;
         _cooldownImage.color = _cooldownReady;
-    }
-    
-    public void OnAbilityActive()
-    {
-        _cooldownImage.fillAmount = 1f;
-        _cooldownImage.color = _cooldownActive;
     }
 
     public void OnAbilityCooldown()

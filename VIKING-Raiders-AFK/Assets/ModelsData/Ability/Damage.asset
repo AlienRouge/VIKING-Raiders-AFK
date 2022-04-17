@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Target>k__BackingField: 1
   <AbilityName>k__BackingField: FireBall
-  <CooldownTime>k__BackingField: 1
-  <ActiveTime>k__BackingField: 20
-  <CastRange>k__BackingField: 5
+  <CooldownTime>k__BackingField: 2
+  <CastRange>k__BackingField: 10
   <CastTime>k__BackingField: 1
   <StatusEffect>k__BackingField: {fileID: 11400000, guid: 37cb09d8ef9fe994299a0eb2c58b2720, type: 2}
   <StatusEffectProcRate>k__BackingField: 1

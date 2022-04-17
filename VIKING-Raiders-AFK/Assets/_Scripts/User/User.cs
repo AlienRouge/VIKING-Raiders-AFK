@@ -12,8 +12,10 @@ public class User : ScriptableObject
     [Header("Hero pool")]
     [SerializeField] public List<Hero> heroList;
     
-    [Header("GameLevelModel for battle scene")]
-    [SerializeField] public GameLevelModel currentGameLevel;
+    [Header("BattleLevel for battle scene")]
+    [SerializeField] public BattleLevelModel currentBattleLevel;
+
+    
 }
 
 

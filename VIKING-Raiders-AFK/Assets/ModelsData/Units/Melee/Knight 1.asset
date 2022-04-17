@@ -26,8 +26,8 @@ MonoBehaviour:
   <CritChance>k__BackingField: 0
   <MinCritrate>k__BackingField: 0
   <MaxCritrate>k__BackingField: 0
-  <PassiveAbility>k__BackingField: {fileID: 0}
-  <ActiveAbility>k__BackingField: {fileID: 11400000, guid: 3f30d4d352839a34f941024a715dd065, type: 2}
+  <PassiveAbility>k__BackingField: {fileID: 11400000, guid: 3f30d4d352839a34f941024a715dd065, type: 2}
+  <ActiveAbility>k__BackingField: {fileID: 11400000, guid: 934de18d78be423459fb3a12245af454, type: 2}
   _targetWeights:
-    HpWeight: 0
-    DistanceWeight: 0
+    HpWeight: 1
+    DistanceWeight: 1

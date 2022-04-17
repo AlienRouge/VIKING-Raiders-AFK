@@ -28,4 +28,9 @@ public class ModelsContainer : ScriptableObject
     {
         return _models.Find(model => model.name == modelName);
     }
+
+    public BaseUnitModel GetRandomModel()
+    {
+        return _models[Random.Range(0, _models.Count)];
+    }
 }
