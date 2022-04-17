@@ -15,7 +15,7 @@ public class BattleSceneController : MonoBehaviour
     [SerializeField] protected MapGenerator _mapGenerator;
     protected MapController _mapController;
 
-    [SerializeField] private GameLevelModel _gameLevel;
+    [SerializeField] private BattleLevelModel battleLevel;
 
     public static BattleSceneController instance
     {
@@ -34,16 +34,16 @@ public class BattleSceneController : MonoBehaviour
 
         _playerData = Resources.Load<User>("Player");
 
-        _mapController = _playerData.currentGameLevel.Generated
+        _mapController = _playerData.currentBattleLevel.Generated
             ? _mapGenerator.GenerateMap()
-            : InstantiateMap(_gameLevel);
+            : InstantiateMap(battleLevel);
         
         InitializeScene(_playerData);
     }
 
-    private MapController InstantiateMap(GameLevelModel levelModel)
+    private MapController InstantiateMap(BattleLevelModel battleLevel)
     {
-        MapController newMap = Instantiate(levelModel.LevelPrefab);
+        MapController newMap = Instantiate(battleLevel.MapPrefab);
         newMap.BakeMap();
 
         return newMap;
@@ -54,7 +54,7 @@ public class BattleSceneController : MonoBehaviour
     {
         UIController.Init(playerData.heroList);
         SpawnController.Init(_mapController.SpawnPointsController);
-        SpawnController.SpawnEnemies(_playerData.currentGameLevel.EnemyHeroes);
+        SpawnController.SpawnEnemies(_playerData.currentBattleLevel.EnemyHeroes);
     }
 
     // Start button or smth else

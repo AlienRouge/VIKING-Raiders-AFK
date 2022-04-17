@@ -34,7 +34,6 @@ public class AbilityController : MonoBehaviour
     public enum AbilityState
     {
         Ready,
-        Active,
         Cooldown
     }
 
@@ -72,10 +71,8 @@ public class AbilityController : MonoBehaviour
         var abilityState = ability == _activeAbility ? ActiveAbilityState : PassiveAbilityState;
         if (abilityState == AbilityState.Ready)
         {
-            SetAbilityState(ability, AbilityState.Active);
             await ability.OnActivate(parent, GetTargets(ability, target));
-
-            AbilityCycleAsync(ability);
+            CooldownAsync(ability);
         }
     }
 
@@ -137,26 +134,11 @@ public class AbilityController : MonoBehaviour
 
         return targets;
     }
-
-    private async Task AbilityCycleAsync(BaseAbility ability)
-    {
-        await ActivityAsync(ability);
-        await CooldownAsync(ability);
-    }
-
-    private async Task ActivityAsync(BaseAbility ability)
-    {
-        // _ability.OnStartActivity(null);
-        await Task.Delay((int)(ability.ActiveTime * Consts.ONE_SECOND_VALUE));
-        // _ability.OnEndActivity(null);
-        SetAbilityState(ability, AbilityState.Cooldown);
-    }
-
+    
     private async Task CooldownAsync(BaseAbility ability)
     {
-        // _ability.OnStartCooldown(null);
+        SetAbilityState(ability, AbilityState.Cooldown);
         await Task.Delay((int)(ability.CooldownTime * Consts.ONE_SECOND_VALUE));
-        // _ability.OnEndCooldown(null);
         SetAbilityState(ability, AbilityState.Ready);
     }
 }

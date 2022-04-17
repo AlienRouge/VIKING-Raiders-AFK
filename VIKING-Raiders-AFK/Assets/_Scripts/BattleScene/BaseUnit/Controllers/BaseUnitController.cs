@@ -11,7 +11,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
 {
     [SerializeField] protected BaseUnitController _currentTarget;
     private MoveState _currentMoveState;
-    private bool _isPassiveAbilityReady;
+    [SerializeField] private bool _isPassiveAbilityReady;
     private bool _isActiveAbilityReady;
     private bool _isCasting;
     private bool _isTargetInRange;

@@ -9,7 +9,6 @@ public abstract class BaseAbility : ScriptableObject
     [field: SerializeField] public TargetType Target { get; private set; }
     [field: SerializeField] public string AbilityName { get; private set; }
     [field: SerializeField] public float CooldownTime { get; private set; }
-    [field: SerializeField] public float ActiveTime { get; private set; }
     [field: SerializeField] public float CastRange { get; private set; }
     [field: SerializeField] public float CastTime { get; private set; }
 
