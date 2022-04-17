@@ -53,4 +53,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Demo/DemoMap.unity
     guid: ef398c49e3818004d8d4502af9fc1ca9
+  - enabled: 1
+    path: Assets/Scenes/ScenesLevels/HeroCollection.unity
+    guid: 7735076643aa3204cb8ab06e1416903d
   m_configObjects: {}
