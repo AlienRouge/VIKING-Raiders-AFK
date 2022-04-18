@@ -71,6 +71,7 @@ public class AbilityController : MonoBehaviour
         var abilityState = ability == _activeAbility ? ActiveAbilityState : PassiveAbilityState;
         if (abilityState == AbilityState.Ready)
         {
+            SetAbilityState(ability, AbilityState.Cooldown);
             await ability.OnActivate(parent, GetTargets(ability, target));
             CooldownAsync(ability);
         }
@@ -137,7 +138,7 @@ public class AbilityController : MonoBehaviour
     
     private async Task CooldownAsync(BaseAbility ability)
     {
-        SetAbilityState(ability, AbilityState.Cooldown);
+        /*SetAbilityState(ability, AbilityState.Cooldown);*/
         await Task.Delay((int)(ability.CooldownTime * Consts.ONE_SECOND_VALUE));
         SetAbilityState(ability, AbilityState.Ready);
     }
