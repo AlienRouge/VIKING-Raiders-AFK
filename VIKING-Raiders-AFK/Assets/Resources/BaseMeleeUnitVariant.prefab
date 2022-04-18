@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentTarget: {fileID: 0}
+  _isPassiveAbilityReady: 0
   <ActualStats>k__BackingField:
     _model: {fileID: 0}
     _battleTeam: 0

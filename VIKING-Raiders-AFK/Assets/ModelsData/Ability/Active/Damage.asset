@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adbf08c762a4147478e855d878b7ded2, type: 3}
   m_Name: Damage
   m_EditorClassIdentifier: 
-  <Target>k__BackingField: 0
+  <Target>k__BackingField: 1
   <AbilityName>k__BackingField: FireBall
   <CooldownTime>k__BackingField: 20
   <CastRange>k__BackingField: 4
