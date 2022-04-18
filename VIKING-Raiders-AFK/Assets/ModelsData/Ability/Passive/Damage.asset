@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Damage
   m_EditorClassIdentifier: 
   <Target>k__BackingField: 1
-  <AbilityName>k__BackingField: FireBall
-  <CooldownTime>k__BackingField: 2
-  <CastRange>k__BackingField: 10
-  <CastTime>k__BackingField: 1
-  <StatusEffect>k__BackingField: {fileID: 11400000, guid: 37cb09d8ef9fe994299a0eb2c58b2720, type: 2}
+  <AbilityName>k__BackingField: Fire
+  <CooldownTime>k__BackingField: 0.5
+  <CastRange>k__BackingField: 2
+  <CastTime>k__BackingField: 0
+  <StatusEffect>k__BackingField: {fileID: 0}
   <StatusEffectProcRate>k__BackingField: 1
   _magicalDamageType: 0
-  baseDamage: 20
+  baseDamage: 0.1

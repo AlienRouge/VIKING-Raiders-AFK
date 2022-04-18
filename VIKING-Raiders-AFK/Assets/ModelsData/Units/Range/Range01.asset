@@ -18,7 +18,7 @@ MonoBehaviour:
   <ViewSpriteScale>k__BackingField: {x: 80, y: 80, z: 80}
   <MaxUnitLevel>k__BackingField: 20
   <BaseHealth>k__BackingField: 100
-  <BaseDamage>k__BackingField: 300
+  <BaseDamage>k__BackingField: 30
   <BaseArmour>k__BackingField: 20
   <MoveSpeed>k__BackingField: 5
   <AttackDeltaTime>k__BackingField: 1
