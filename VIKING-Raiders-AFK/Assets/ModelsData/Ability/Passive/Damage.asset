@@ -20,4 +20,4 @@ MonoBehaviour:
   <StatusEffect>k__BackingField: {fileID: 0}
   <StatusEffectProcRate>k__BackingField: 1
   _magicalDamageType: 0
-  baseDamage: 0.1
+  baseDamage: 4
