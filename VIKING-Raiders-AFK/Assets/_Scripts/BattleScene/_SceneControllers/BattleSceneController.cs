@@ -6,7 +6,7 @@ public class BattleSceneController : MonoBehaviour
 {
     private static BattleSceneController _instance;
 
-    protected User _playerData;
+    [SerializeField] protected User _playerData;
 
     [field: SerializeField] public BattleController BattleController { get; private set; }
     [field: SerializeField] public SpawnController SpawnController { get; private set; }
@@ -32,7 +32,7 @@ public class BattleSceneController : MonoBehaviour
     {
         _instance = this;
 
-        _playerData = Resources.Load<User>("Player");
+        // _playerData = Resources.Load<User>("Player");
 
         _mapController = _playerData.currentBattleLevel.Generated
             ? _mapGenerator.GenerateMap()

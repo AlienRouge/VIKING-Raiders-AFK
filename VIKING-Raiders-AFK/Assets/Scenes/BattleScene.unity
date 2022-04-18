@@ -1008,6 +1008,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e508f3b18401e4f844cacfcec10295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerData: {fileID: 11400000, guid: 73d9bb9f0a2c19842a955cef5f85bb80, type: 2}
   <BattleController>k__BackingField: {fileID: 1459515373}
   <SpawnController>k__BackingField: {fileID: 1161712205}
   <UIController>k__BackingField: {fileID: 246118306}
