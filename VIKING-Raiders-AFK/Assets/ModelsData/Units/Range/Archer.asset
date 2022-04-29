@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0f1797ba3b4407faaf6d6b384081867, type: 3}
+  m_Name: Archer
+  m_EditorClassIdentifier: 
+  <CharacterName>k__BackingField: Archer
+  <Description>k__BackingField: 
+  <ViewSprite>k__BackingField: {fileID: 4723107735738678597, guid: 3716c2a189331474ebe510f3b527fcf4, type: 3}
+  <AvatarSprite>k__BackingField: {fileID: 4723107735738678597, guid: 3716c2a189331474ebe510f3b527fcf4, type: 3}
+  <AnimatorController>k__BackingField: {fileID: 9100000, guid: c62f111340a9cc24b869a5db232ac0c8, type: 2}
+  <ViewSpriteScale>k__BackingField: {x: 60, y: 60, z: 60}
+  <MaxUnitLevel>k__BackingField: 100
+  <BaseHealth>k__BackingField: 400
+  <BaseDamage>k__BackingField: 30
+  <BaseArmour>k__BackingField: 150
+  <MoveSpeed>k__BackingField: 6
+  <AttackDeltaTime>k__BackingField: 0.5
+  <AttackRange>k__BackingField: 20
+  <CritChance>k__BackingField: 0
+  <MinCritrate>k__BackingField: 0
+  <MaxCritrate>k__BackingField: 0
+  <PassiveAbility>k__BackingField: {fileID: 0}
+  <ActiveAbility>k__BackingField: {fileID: 0}
+  _targetWeights:
+    HpWeight: 0
+    DistanceWeight: 0
+  <ProjectileModel>k__BackingField: {fileID: 11400000, guid: 3e19bc50bc77fa1429751b93188b4a73, type: 2}

@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using _Scripts.Enums;
+using UnityEditor.Animations;
 using UnityEngine;
 
 [Serializable]
@@ -15,12 +16,18 @@ public abstract class BaseUnitModel : ScriptableObject
     [field: Header("UnitDescription")]
     [field: SerializeField]
     public string CharacterName { get; private set; }
-
+    
     [field: SerializeField] public string Description { get; private set; }
 
     [field: SerializeField, Header("View Sprite")]
     public Sprite ViewSprite { get; private set; }
-
+    
+    [field: SerializeField, Header("Avatar Sprite")]
+    public Sprite AvatarSprite { get; private set; }
+    
+    [field: SerializeField, Header("Animation Controller")]
+    public AnimatorController AnimatorController { get; private set; }
+    
     [field: SerializeField] public Vector3 ViewSpriteScale { get; private set; }
 
     

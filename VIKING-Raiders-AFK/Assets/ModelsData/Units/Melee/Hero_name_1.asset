@@ -15,19 +15,19 @@ MonoBehaviour:
   <CharacterName>k__BackingField: Vera
   <Description>k__BackingField: Somethind description
   <ViewSprite>k__BackingField: {fileID: 3840603312409840984, guid: 3fce839290f116d40a0b3ed066fa6086, type: 3}
-  <ViewSpriteScale>k__BackingField: {x: 0, y: 0, z: 0}
-  <UnitType>k__BackingField: 0
+  <ViewSpriteScale>k__BackingField: {x: 60, y: 60, z: 60}
   <MaxUnitLevel>k__BackingField: 20
   <BaseHealth>k__BackingField: 100
   <BaseDamage>k__BackingField: 30
   <BaseArmour>k__BackingField: 4
-  <AttackSpeed>k__BackingField: 4
-  <CriticalRate>k__BackingField: 0.074
-  <AttackRange>k__BackingField: 1
   <MoveSpeed>k__BackingField: 4
+  <AttackDeltaTime>k__BackingField: 0
+  <AttackRange>k__BackingField: 1
+  <CritChance>k__BackingField: 0
+  <MinCritrate>k__BackingField: 0
+  <MaxCritrate>k__BackingField: 0
   <PassiveAbility>k__BackingField: {fileID: 0}
   <ActiveAbility>k__BackingField: {fileID: 0}
   _targetWeights:
-    hpWeight: 0
-    distanceWeight: 0
-  additionalArmor: 0
+    HpWeight: 0
+    DistanceWeight: 0
