@@ -19,9 +19,9 @@ MonoBehaviour:
   <AnimatorController>k__BackingField: {fileID: 9100000, guid: c62f111340a9cc24b869a5db232ac0c8, type: 2}
   <ViewSpriteScale>k__BackingField: {x: 60, y: 60, z: 60}
   <MaxUnitLevel>k__BackingField: 100
-  <BaseHealth>k__BackingField: 400
-  <BaseDamage>k__BackingField: 30
-  <BaseArmour>k__BackingField: 150
+  <BaseHealth>k__BackingField: 100
+  <BaseDamage>k__BackingField: 2
+  <BaseArmour>k__BackingField: 0
   <MoveSpeed>k__BackingField: 6
   <AttackDeltaTime>k__BackingField: 0.5
   <AttackRange>k__BackingField: 20
@@ -31,6 +31,6 @@ MonoBehaviour:
   <PassiveAbility>k__BackingField: {fileID: 0}
   <ActiveAbility>k__BackingField: {fileID: 0}
   _targetWeights:
-    HpWeight: 0
-    DistanceWeight: 0
+    HpWeight: 1
+    DistanceWeight: 1
   <ProjectileModel>k__BackingField: {fileID: 11400000, guid: 3e19bc50bc77fa1429751b93188b4a73, type: 2}

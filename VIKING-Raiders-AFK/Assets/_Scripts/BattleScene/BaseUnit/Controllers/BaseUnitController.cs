@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using _Scripts.Enums;
 using Photon.Pun;
+using UnityEditor.Animations;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -23,6 +25,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         Stop
     }
 
+    protected Animator _animator;
     private BaseUnitView _baseUnitView;
     private MovementController _movementController;
     private DragDropController _dragDropController;
@@ -31,7 +34,8 @@ public abstract class BaseUnitController : MonoBehaviourPun
     protected BattleController _battleController;
 
     [field: SerializeField] public ActualUnitStats ActualStats { get; protected set; }
-
+    
+    
     private MoveState CurrentMoveState
     {
         get => _currentMoveState;
@@ -55,12 +59,32 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     private bool TargetInAttackRange =>
         Vector3.Distance(transform.position, _currentTarget.transform.position) <= ActualStats.AttackRange;
-
-
+    
     public void Init(BaseUnitModel model, Team team, int unitLevel, bool isDraggable)
     {
+        
         InitializeData(model, team, unitLevel);
         InitializeControllers(isDraggable);
+        if (model.AnimatorController != null)
+        {
+            _animator = gameObject.GetComponent<Animator>();
+           // var a = new AnimatorOverrideController(model.AnimatorController);
+           //  AnimatorOverrideController aoc = new AnimatorOverrideController(model.AnimatorController);
+           //  var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+           //  foreach (var a in aoc.animationClips)
+           //      anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(a,));
+           //  aoc.ApplyOverrides(anims);
+           //  animator.runtimeAnimatorController = aoc;
+           // // a["ArcherIdle"] = model.AnimatorController.animationClips.;
+           //  Debug.Log(_animator);
+           //  _animator.runtimeAnimatorController = model.AnimatorController;
+           //  _animator.name = "Archer";
+           //  _animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+           //  _animator.updateMode = AnimatorUpdateMode.Normal;
+           //  Debug.Log(_animator.runtimeAnimatorController.animationClips[0].name);
+           Debug.Log("Assets/Resources/Animators/" + model.AnimatorController.name);
+        //   _animator.runtimeAnimatorController = Resources.Load <RuntimeAnimatorController>("Animators/" + model.AnimatorController.name);
+        }
     }
 
     private void InitializeData(BaseUnitModel model, Team team, int unitLevel)
@@ -239,6 +263,15 @@ public abstract class BaseUnitController : MonoBehaviourPun
         _movementController.SetMoveSpeed(speed);
     }
 
+    public void PlayDiedAnim()
+    {
+        if (_animator != null)
+        {
+            Debug.Log(_animator);
+            _animator.SetTrigger("isDied"); 
+            _animator.Play(stateName:"ArcherDeath");
+        }
+    }
     protected virtual void OnDeathHandler()
     {
         _currentTarget = null;

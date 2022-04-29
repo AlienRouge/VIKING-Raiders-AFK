@@ -1956,6 +1956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e508f3b18401e4f844cacfcec10295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerData: {fileID: 0}
   <BattleController>k__BackingField: {fileID: 1928336928}
   <SpawnController>k__BackingField: {fileID: 1444404998}
   <UIController>k__BackingField: {fileID: 111241751}

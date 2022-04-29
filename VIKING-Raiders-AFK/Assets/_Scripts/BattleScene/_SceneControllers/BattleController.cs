@@ -45,11 +45,14 @@ public class BattleController : MonoBehaviour
         _unitsByTeams[unit.ActualStats.BattleTeam] = _unitsByTeams[unit.ActualStats.BattleTeam]
             .Where(value => !ReferenceEquals(value, unit)).ToList();
 
-        unit.gameObject.SetActive(false);
+        //unit.gameObject.SetActive(false);
         if (_unitsByTeams[Team.Team1].Count == 0 || _unitsByTeams[Team.Team2].Count == 0)
         {
             OnBattleEnded();
         }
+        
+        unit.PlayDiedAnim();
+        Debug.Log("ttrtrttrtrtrt");
     }
 
     private void OnBattleEnded()

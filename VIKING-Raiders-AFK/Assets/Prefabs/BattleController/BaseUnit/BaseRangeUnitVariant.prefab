@@ -78,6 +78,25 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6298265924390244678, guid: 87cfbe22b40213e43bce8c932cc90bb7, type: 3}
   m_PrefabInstance: {fileID: 257760849467972540}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &-5847620553904449457
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6121569871755004666}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c62f111340a9cc24b869a5db232ac0c8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &138301198293111515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed4be5f75b24454188e7af18a559ace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentTarget: {fileID: 0}
+  _isPassiveAbilityReady: 0
   <ActualStats>k__BackingField:
     _model: {fileID: 0}
     _battleTeam: 0
