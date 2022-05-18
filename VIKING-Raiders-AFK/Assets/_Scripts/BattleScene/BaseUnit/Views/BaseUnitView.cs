@@ -1,3 +1,4 @@
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,21 +10,48 @@ public class BaseUnitView : MonoBehaviour
     private Image _viewImage;
     private RectTransform _viewRectTransform;
     private BaseUnitController _parent;
-
+    private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
+    
     public void Init(BaseUnitController parent)
     {
         _parent = parent;
         _viewImage = _unitView.GetComponent<Image>();
+        _spriteRenderer = _unitView.GetComponent<SpriteRenderer>();
         _viewRectTransform = _unitView.GetComponent<RectTransform>();
-
+        _animator = _unitView.GetComponent<Animator>();
         SetUnitSprite(parent.ActualStats.Model.ViewSprite, parent.ActualStats.Model.ViewSpriteScale);
         _healthBar.SetMaxHealth(parent.ActualStats.Model.BaseHealth);
     }
 
+    public Animator SetAnimator(AnimatorController animatorController)
+    {
+        _animator.runtimeAnimatorController = animatorController;
+        _animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+        _animator.updateMode = AnimatorUpdateMode.Normal;
+        return _animator;
+    }
     private void SetUnitSprite(Sprite sprite, Vector3 scale)
     {
-        _viewImage.sprite = sprite;
-        _viewRectTransform.localScale = scale;
+        if (_viewImage != null)
+        {
+            _viewImage.sprite = sprite;
+        }
+
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.sprite = sprite;
+        }
+
+        if (_viewRectTransform != null)
+        {
+            _viewRectTransform.localScale = scale;
+        }
+        else
+        {
+            _unitView.transform.localScale = scale;
+           // transform.localScale = scale;
+        }
     }
 
     // TODO Сомнительно?

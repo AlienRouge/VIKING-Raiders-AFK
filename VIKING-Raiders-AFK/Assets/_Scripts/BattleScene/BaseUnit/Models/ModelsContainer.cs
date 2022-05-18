@@ -5,9 +5,9 @@ using UnityEngine;
 public class ModelsContainer : ScriptableObject
 {
     [SerializeField] private List<BaseUnitModel> _models;
-    
     private static ModelsContainer _instance;
 
+    public List<BaseUnitModel> Models => _models;
     public static ModelsContainer Instance
     {
         get
@@ -32,5 +32,29 @@ public class ModelsContainer : ScriptableObject
     public BaseUnitModel GetRandomModel()
     {
         return _models[Random.Range(0, _models.Count)];
+    }
+
+    public List<BaseUnitModel> GetIntersectListModel(List<Hero> heroes)
+    {
+        List<BaseUnitModel> listOfShopHeroes = new List<BaseUnitModel>();
+        foreach (var model in _models)
+        {
+            bool isExistHero = false;
+            foreach (var hero in heroes)
+            {
+                if (model.CharacterName == hero._heroModel.CharacterName)
+                {
+                    isExistHero = true;
+                    break;
+                }
+            }
+
+            if (!isExistHero)
+            {
+                listOfShopHeroes.Add(model);
+            }
+        }
+
+        return listOfShopHeroes;
     }
 }

@@ -8,6 +8,7 @@ public class User : ScriptableObject
     [SerializeField] public string _userName;
     [SerializeField] public int _accountLevel;
     [SerializeField] public int _accountExp;
+    [SerializeField] public int _money;
     
     [Header("Hero pool")]
     [SerializeField] public List<Hero> heroList;
@@ -15,7 +16,6 @@ public class User : ScriptableObject
     [Header("BattleLevel for battle scene")]
     [SerializeField] public BattleLevelModel currentBattleLevel;
 
-    
 }
 
 

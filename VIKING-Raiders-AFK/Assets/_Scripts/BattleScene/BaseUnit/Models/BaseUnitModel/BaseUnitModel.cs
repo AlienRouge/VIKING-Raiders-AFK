@@ -16,7 +16,8 @@ public abstract class BaseUnitModel : ScriptableObject
     [field: Header("UnitDescription")]
     [field: SerializeField]
     public string CharacterName { get; private set; }
-    
+    [field: SerializeField]
+    public int CharacterPrice { get; private set; }
     [field: SerializeField] public string Description { get; private set; }
 
     [field: SerializeField, Header("View Sprite")]

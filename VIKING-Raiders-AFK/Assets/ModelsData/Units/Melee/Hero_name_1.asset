@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Hero_name_1
   m_EditorClassIdentifier: 
   <CharacterName>k__BackingField: Vera
+  <CharacterPrice>k__BackingField: 200
   <Description>k__BackingField: Somethind description
   <ViewSprite>k__BackingField: {fileID: 3840603312409840984, guid: 3fce839290f116d40a0b3ed066fa6086, type: 3}
-  <ViewSpriteScale>k__BackingField: {x: 60, y: 60, z: 60}
+  <AvatarSprite>k__BackingField: {fileID: 0}
+  <AnimatorController>k__BackingField: {fileID: 0}
+  <ViewSpriteScale>k__BackingField: {x: 5, y: 5, z: 1}
   <MaxUnitLevel>k__BackingField: 20
   <BaseHealth>k__BackingField: 100
   <BaseDamage>k__BackingField: 30

@@ -26,12 +26,13 @@ public class DragDropController : MonoBehaviour, IPointerDownHandler, IBeginDrag
     public void OnPointerDown(PointerEventData eventData)
     {
         _offset = GetMousePos() - transform.position;
-        // Debug.Log("Clicked: " + eventData.pointerCurrentRaycast.gameObject.name);
+        Debug.Log("Clicked: " + eventData.pointerCurrentRaycast.gameObject.name);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         EventController.UnitDragged.Invoke(_unitTeam);
+        Debug.Log("Ya tupaya");
     }
 
     public void OnDrag(PointerEventData eventData)

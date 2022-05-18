@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a945832059c4a534c9f81a988264dd08, type: 3}
   m_Name: Knight 1
   m_EditorClassIdentifier: 
-  <CharacterName>k__BackingField: Weak Knight
+  <CharacterName>k__BackingField: Knight
+  <CharacterPrice>k__BackingField: 100
   <Description>k__BackingField: 
-  <ViewSprite>k__BackingField: {fileID: 21300000, guid: b1ad4586410f20a45ae46023317ba1c8, type: 3}
-  <ViewSpriteScale>k__BackingField: {x: 60, y: 60, z: 60}
+  <ViewSprite>k__BackingField: {fileID: 21300000, guid: f9c8204a846016f469c85acb4a97c389, type: 3}
+  <AvatarSprite>k__BackingField: {fileID: 21300000, guid: f9c8204a846016f469c85acb4a97c389, type: 3}
+  <AnimatorController>k__BackingField: {fileID: 9100000, guid: 3d0bfaff77542ed4096d1b71ad497cd1, type: 2}
+  <ViewSpriteScale>k__BackingField: {x: 5, y: 5, z: 1}
   <MaxUnitLevel>k__BackingField: 20
   <BaseHealth>k__BackingField: 150
-  <BaseDamage>k__BackingField: 0
+  <BaseDamage>k__BackingField: 10
   <BaseArmour>k__BackingField: 30
   <MoveSpeed>k__BackingField: 2
   <AttackDeltaTime>k__BackingField: 1

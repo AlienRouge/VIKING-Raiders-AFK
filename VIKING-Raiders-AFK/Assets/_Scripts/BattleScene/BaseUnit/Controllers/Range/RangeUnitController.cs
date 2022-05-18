@@ -6,7 +6,7 @@ public class RangeUnitController : BaseUnitController
 
     protected override void DoOnAttack(int damage)
     {
-        var newProjectile = Instantiate(_projectilePrefab, transform.position, Quaternion.identity);
+        var newProjectile = Instantiate(_projectilePrefab, transform.position, Quaternion.Euler(ActualStats.Model.GetProjModel().ViewRotate));
         newProjectile.transform.SetParent(transform.root);
         newProjectile.Init(_currentTarget, ActualStats.Model.GetProjModel(), damage);
         newProjectile.Launch();

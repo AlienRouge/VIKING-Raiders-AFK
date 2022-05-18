@@ -13,5 +13,6 @@ public class EventController : MonoBehaviour
     public static UnityAction<BaseUnitController, AbilityController.AbilityState> ActiveAbilityStateChanged;
     public static UnityAction<BaseUnitController, AbilityController.AbilityState> PassiveAbilityStateChanged;
     public static UnityAction<Hero> HeroStatsFilling;
+    public static UnityAction<BaseUnitModel, bool> HeroShopStatsFilling;
 }
 // TODO Объединить active и passive

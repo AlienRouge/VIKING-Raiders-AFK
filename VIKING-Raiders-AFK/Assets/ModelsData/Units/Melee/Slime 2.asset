@@ -15,7 +15,9 @@ MonoBehaviour:
   <CharacterName>k__BackingField: Normal Slime
   <Description>k__BackingField: 
   <ViewSprite>k__BackingField: {fileID: 21300000, guid: 5ffed6b50d9e117468078a8df73f534c, type: 3}
-  <ViewSpriteScale>k__BackingField: {x: 85, y: 85, z: 85}
+  <AvatarSprite>k__BackingField: {fileID: 0}
+  <AnimatorController>k__BackingField: {fileID: 0}
+  <ViewSpriteScale>k__BackingField: {x: 5, y: 5, z: 1}
   <MaxUnitLevel>k__BackingField: 20
   <BaseHealth>k__BackingField: 300
   <BaseDamage>k__BackingField: 0

@@ -52,7 +52,6 @@ public class BattleController : MonoBehaviour
         }
         
         unit.PlayDiedAnim();
-        Debug.Log("ttrtrttrtrtrt");
     }
 
     private void OnBattleEnded()

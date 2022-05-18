@@ -12,6 +12,8 @@ public class ProjectileController : MonoBehaviour
     protected float _damage;
     
     private float _distance => Vector3.Distance(transform.position, _target.transform.position);
+
+    public Vector3 GetRotate => _model.ViewRotate;
     
     public void Init(BaseUnitController target, ProjectileModel projectileModel, float damageValue)
     {

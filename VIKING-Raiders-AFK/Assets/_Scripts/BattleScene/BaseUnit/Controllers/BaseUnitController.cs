@@ -32,6 +32,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
     private AbilityController _abilityController;
     private StatusEffectController _statusEffectController;
     protected BattleController _battleController;
+    private AnimationController _animationController;
 
     [field: SerializeField] public ActualUnitStats ActualStats { get; protected set; }
     
@@ -67,23 +68,9 @@ public abstract class BaseUnitController : MonoBehaviourPun
         InitializeControllers(isDraggable);
         if (model.AnimatorController != null)
         {
-            _animator = gameObject.GetComponent<Animator>();
-           // var a = new AnimatorOverrideController(model.AnimatorController);
-           //  AnimatorOverrideController aoc = new AnimatorOverrideController(model.AnimatorController);
-           //  var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-           //  foreach (var a in aoc.animationClips)
-           //      anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(a,));
-           //  aoc.ApplyOverrides(anims);
-           //  animator.runtimeAnimatorController = aoc;
-           // // a["ArcherIdle"] = model.AnimatorController.animationClips.;
-           //  Debug.Log(_animator);
-           //  _animator.runtimeAnimatorController = model.AnimatorController;
-           //  _animator.name = "Archer";
-           //  _animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
-           //  _animator.updateMode = AnimatorUpdateMode.Normal;
-           //  Debug.Log(_animator.runtimeAnimatorController.animationClips[0].name);
-           Debug.Log("Assets/Resources/Animators/" + model.AnimatorController.name);
-        //   _animator.runtimeAnimatorController = Resources.Load <RuntimeAnimatorController>("Animators/" + model.AnimatorController.name);
+           // _baseUnitView.SetAnimator(model.AnimatorController);
+            _animator = _baseUnitView.SetAnimator(model.AnimatorController);
+            _animationController.Init(_animator);
         }
     }
 
@@ -100,6 +87,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         _abilityController = GetComponent<AbilityController>();
         _statusEffectController = GetComponent<StatusEffectController>();
         _battleController = FindObjectOfType<BattleController>();
+        _animationController = GetComponent<AnimationController>();
 
         _movementController.Init(ActualStats.Model.MoveSpeed);
         _baseUnitView.Init(this);
@@ -132,12 +120,18 @@ public abstract class BaseUnitController : MonoBehaviourPun
         _movementController.Disable();
     }
 
+    //trigger run
     private void PreFightSetup()
     {
+        if (_animator != null)
+        {
+            _animationController.IsRunning();
+        }
         _movementController.Enable();
         _dragDropController.enabled = false;
     }
 
+    //or*
     private void FindTarget()
     {
         _currentTarget = _battleController.GetTarget(this);
@@ -171,6 +165,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
                 TargetInRange = TargetInAttackRange; //? 
                 if (TargetInRange)
                 {
+                    PlayAttackAnim();
                     await Attack();
                     continue;
                 }
@@ -267,9 +262,16 @@ public abstract class BaseUnitController : MonoBehaviourPun
     {
         if (_animator != null)
         {
-            Debug.Log(_animator);
-            _animator.SetTrigger("isDied"); 
-            _animator.Play(stateName:"ArcherDeath");
+            _animationController.IsDied();
+        }
+    }
+
+    public void PlayAttackAnim()
+    {
+        if (_animator != null)
+        {
+            _animationController.IsAttacking();
+           // Debug.Log("123456");
         }
     }
     protected virtual void OnDeathHandler()
@@ -294,6 +296,10 @@ public abstract class BaseUnitController : MonoBehaviourPun
     private void OnBattleEnded()
     {
         //_isBattleEnd = true;
+        if (_animator != null)
+        {
+            _animationController.IsIdle();
+        }
     }
 
     private void OnTargetDeath(BaseUnitController unit)

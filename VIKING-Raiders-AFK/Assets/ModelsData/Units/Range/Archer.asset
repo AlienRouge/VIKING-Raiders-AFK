@@ -17,7 +17,7 @@ MonoBehaviour:
   <ViewSprite>k__BackingField: {fileID: 4723107735738678597, guid: 3716c2a189331474ebe510f3b527fcf4, type: 3}
   <AvatarSprite>k__BackingField: {fileID: 4723107735738678597, guid: 3716c2a189331474ebe510f3b527fcf4, type: 3}
   <AnimatorController>k__BackingField: {fileID: 9100000, guid: c62f111340a9cc24b869a5db232ac0c8, type: 2}
-  <ViewSpriteScale>k__BackingField: {x: 60, y: 60, z: 60}
+  <ViewSpriteScale>k__BackingField: {x: 5, y: 5, z: 1}
   <MaxUnitLevel>k__BackingField: 100
   <BaseHealth>k__BackingField: 100
   <BaseDamage>k__BackingField: 2
