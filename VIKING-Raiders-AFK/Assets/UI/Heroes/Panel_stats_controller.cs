@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Panel_stats_controller : MonoBehaviour
+public class Panel_stats_controller : MonoBehaviour //View
 {
     [SerializeField] private Text heroHealth;
     [SerializeField] private Text heroDamage;
     [SerializeField] private Text heroArmor;
     [SerializeField] private Text heroLevel;
-   
+
     private void OnEnable()
     {
-        EventController.HeroStatsFilling += SetHeroStats;
+        Hero_controller.HeroStatsFilling += SetHeroStats;
     }
 
     private void OnDisable()
     {
-        EventController.HeroStatsFilling -= SetHeroStats;
+        Hero_controller.HeroStatsFilling -= SetHeroStats;
     }
 
     private void SetHeroStats(Hero hero)

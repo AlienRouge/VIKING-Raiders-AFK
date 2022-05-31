@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f1797ba3b4407faaf6d6b384081867, type: 3}
   m_Name: Hero_name_4
   m_EditorClassIdentifier: 
-  <CharacterName>k__BackingField: Loli
+  <CharacterName>k__BackingField: Witch
   <CharacterPrice>k__BackingField: 400
   <Description>k__BackingField: 
-  <ViewSprite>k__BackingField: {fileID: 6269304315422408327, guid: 3fce839290f116d40a0b3ed066fa6086, type: 3}
+  <ViewSprite>k__BackingField: {fileID: 675365273400494122, guid: 3fce839290f116d40a0b3ed066fa6086, type: 3}
   <AvatarSprite>k__BackingField: {fileID: 0}
   <AnimatorController>k__BackingField: {fileID: 0}
   <ViewSpriteScale>k__BackingField: {x: 0, y: 0, z: 0}
-  <MaxUnitLevel>k__BackingField: 0
-  <BaseHealth>k__BackingField: 0
-  <BaseDamage>k__BackingField: 0
-  <BaseArmour>k__BackingField: 0
-  <MoveSpeed>k__BackingField: 0
-  <AttackDeltaTime>k__BackingField: 0
+  <MaxUnitLevel>k__BackingField: 100
+  <BaseHealth>k__BackingField: 100
+  <BaseDamage>k__BackingField: 30
+  <BaseArmour>k__BackingField: 12
+  <MoveSpeed>k__BackingField: 1
+  <AttackDeltaTime>k__BackingField: 1
   <AttackRange>k__BackingField: 0
   <CritChance>k__BackingField: 0
-  <MinCritrate>k__BackingField: 0
-  <MaxCritrate>k__BackingField: 0
+  <MinCritrate>k__BackingField: 1
+  <MaxCritrate>k__BackingField: 1
   <PassiveAbility>k__BackingField: {fileID: 0}
   <ActiveAbility>k__BackingField: {fileID: 0}
   _targetWeights:

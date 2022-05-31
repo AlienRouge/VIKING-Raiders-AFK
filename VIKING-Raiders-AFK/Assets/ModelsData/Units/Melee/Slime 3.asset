@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Slime 3
   m_EditorClassIdentifier: 
   <CharacterName>k__BackingField: Strong Slime
-  <Description>k__BackingField: 
+  <CharacterPrice>k__BackingField: 0
+  <Description>k__BackingField: TtTtt
   <ViewSprite>k__BackingField: {fileID: 21300000, guid: 5ffed6b50d9e117468078a8df73f534c, type: 3}
   <AvatarSprite>k__BackingField: {fileID: 0}
   <AnimatorController>k__BackingField: {fileID: 0}

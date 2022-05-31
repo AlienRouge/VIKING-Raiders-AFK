@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CharacterName>k__BackingField: Knight
   <CharacterPrice>k__BackingField: 100
-  <Description>k__BackingField: 
-  <ViewSprite>k__BackingField: {fileID: 21300000, guid: f9c8204a846016f469c85acb4a97c389, type: 3}
-  <AvatarSprite>k__BackingField: {fileID: 21300000, guid: f9c8204a846016f469c85acb4a97c389, type: 3}
+  <Description>k__BackingField: yttttttttyttyyt
+  <ViewSprite>k__BackingField: {fileID: 200540734713711893, guid: b9a62d4b48b0cf240953e8b9a587d251, type: 3}
+  <AvatarSprite>k__BackingField: {fileID: 200540734713711893, guid: b9a62d4b48b0cf240953e8b9a587d251, type: 3}
   <AnimatorController>k__BackingField: {fileID: 9100000, guid: 3d0bfaff77542ed4096d1b71ad497cd1, type: 2}
   <ViewSpriteScale>k__BackingField: {x: 5, y: 5, z: 1}
   <MaxUnitLevel>k__BackingField: 20

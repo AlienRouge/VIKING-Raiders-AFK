@@ -62,7 +62,11 @@ public class BaseUnitView : MonoBehaviour
             _healthBar.SetHealth(health);
         }
     }
-    
+
+    public void ShowHealthBar(bool isHide)
+    {
+        _healthBar.gameObject.SetActive(isHide);
+    }
     private void OnEnable()
     {
         EventController.UnitHealthChanged += OnChangeHealth;

@@ -1,18 +1,25 @@
 using System;
 using System.Threading.Tasks;
+using _Scripts.Enums;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class MovementController : MonoBehaviour
 {
     [SerializeField] private Transform target;
     private NavMeshAgent _navMeshAgent;
-
+    private bool _isRightVectorDirection = true;
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.updateRotation = false;
         _navMeshAgent.updateUpAxis = false;
+    }
+
+    public void TeamInit(Team team)
+    {
+        _isRightVectorDirection = team == Team.Team1;
     }
 
     public void Init(float speed)
@@ -73,7 +80,6 @@ public class MovementController : MonoBehaviour
         enabled = true;
         _navMeshAgent.enabled = true;
     }
-
     private void Update()
     {
         if (target == null)
@@ -82,5 +88,23 @@ public class MovementController : MonoBehaviour
         {
             _navMeshAgent.SetDestination(target.position);
         }
+
+        if (transform.position.x <= target.transform.position.x && !_isRightVectorDirection)
+        {
+            _isRightVectorDirection = true;
+            ChangeRotation(new Vector3(0,0,0));
+        }
+
+        if (transform.position.x > target.transform.position.x && _isRightVectorDirection)
+        {
+            _isRightVectorDirection = false;
+            ChangeRotation(new Vector3(0,180,0));
+        }
+    }
+
+    private void ChangeRotation(Vector3 euler)
+    {
+       // transform.Rotate(euler);
+        transform.rotation = Quaternion.Euler(euler);
     }
 }

@@ -1,10 +1,12 @@
 using UI.Scripts;
 using UnityEngine;
+using UnityEngine.Events;
 
 
-public class Hero_controller : MonoBehaviour
+public class Hero_controller : MonoBehaviour //StatsPanelCotroler
 {
     [SerializeField] private Heroes_attributes _view;
+    public static UnityAction<Hero> HeroStatsFilling;
     private Hero _hero;
 
     public void Init(Hero hero)
@@ -16,7 +18,7 @@ public class Hero_controller : MonoBehaviour
     public void OnButtonClick()
     {
         hero_scene.instance.ShowStatsPanel();
-        EventController.HeroStatsFilling?.Invoke(_hero);
+        HeroStatsFilling?.Invoke(_hero);
         Debug.Log("Clicked");
     }
 

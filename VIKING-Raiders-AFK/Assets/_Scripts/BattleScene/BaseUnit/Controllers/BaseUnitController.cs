@@ -25,7 +25,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
         Stop
     }
 
-    protected Animator _animator;
+    //protected Animator _animator;
     private BaseUnitView _baseUnitView;
     private MovementController _movementController;
     private DragDropController _dragDropController;
@@ -68,9 +68,8 @@ public abstract class BaseUnitController : MonoBehaviourPun
         InitializeControllers(isDraggable);
         if (model.AnimatorController != null)
         {
-           // _baseUnitView.SetAnimator(model.AnimatorController);
-            _animator = _baseUnitView.SetAnimator(model.AnimatorController);
-            _animationController.Init(_animator);
+           _baseUnitView.SetAnimator(model.AnimatorController);
+           _animationController.Init(_baseUnitView.SetAnimator(model.AnimatorController));
         }
     }
 
@@ -123,11 +122,12 @@ public abstract class BaseUnitController : MonoBehaviourPun
     //trigger run
     private void PreFightSetup()
     {
-        if (_animator != null)
+        if ( _animationController != null)
         {
             _animationController.IsRunning();
         }
         _movementController.Enable();
+        _movementController.TeamInit(ActualStats.BattleTeam);
         _dragDropController.enabled = false;
     }
 
@@ -260,15 +260,16 @@ public abstract class BaseUnitController : MonoBehaviourPun
 
     public void PlayDiedAnim()
     {
-        if (_animator != null)
+        if ( _animationController != null)
         {
             _animationController.IsDied();
         }
+        _baseUnitView.ShowHealthBar(false);
     }
 
     public void PlayAttackAnim()
     {
-        if (_animator != null)
+        if (_animationController!= null)
         {
             _animationController.IsAttacking();
            // Debug.Log("123456");
@@ -296,7 +297,7 @@ public abstract class BaseUnitController : MonoBehaviourPun
     private void OnBattleEnded()
     {
         //_isBattleEnd = true;
-        if (_animator != null)
+        if (_animationController != null)
         {
             _animationController.IsIdle();
         }

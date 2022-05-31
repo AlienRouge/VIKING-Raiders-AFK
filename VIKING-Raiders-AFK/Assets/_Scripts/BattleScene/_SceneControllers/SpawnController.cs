@@ -122,6 +122,10 @@ public class SpawnController : MonoBehaviourPun
         newUnit.Init(hero._heroModel, team, hero._heroLevel, team == Team.Team1);
         newUnit.name = hero._heroModel.CharacterName;
         newUnit.transform.SetParent(spawnPointsController.transform);
+        if (team == Team.Team2)
+        {
+            newUnit.transform.Rotate(new Vector3(0, 180, 0));
+        }
 
         if (team == CurrentTeam)
         {

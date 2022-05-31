@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f1797ba3b4407faaf6d6b384081867, type: 3}
   m_Name: Range01
   m_EditorClassIdentifier: 
-  <CharacterName>k__BackingField: R01
+  <CharacterName>k__BackingField: Wizard
+  <CharacterPrice>k__BackingField: 0
   <Description>k__BackingField: 
-  <ViewSprite>k__BackingField: {fileID: 21300000, guid: 2715cec70a75b7744840d1e41b26547f, type: 3}
+  <ViewSprite>k__BackingField: {fileID: 8113981107377520989, guid: 508e189445c574b4db4e7d6583785ce7, type: 3}
   <AvatarSprite>k__BackingField: {fileID: 0}
   <AnimatorController>k__BackingField: {fileID: 0}
   <ViewSpriteScale>k__BackingField: {x: 5, y: 5, z: 5}
@@ -29,7 +30,7 @@ MonoBehaviour:
   <MinCritrate>k__BackingField: 2
   <MaxCritrate>k__BackingField: 4
   <PassiveAbility>k__BackingField: {fileID: 0}
-  <ActiveAbility>k__BackingField: {fileID: 11400000, guid: cc538ad0adcb9d44a97c9e814654d4ce, type: 2}
+  <ActiveAbility>k__BackingField: {fileID: 11400000, guid: 934de18d78be423459fb3a12245af454, type: 2}
   _targetWeights:
     HpWeight: 1
     DistanceWeight: 1

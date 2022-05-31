@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Archer
   m_EditorClassIdentifier: 
   <CharacterName>k__BackingField: Archer
+  <CharacterPrice>k__BackingField: 0
   <Description>k__BackingField: 
-  <ViewSprite>k__BackingField: {fileID: 4723107735738678597, guid: 3716c2a189331474ebe510f3b527fcf4, type: 3}
+  <ViewSprite>k__BackingField: {fileID: -2387127208438112836, guid: b9a62d4b48b0cf240953e8b9a587d251, type: 3}
   <AvatarSprite>k__BackingField: {fileID: 4723107735738678597, guid: 3716c2a189331474ebe510f3b527fcf4, type: 3}
   <AnimatorController>k__BackingField: {fileID: 9100000, guid: c62f111340a9cc24b869a5db232ac0c8, type: 2}
   <ViewSpriteScale>k__BackingField: {x: 5, y: 5, z: 1}
@@ -29,7 +30,7 @@ MonoBehaviour:
   <MinCritrate>k__BackingField: 0
   <MaxCritrate>k__BackingField: 0
   <PassiveAbility>k__BackingField: {fileID: 0}
-  <ActiveAbility>k__BackingField: {fileID: 0}
+  <ActiveAbility>k__BackingField: {fileID: 11400000, guid: 3f30d4d352839a34f941024a715dd065, type: 2}
   _targetWeights:
     HpWeight: 1
     DistanceWeight: 1
